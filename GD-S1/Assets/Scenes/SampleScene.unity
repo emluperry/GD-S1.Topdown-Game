@@ -470,6 +470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a49453bafdd93b249ba9c33544281f7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Player: {fileID: 1071292295}
   m_MaxSpeed: 10
   m_MaxDistance: 4
   m_MaxAccelerationForce: 150
@@ -540,6 +541,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  m_ReturnSpeed: 20
 --- !u!1 &1071292290
 GameObject:
   m_ObjectHideFlags: 0
