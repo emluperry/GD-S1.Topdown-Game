@@ -34,6 +34,7 @@ public class Weapon_Movement : MonoBehaviour
         m_RB = GetComponent<Rigidbody2D>();
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
         m_SpriteRenderer.enabled = false;
+        m_PrevLocation = transform.position;
 
         m_DistTravelled = 0;
         m_Returning = false;
@@ -41,7 +42,11 @@ public class Weapon_Movement : MonoBehaviour
 
     private void Update()
     {
-        m_InputDirection = new Vector2(Input.GetAxis("W-Horizontal"), Input.GetAxis("W-Vertical"));
+        if (!m_Returning)
+            m_InputDirection = new Vector2(Input.GetAxis("W-Horizontal"), Input.GetAxis("W-Vertical"));
+        else
+            m_InputDirection = new Vector2(0, 0);
+
         if(m_InputDirection.magnitude == 0 && m_SpriteRenderer.enabled == true)
         {
             m_Returning = true;
@@ -55,15 +60,17 @@ public class Weapon_Movement : MonoBehaviour
     private void FixedUpdate()
     {
         ApplyMovement();
+        Debug.Log(m_DistTravelled);
 
         if(m_Returning)
         {
             if(Vector2.Distance(transform.position, m_Player.position) <= m_MaxReturnDistance)
             {
                 m_SpriteRenderer.enabled = false;
-                m_DistTravelled = 0;
                 m_RB.velocity = new Vector2(0, 0);
+                m_DistTravelled = 0;
                 m_RB.MovePosition(m_Player.position);
+                m_PrevLocation = transform.position;
                 m_Returning = false;
             }
         }
@@ -71,8 +78,10 @@ public class Weapon_Movement : MonoBehaviour
 
     private void ApplyMovement()
     {
-        float deltaDistance = Vector2.Distance(m_PrevLocation, transform.position);
-        m_DistTravelled += deltaDistance;
+        if(!m_Returning && m_SpriteRenderer.enabled == true)
+        {
+            m_DistTravelled += Vector2.Distance(m_PrevLocation, transform.position);
+        }
 
         Vector2 NeededAcceleration;
         float MaxAcceleration;
