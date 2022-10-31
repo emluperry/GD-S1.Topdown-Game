@@ -7,9 +7,7 @@ public class Player_Movement : MonoBehaviour
     //Components
     private Rigidbody2D m_RB;
 
-    [SerializeField] private Transform m_Camera;
     private Vector2 m_InputDirection;
-    private Vector2 m_UnitGoal;
     private Vector2 m_GoalVelocity;
 
     [Header("Player Motion")]
@@ -27,7 +25,6 @@ public class Player_Movement : MonoBehaviour
     private void Update()
     {
         m_InputDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        m_UnitGoal = m_Camera.TransformDirection(m_InputDirection);
     }
 
     private void FixedUpdate()
@@ -39,10 +36,10 @@ public class Player_Movement : MonoBehaviour
     {
         //calculate goal velocity
 
-        float velDot = Vector2.Dot(m_UnitGoal, m_GoalVelocity.normalized);
+        float velDot = Vector2.Dot(m_InputDirection, m_GoalVelocity.normalized);
         float acceleration = m_Acceleration * m_AccelerationCurve.Evaluate(velDot);
 
-        m_GoalVelocity = Vector2.MoveTowards(m_GoalVelocity, m_UnitGoal * m_MaxSpeed, acceleration*Time.fixedDeltaTime);
+        m_GoalVelocity = Vector2.MoveTowards(m_GoalVelocity, m_InputDirection * m_MaxSpeed, acceleration*Time.fixedDeltaTime);
 
         Vector2 NeededAcceleration = (m_GoalVelocity - new Vector2(m_RB.velocity.x, m_RB.velocity.y)) / Time.fixedDeltaTime;
 
