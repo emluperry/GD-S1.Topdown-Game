@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.ShaderGraph.Internal;
@@ -6,6 +7,7 @@ using UnityEngine;
 public class Weapon_Movement : MonoBehaviour
 {
     private Rigidbody2D m_RB;
+    private SpriteRenderer m_SpriteRenderer;
     [SerializeField] private Transform m_Player;
 
     private Vector2 m_InputDirection;
@@ -17,8 +19,10 @@ public class Weapon_Movement : MonoBehaviour
     [Header("Weapon Limits")]
     [SerializeField][Min(0f)] private float m_MaxSpeed = 10f;
     [SerializeField][Min(0f)] private float m_MaxDistance = 4f;
+    [SerializeField][Min(0f)] private float m_MaxReturnDistance = 0.1f;
     [SerializeField][Min(0f)] private float m_MaxAccelerationForce = 150f;
     [SerializeField][Min(0f)] private AnimationCurve m_MaxAccelerationCurve;
+    [SerializeField][Min(0f)] private float m_MaxReturnAccelerationForce = 200f;
 
     [Header("Weapon Movement")]
     [SerializeField][Min(0f)] private float m_Acceleration = 200f;
@@ -28,6 +32,9 @@ public class Weapon_Movement : MonoBehaviour
     private void Start()
     {
         m_RB = GetComponent<Rigidbody2D>();
+        m_SpriteRenderer = GetComponent<SpriteRenderer>();
+        m_SpriteRenderer.enabled = false;
+
         m_DistTravelled = 0;
         m_Returning = false;
     }
@@ -35,6 +42,14 @@ public class Weapon_Movement : MonoBehaviour
     private void Update()
     {
         m_InputDirection = new Vector2(Input.GetAxis("W-Horizontal"), Input.GetAxis("W-Vertical"));
+        if(m_InputDirection.magnitude == 0 && m_SpriteRenderer.enabled == true)
+        {
+            m_Returning = true;
+        }
+        else if(m_InputDirection.magnitude > 0 && m_SpriteRenderer.enabled == false)
+        {
+            m_SpriteRenderer.enabled = true;
+        }
     }
 
     private void FixedUpdate()
@@ -43,8 +58,14 @@ public class Weapon_Movement : MonoBehaviour
 
         if(m_Returning)
         {
-            //check if close to player
-            //if so, freeze velocity and reset functionality
+            if(Vector2.Distance(transform.position, m_Player.position) <= m_MaxReturnDistance)
+            {
+                m_SpriteRenderer.enabled = false;
+                m_DistTravelled = 0;
+                m_RB.velocity = new Vector2(0, 0);
+                m_RB.MovePosition(m_Player.position);
+                m_Returning = false;
+            }
         }
     }
 
@@ -54,8 +75,9 @@ public class Weapon_Movement : MonoBehaviour
         m_DistTravelled += deltaDistance;
 
         Vector2 NeededAcceleration;
+        float MaxAcceleration;
 
-        if (m_DistTravelled > m_MaxDistance)
+        if (m_DistTravelled > m_MaxDistance || m_Returning)
         {
             if(!m_Returning)
             {
@@ -65,8 +87,7 @@ public class Weapon_Movement : MonoBehaviour
 
             //logic
             NeededAcceleration = m_ReturnSpeed * (m_Player.position - transform.position).normalized / Time.fixedDeltaTime;
-
-            m_RB.AddForce(NeededAcceleration, ForceMode2D.Force);
+            MaxAcceleration = m_MaxReturnAccelerationForce;
         }
         else
         {
@@ -77,12 +98,13 @@ public class Weapon_Movement : MonoBehaviour
 
             NeededAcceleration = (m_GoalVelocity - new Vector2(m_RB.velocity.x, m_RB.velocity.y)) / Time.fixedDeltaTime;
 
-            float MaxAcceleration = m_MaxAccelerationForce * m_MaxAccelerationCurve.Evaluate(velDot);
-
-            NeededAcceleration = Vector2.ClampMagnitude(NeededAcceleration, MaxAcceleration);
+            MaxAcceleration = m_MaxAccelerationForce * m_MaxAccelerationCurve.Evaluate(velDot);
 
             m_PrevLocation = transform.position;
-            m_RB.AddForce(NeededAcceleration, ForceMode2D.Force);
         }
+
+        NeededAcceleration = Vector2.ClampMagnitude(NeededAcceleration, MaxAcceleration);
+
+        m_RB.AddForce(NeededAcceleration, ForceMode2D.Force);
     }
 }

@@ -473,6 +473,7 @@ MonoBehaviour:
   m_Player: {fileID: 1071292295}
   m_MaxSpeed: 10
   m_MaxDistance: 4
+  m_MaxReturnDistance: 0.4
   m_MaxAccelerationForce: 150
   m_MaxAccelerationCurve:
     serializedVersion: 2
@@ -507,6 +508,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  m_MaxReturnAccelerationForce: 200
   m_Acceleration: 200
   m_AccelerationCurve:
     serializedVersion: 2
