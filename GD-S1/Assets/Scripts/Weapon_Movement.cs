@@ -46,19 +46,20 @@ public class Weapon_Movement : MonoBehaviour
             m_InputDirection = new Vector2(Input.GetAxis("W-Horizontal"), Input.GetAxis("W-Vertical"));
         else
             m_InputDirection = new Vector2(0, 0);
-
-        if(m_InputDirection.magnitude == 0 && m_SpriteRenderer.enabled == true)
-        {
-            m_Returning = true;
-        }
-        else if(m_InputDirection.magnitude > 0 && m_SpriteRenderer.enabled == false)
-        {
-            m_SpriteRenderer.enabled = true;
-        }
     }
 
     private void FixedUpdate()
     {
+        if (m_InputDirection.magnitude == 0 && m_SpriteRenderer.enabled == true)
+        {
+            m_Returning = true;
+        }
+        else if (m_InputDirection.magnitude > 0 && m_SpriteRenderer.enabled == false)
+        {
+            m_RB.MovePosition(m_Player.position);
+            m_SpriteRenderer.enabled = true;
+        }
+
         ApplyMovement();
 
         if(m_Returning)
