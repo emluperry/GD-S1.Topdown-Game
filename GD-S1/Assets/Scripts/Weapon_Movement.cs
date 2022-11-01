@@ -60,7 +60,6 @@ public class Weapon_Movement : MonoBehaviour
     private void FixedUpdate()
     {
         ApplyMovement();
-        Debug.Log(m_DistTravelled);
 
         if(m_Returning)
         {
@@ -86,7 +85,7 @@ public class Weapon_Movement : MonoBehaviour
         Vector2 NeededAcceleration;
         float MaxAcceleration;
 
-        if (m_DistTravelled > m_MaxDistance || m_Returning)
+        if (m_DistTravelled > m_MaxDistance || m_Returning || Vector2.Distance((Vector2)transform.position + m_InputDirection.normalized, m_Player.position) < Vector2.Distance(transform.position, m_Player.position) )
         {
             if(!m_Returning)
             {
