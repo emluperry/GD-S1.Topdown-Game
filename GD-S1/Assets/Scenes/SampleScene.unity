@@ -508,7 +508,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_MaxReturnAccelerationForce: 200
   m_Acceleration: 200
   m_AccelerationCurve:
     serializedVersion: 2
@@ -543,7 +542,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_ReturnSpeed: 20
+  m_ReturnSpeed: 40
 --- !u!1 &1071292290
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,7 +22,6 @@ public class Weapon_Movement : MonoBehaviour
     [SerializeField][Min(0f)] private float m_MaxReturnDistance = 0.1f;
     [SerializeField][Min(0f)] private float m_MaxAccelerationForce = 150f;
     [SerializeField][Min(0f)] private AnimationCurve m_MaxAccelerationCurve;
-    [SerializeField][Min(0f)] private float m_MaxReturnAccelerationForce = 200f;
 
     [Header("Weapon Movement")]
     [SerializeField][Min(0f)] private float m_Acceleration = 200f;
@@ -94,9 +93,7 @@ public class Weapon_Movement : MonoBehaviour
                 m_Returning = true;
             }
 
-            //logic
-            NeededAcceleration = m_ReturnSpeed * (m_Player.position - transform.position).normalized / Time.fixedDeltaTime;
-            MaxAcceleration = m_MaxReturnAccelerationForce;
+            m_RB.MovePosition(Vector2.MoveTowards(transform.position, m_Player.position, m_ReturnSpeed*Time.fixedDeltaTime));
         }
         else
         {
@@ -110,10 +107,10 @@ public class Weapon_Movement : MonoBehaviour
             MaxAcceleration = m_MaxAccelerationForce * m_MaxAccelerationCurve.Evaluate(velDot);
 
             m_PrevLocation = transform.position;
+
+            NeededAcceleration = Vector2.ClampMagnitude(NeededAcceleration, MaxAcceleration);
+
+            m_RB.AddForce(NeededAcceleration, ForceMode2D.Force);
         }
-
-        NeededAcceleration = Vector2.ClampMagnitude(NeededAcceleration, MaxAcceleration);
-
-        m_RB.AddForce(NeededAcceleration, ForceMode2D.Force);
     }
 }
