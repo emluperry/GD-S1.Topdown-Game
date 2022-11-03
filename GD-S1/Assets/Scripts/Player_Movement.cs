@@ -6,6 +6,7 @@ public class Player_Movement : MonoBehaviour
 {
     //Components
     private Rigidbody2D m_RB;
+    private Animator m_Animator;
 
     private Vector2 m_InputDirection;
     private Vector2 m_GoalVelocity;
@@ -20,6 +21,7 @@ public class Player_Movement : MonoBehaviour
     private void Start()
     {
         m_RB = GetComponent<Rigidbody2D>();
+        m_Animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -29,6 +31,7 @@ public class Player_Movement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        UpdateAnimation();
         ApplyMovement();
     }
 
@@ -48,5 +51,23 @@ public class Player_Movement : MonoBehaviour
         NeededAcceleration = Vector3.ClampMagnitude(NeededAcceleration, MaxAcceleration);
 
         m_RB.AddForce(NeededAcceleration, ForceMode2D.Force);
+    }
+
+    private void UpdateAnimation()
+    {
+        if(m_InputDirection.x > 0)
+        {
+            transform.localScale = new Vector2(-1, 1);
+            m_Animator.SetBool("isWalking", true);
+        }
+        else if(m_InputDirection.x < 0)
+        {
+            transform.localScale = new Vector2(1, 1);
+            m_Animator.SetBool("isWalking", true);
+        }
+        else
+        {
+            m_Animator.SetBool("isWalking", false);
+        }
     }
 }
