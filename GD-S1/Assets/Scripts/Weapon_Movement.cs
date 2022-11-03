@@ -7,7 +7,6 @@ using UnityEngine;
 public class Weapon_Movement : MonoBehaviour
 {
     private Rigidbody2D m_RB;
-    private SpriteRenderer m_SpriteRenderer;
     [SerializeField] private Transform m_Player;
 
     private Vector2 m_InputDirection;
@@ -15,6 +14,7 @@ public class Weapon_Movement : MonoBehaviour
     private Vector2 m_PrevLocation;
     private float m_DistTravelled;
     private bool m_Returning;
+    private bool m_IsActive;
 
     [Header("Weapon Limits")]
     [SerializeField][Min(0f)] private float m_MaxSpeed = 10f;
@@ -31,8 +31,7 @@ public class Weapon_Movement : MonoBehaviour
     private void Start()
     {
         m_RB = GetComponent<Rigidbody2D>();
-        m_SpriteRenderer = GetComponent<SpriteRenderer>();
-        m_SpriteRenderer.enabled = false;
+        ToggleVisibility(false);
         m_PrevLocation = transform.position;
 
         m_DistTravelled = 0;
@@ -49,14 +48,14 @@ public class Weapon_Movement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (m_InputDirection.magnitude == 0 && m_SpriteRenderer.enabled == true)
+        if (m_InputDirection.magnitude == 0 && m_IsActive == true)
         {
             m_Returning = true;
         }
-        else if (m_InputDirection.magnitude > 0 && m_SpriteRenderer.enabled == false)
+        else if (m_InputDirection.magnitude > 0 && m_IsActive == false)
         {
             m_RB.MovePosition(m_Player.position);
-            m_SpriteRenderer.enabled = true;
+            ToggleVisibility(true);
         }
 
         ApplyMovement();
@@ -65,7 +64,7 @@ public class Weapon_Movement : MonoBehaviour
         {
             if(Vector2.Distance(transform.position, m_Player.position) <= m_MaxReturnDistance)
             {
-                m_SpriteRenderer.enabled = false;
+                ToggleVisibility(false);
                 m_RB.velocity = new Vector2(0, 0);
                 m_DistTravelled = 0;
                 m_RB.MovePosition(m_Player.position);
@@ -77,7 +76,7 @@ public class Weapon_Movement : MonoBehaviour
 
     private void ApplyMovement()
     {
-        if(!m_Returning && m_SpriteRenderer.enabled == true)
+        if(!m_Returning && m_IsActive == true)
         {
             m_DistTravelled += Vector2.Distance(m_PrevLocation, transform.position);
         }
@@ -111,6 +110,15 @@ public class Weapon_Movement : MonoBehaviour
             NeededAcceleration = Vector2.ClampMagnitude(NeededAcceleration, MaxAcceleration);
 
             m_RB.AddForce(NeededAcceleration, ForceMode2D.Force);
+        }
+    }
+
+    private void ToggleVisibility(bool visibility)
+    {
+        m_IsActive = visibility;
+        foreach (SpriteRenderer renderer in GetComponentsInChildren<SpriteRenderer>())
+        {
+            renderer.enabled = visibility;
         }
     }
 }
