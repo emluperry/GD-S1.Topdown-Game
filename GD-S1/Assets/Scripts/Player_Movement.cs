@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,6 +25,7 @@ public class Player_Movement : MonoBehaviour
     [Header("Weapon Animation")]
     [SerializeField] private Transform m_AttackArmJoint;
     [SerializeField] private Transform m_WeaponHead;
+    [SerializeField] private float m_ArmRotationSpeed = 1f;
 
 
     private void Start()
@@ -82,20 +84,13 @@ public class Player_Movement : MonoBehaviour
 
         if(m_WeaponInputDirection.magnitude > 0)
         {
-            float val = Vector2.Dot((m_AttackArmJoint.rotation * Vector2.right).normalized, (-m_AttackArmJoint.position + m_WeaponHead.position).normalized);
-            float degree = Mathf.Acos(val) * Mathf.Rad2Deg;
-            if (!float.IsNaN(degree))
-            {
-                if (degree > 180)
-                    degree -= 360;
-                else if (degree < -180)
-                    degree += 360;
-                m_AttackArmJoint.Rotate(0, 0, degree);
-            }
+            Quaternion rotQ = Quaternion.identity;
+            rotQ.SetFromToRotation((m_AttackArmJoint.rotation * Vector2.right).normalized, (-m_AttackArmJoint.position + m_WeaponHead.position).normalized);
+            m_AttackArmJoint.rotation *= rotQ;
         }
         else
         {
-            m_AttackArmJoint.transform.rotation = m_AttackArmIdleRotation;
+            m_AttackArmJoint.rotation = m_AttackArmIdleRotation;
         }
     }
 }
