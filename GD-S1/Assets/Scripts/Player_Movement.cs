@@ -11,6 +11,9 @@ public class Player_Movement : MonoBehaviour
     private Vector2 m_InputDirection;
     private Vector2 m_GoalVelocity;
 
+    private Vector2 m_WeaponInputDirection;
+    private Quaternion m_AttackArmIdleRotation;
+
     [Header("Player Motion")]
     [SerializeField] [Min(0f)] private float m_MaxSpeed = 1f;
     [SerializeField] [Min(0f)] private float m_Acceleration = 200f;
@@ -18,15 +21,22 @@ public class Player_Movement : MonoBehaviour
     [SerializeField] [Min(0f)] private AnimationCurve m_AccelerationCurve;
     [SerializeField] [Min(0f)] private AnimationCurve m_MaxAccelerationCurve;
 
+    [Header("Weapon Animation")]
+    [SerializeField] private Transform m_AttackArmJoint;
+    [SerializeField] private Transform m_WeaponHead;
+
+
     private void Start()
     {
         m_RB = GetComponent<Rigidbody2D>();
         m_Animator = GetComponent<Animator>();
+        m_AttackArmIdleRotation = m_AttackArmJoint.rotation;
     }
 
     private void Update()
     {
         m_InputDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        m_WeaponInputDirection = new Vector2(Input.GetAxis("W-Horizontal"), Input.GetAxis("W-Vertical"));
     }
 
     private void FixedUpdate()
@@ -37,8 +47,6 @@ public class Player_Movement : MonoBehaviour
 
     private void ApplyMovement()
     {
-        //calculate goal velocity
-
         float velDot = Vector2.Dot(m_InputDirection, m_GoalVelocity.normalized);
         float acceleration = m_Acceleration * m_AccelerationCurve.Evaluate(velDot);
 
@@ -68,6 +76,22 @@ public class Player_Movement : MonoBehaviour
         else
         {
             m_Animator.SetBool("isWalking", false);
+        }
+
+        if(m_WeaponInputDirection.magnitude > 0)
+        {
+            //change rotation of arm
+            //current rotation dir. = unit vector in current rot. direction
+            //target rotation dir. = unit vector between pos and weapon pos
+            Vector2 direction = transform.localScale.x == 1 ? Vector2.right : Vector2.left;
+            float val = Vector2.Dot((m_AttackArmJoint.localRotation * direction).normalized, (-transform.position + m_WeaponHead.position).normalized);
+            float degree = Mathf.Acos(val) * Mathf.Rad2Deg;
+            if (!float.IsNaN(degree))
+                m_AttackArmJoint.Rotate(0, 0, degree);
+        }
+        else
+        {
+            m_AttackArmJoint.transform.rotation = m_AttackArmIdleRotation;
         }
     }
 }
