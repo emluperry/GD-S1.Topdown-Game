@@ -66,11 +66,13 @@ public class Player_Movement : MonoBehaviour
         if(m_InputDirection.x > 0)
         {
             transform.localScale = new Vector2(-1, 1);
+            m_AttackArmJoint.localScale = new Vector2(-1, 1);
             m_Animator.SetBool("isWalking", true);
         }
         else if(m_InputDirection.x < 0)
         {
             transform.localScale = new Vector2(1, 1);
+            m_AttackArmJoint.localScale = new Vector2(1, 1);
             m_Animator.SetBool("isWalking", true);
         }
         else
@@ -80,14 +82,16 @@ public class Player_Movement : MonoBehaviour
 
         if(m_WeaponInputDirection.magnitude > 0)
         {
-            //change rotation of arm
-            //current rotation dir. = unit vector in current rot. direction
-            //target rotation dir. = unit vector between pos and weapon pos
-            Vector2 direction = transform.localScale.x == 1 ? Vector2.right : Vector2.left;
-            float val = Vector2.Dot((m_AttackArmJoint.localRotation * direction).normalized, (-transform.position + m_WeaponHead.position).normalized);
+            float val = Vector2.Dot((m_AttackArmJoint.rotation * Vector2.right).normalized, (-m_AttackArmJoint.position + m_WeaponHead.position).normalized);
             float degree = Mathf.Acos(val) * Mathf.Rad2Deg;
             if (!float.IsNaN(degree))
+            {
+                if (degree > 180)
+                    degree -= 360;
+                else if (degree < -180)
+                    degree += 360;
                 m_AttackArmJoint.Rotate(0, 0, degree);
+            }
         }
         else
         {
