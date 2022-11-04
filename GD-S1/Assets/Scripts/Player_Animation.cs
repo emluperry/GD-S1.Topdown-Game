@@ -9,17 +9,23 @@ public class Player_Animation : MonoBehaviour
     private Vector2 m_WeaponInputDirection;
     private Quaternion m_AttackArmIdleRotation;
 
+    private SpriteRenderer m_ChainSpriteRenderer;
+    private BoxCollider2D m_ChainCollider;
+
     [Header("Player Animation")]
     [SerializeField] private Animator m_PlayerAnimator;
 
     [Header("Weapon Animation")]
     [SerializeField] private Transform m_AttackArmJoint;
     [SerializeField] private Transform m_WeaponHead;
-    [SerializeField] private SpriteRenderer m_WeaponChain;
+    [SerializeField] private Transform m_WeaponChain;
 
     private void Start()
     {
         m_AttackArmIdleRotation = m_AttackArmJoint.rotation;
+
+        m_ChainSpriteRenderer = m_WeaponChain.GetComponent<SpriteRenderer>();
+        m_ChainCollider = m_WeaponChain.GetComponent<BoxCollider2D>();
     }
 
     private void Update()
@@ -34,6 +40,13 @@ public class Player_Animation : MonoBehaviour
     }
 
     private void UpdateAnimation()
+    {
+        AdjustPlayerSprite();
+
+        AdjustWeaponSprites();
+    }
+
+    private void AdjustPlayerSprite()
     {
         if (m_InputDirection.x > 0)
         {
@@ -51,7 +64,11 @@ public class Player_Animation : MonoBehaviour
         {
             m_PlayerAnimator.SetBool("isWalking", false);
         }
+    }
 
+    private void AdjustWeaponSprites()
+    {
+        Vector2 size;
         if (m_WeaponInputDirection.magnitude > 0)
         {
             Vector3 WeaponVector = -m_AttackArmJoint.position + m_WeaponHead.position;
@@ -60,13 +77,18 @@ public class Player_Animation : MonoBehaviour
             m_AttackArmJoint.rotation *= ArmRotation;
             m_WeaponHead.rotation = m_AttackArmJoint.rotation;
 
-            m_WeaponChain.size = new Vector2(WeaponVector.magnitude, m_WeaponChain.size.y);
+            size = new Vector2(WeaponVector.magnitude, m_ChainSpriteRenderer.size.y);
+            m_ChainSpriteRenderer.size = size;
+            m_ChainCollider.size = size;
             m_WeaponChain.transform.localPosition = new Vector3(0.5f * WeaponVector.magnitude, 0, 0);
         }
         else
         {
             m_AttackArmJoint.rotation = m_AttackArmIdleRotation;
-            m_WeaponChain.size = new Vector2(0, m_WeaponChain.size.y);
+
+            size = new Vector2(0, m_ChainSpriteRenderer.size.y);
+            m_ChainSpriteRenderer.size = size;
+            m_ChainCollider.size = size;
         }
     }
 }
