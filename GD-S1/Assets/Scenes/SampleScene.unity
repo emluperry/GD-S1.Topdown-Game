@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 343435631}
   - component: {fileID: 343435632}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: player_tail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -334,7 +334,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 541464337}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: player_rlegJoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -467,6 +467,56 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &678499668
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 678499669}
+  - component: {fileID: 678499670}
+  m_Layer: 3
+  m_Name: Player
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &678499669
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678499668}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1071292295}
+  - {fileID: 995697577}
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &678499670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678499668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee41bcbb5b5095b40bd2ecef9f672716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PlayerAnimator: {fileID: 1071292296}
+  m_AttackArmJoint: {fileID: 1121383701}
+  m_WeaponHead: {fileID: 995697577}
+  m_WeaponChain: {fileID: 850144653}
 --- !u!1 &779941187
 GameObject:
   m_ObjectHideFlags: 0
@@ -477,7 +527,7 @@ GameObject:
   m_Component:
   - component: {fileID: 779941188}
   - component: {fileID: 779941189}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: player_leftleg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -560,7 +610,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 838643192}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: player_headJoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -593,7 +643,7 @@ GameObject:
   m_Component:
   - component: {fileID: 850144652}
   - component: {fileID: 850144653}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: chain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -676,7 +726,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 946167470}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: player_llegJoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -710,7 +760,8 @@ GameObject:
   - component: {fileID: 995697577}
   - component: {fileID: 995697579}
   - component: {fileID: 995697581}
-  m_Layer: 0
+  - component: {fileID: 995697582}
+  m_Layer: 3
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -724,14 +775,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 995697576}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1593551336}
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_Father: {fileID: 678499669}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &995697579
 Rigidbody2D:
@@ -839,6 +890,32 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   m_ReturnSpeed: 40
+--- !u!61 &995697582
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 995697576}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.4, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1071292290
 GameObject:
   m_ObjectHideFlags: 0
@@ -852,8 +929,8 @@ GameObject:
   - component: {fileID: 1071292291}
   - component: {fileID: 1071292293}
   - component: {fileID: 1071292296}
-  m_Layer: 0
-  m_Name: Player
+  m_Layer: 3
+  m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -995,9 +1072,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_AttackArmJoint: {fileID: 1121383701}
-  m_WeaponHead: {fileID: 995697577}
-  m_WeaponChain: {fileID: 850144653}
 --- !u!4 &1071292295
 Transform:
   m_ObjectHideFlags: 0
@@ -1011,8 +1085,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1717407014}
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_Father: {fileID: 678499669}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1071292296
 Animator:
@@ -1043,7 +1117,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1121383701}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: player_rarmJoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1078,7 +1152,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1375555458}
   - component: {fileID: 1375555459}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: player_leftarm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1161,7 +1235,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1387824330}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: player_tailJoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1194,7 +1268,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1567047760}
   - component: {fileID: 1567047761}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1278,7 +1352,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1593551336}
   - component: {fileID: 1593551337}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: weaponHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1293,7 +1367,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1593551335}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.4, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1340,7 +1414,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1851294217
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -1116235499, guid: 6ed30a79a929e00479f6d9898b71ef26, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1361,7 +1435,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1651492897}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: player_larmJoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1394,7 +1468,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1717407014}
   - component: {fileID: 1717407015}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: torso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1484,7 +1558,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1718826694}
   - component: {fileID: 1718826695}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: player_weaponHandle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1568,7 +1642,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1797366813}
   - component: {fileID: 1797366814}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: player_rightleg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1652,7 +1726,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1923031654}
   - component: {fileID: 1923031655}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: player_rightarm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
