@@ -516,7 +516,7 @@ MonoBehaviour:
   m_PlayerAnimator: {fileID: 1071292296}
   m_AttackArmJoint: {fileID: 1121383701}
   m_WeaponHead: {fileID: 995697577}
-  m_WeaponChain: {fileID: 850144653}
+  m_WeaponChain: {fileID: 850144652}
 --- !u!1 &779941187
 GameObject:
   m_ObjectHideFlags: 0
@@ -786,8 +786,8 @@ GameObject:
   m_Component:
   - component: {fileID: 995697577}
   - component: {fileID: 995697579}
-  - component: {fileID: 995697581}
   - component: {fileID: 995697582}
+  - component: {fileID: 995697581}
   m_Layer: 3
   m_Name: Weapon
   m_TagString: Untagged
@@ -848,6 +848,7 @@ MonoBehaviour:
   m_MaxSpeed: 10
   m_MaxDistance: 4
   m_MaxReturnDistance: 0.4
+  m_MaxReturnDistanceOffset: 0.1
   m_MaxAccelerationForce: 150
   m_MaxAccelerationCurve:
     serializedVersion: 2
@@ -954,8 +955,8 @@ GameObject:
   - component: {fileID: 1071292295}
   - component: {fileID: 1071292292}
   - component: {fileID: 1071292291}
-  - component: {fileID: 1071292293}
   - component: {fileID: 1071292296}
+  - component: {fileID: 1071292293}
   m_Layer: 3
   m_Name: Body
   m_TagString: Untagged

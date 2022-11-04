@@ -20,6 +20,7 @@ public class Weapon_Movement : MonoBehaviour
     [SerializeField][Min(0f)] private float m_MaxSpeed = 10f;
     [SerializeField][Min(0f)] private float m_MaxDistance = 4f;
     [SerializeField][Min(0f)] private float m_MaxReturnDistance = 0.1f;
+    [SerializeField][Min(0f)] private float m_MaxReturnDistanceOffset = 0.1f;
     [SerializeField][Min(0f)] private float m_MaxAccelerationForce = 150f;
     [SerializeField][Min(0f)] private AnimationCurve m_MaxAccelerationCurve;
 
@@ -62,13 +63,13 @@ public class Weapon_Movement : MonoBehaviour
 
         if(m_Returning)
         {
-            if(Vector2.Distance(transform.position, m_Player.position) <= m_MaxReturnDistance)
+            if(Vector2.Distance(transform.position, m_Player.position) <= m_MaxReturnDistance + m_MaxReturnDistanceOffset)
             {
                 ToggleVisibility(false);
                 m_RB.velocity = new Vector2(0, 0);
                 m_DistTravelled = 0;
                 m_RB.MovePosition(m_Player.position);
-                m_PrevLocation = transform.position;
+                m_PrevLocation = m_Player.position;
                 m_Returning = false;
             }
         }
@@ -81,35 +82,13 @@ public class Weapon_Movement : MonoBehaviour
             m_DistTravelled += Vector2.Distance(m_PrevLocation, transform.position);
         }
 
-        Vector2 NeededAcceleration;
-        float MaxAcceleration;
-
         if (m_DistTravelled > m_MaxDistance || m_Returning || Vector2.Distance((Vector2)transform.position + m_InputDirection.normalized, m_Player.position) < Vector2.Distance(transform.position, m_Player.position) )
         {
-            if(!m_Returning)
-            {
-                m_RB.velocity = new Vector2(0, 0);
-                m_Returning = true;
-            }
-
-            m_RB.MovePosition(Vector2.MoveTowards(transform.position, m_Player.position, m_ReturnSpeed*Time.fixedDeltaTime));
+            ReturnToPlayer();
         }
         else
         {
-            float velDot = Vector2.Dot(m_InputDirection, m_GoalVelocity.normalized);
-            float acceleration = m_Acceleration * m_AccelerationCurve.Evaluate(velDot);
-
-            m_GoalVelocity = Vector2.MoveTowards(m_GoalVelocity, m_InputDirection * m_MaxSpeed, acceleration * Time.fixedDeltaTime);
-
-            NeededAcceleration = (m_GoalVelocity - new Vector2(m_RB.velocity.x, m_RB.velocity.y)) / Time.fixedDeltaTime;
-
-            MaxAcceleration = m_MaxAccelerationForce * m_MaxAccelerationCurve.Evaluate(velDot);
-
-            m_PrevLocation = transform.position;
-
-            NeededAcceleration = Vector2.ClampMagnitude(NeededAcceleration, MaxAcceleration);
-
-            m_RB.AddForce(NeededAcceleration, ForceMode2D.Force);
+            FlyAway();
         }
     }
 
@@ -120,5 +99,38 @@ public class Weapon_Movement : MonoBehaviour
         {
             renderer.enabled = visibility;
         }
+    }
+
+    private void FlyAway()
+    {
+        Vector2 NeededAcceleration;
+        float MaxAcceleration;
+
+        float velDot = Vector2.Dot(m_InputDirection, m_GoalVelocity.normalized);
+        float acceleration = m_Acceleration * m_AccelerationCurve.Evaluate(velDot);
+
+        m_GoalVelocity = Vector2.MoveTowards(m_GoalVelocity, m_InputDirection * m_MaxSpeed, acceleration * Time.fixedDeltaTime);
+
+        NeededAcceleration = (m_GoalVelocity - new Vector2(m_RB.velocity.x, m_RB.velocity.y)) / Time.fixedDeltaTime;
+
+        MaxAcceleration = m_MaxAccelerationForce * m_MaxAccelerationCurve.Evaluate(velDot);
+
+        m_PrevLocation = transform.position;
+
+        NeededAcceleration = Vector2.ClampMagnitude(NeededAcceleration, MaxAcceleration);
+
+        m_RB.AddForce(NeededAcceleration, ForceMode2D.Force);
+    }
+
+    private void ReturnToPlayer()
+    {
+        if (!m_Returning)
+        {
+            m_RB.velocity = new Vector2(0, 0);
+            m_Returning = true;
+        }
+
+        Vector3 PlayerRange = m_Player.position * m_MaxReturnDistance;
+        m_RB.MovePosition(Vector2.MoveTowards(transform.position, m_Player.position + PlayerRange, m_ReturnSpeed * Time.fixedDeltaTime));
     }
 }
