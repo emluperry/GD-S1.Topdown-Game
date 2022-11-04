@@ -25,7 +25,7 @@ public class Player_Movement : MonoBehaviour
     [Header("Weapon Animation")]
     [SerializeField] private Transform m_AttackArmJoint;
     [SerializeField] private Transform m_WeaponHead;
-    [SerializeField] private float m_ArmRotationSpeed = 1f;
+    [SerializeField] private SpriteRenderer m_WeaponChain;
 
 
     private void Start()
@@ -84,13 +84,18 @@ public class Player_Movement : MonoBehaviour
 
         if(m_WeaponInputDirection.magnitude > 0)
         {
-            Quaternion rotQ = Quaternion.identity;
-            rotQ.SetFromToRotation((m_AttackArmJoint.rotation * Vector2.right).normalized, (-m_AttackArmJoint.position + m_WeaponHead.position).normalized);
-            m_AttackArmJoint.rotation *= rotQ;
+            Vector3 WeaponVector = -m_AttackArmJoint.position + m_WeaponHead.position;
+            Quaternion ArmRotation = Quaternion.identity;
+            ArmRotation.SetFromToRotation((m_AttackArmJoint.rotation * Vector2.right).normalized, WeaponVector.normalized);
+            m_AttackArmJoint.rotation *= ArmRotation;
+
+            m_WeaponChain.size = new Vector2(WeaponVector.magnitude, m_WeaponChain.size.y);
+            m_WeaponChain.transform.localPosition = new Vector3(0.5f * WeaponVector.magnitude, 0, 0);
         }
         else
         {
             m_AttackArmJoint.rotation = m_AttackArmIdleRotation;
+            m_WeaponChain.size = new Vector2(0, m_WeaponChain.size.y);
         }
     }
 }
