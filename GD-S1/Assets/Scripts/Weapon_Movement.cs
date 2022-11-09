@@ -130,7 +130,6 @@ public class Weapon_Movement : MonoBehaviour
             m_Returning = true;
         }
 
-        Vector3 PlayerRange = m_Player.position * m_MaxReturnDistance;
-        m_RB.MovePosition(Vector2.MoveTowards(transform.position, m_Player.position + PlayerRange, m_ReturnSpeed * Time.fixedDeltaTime));
+        m_RB.MovePosition(Vector2.MoveTowards(transform.position, m_Player.position, m_ReturnSpeed * Time.fixedDeltaTime));
     }
 }
