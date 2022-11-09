@@ -132,4 +132,9 @@ public class Weapon_Movement : MonoBehaviour
 
         m_RB.MovePosition(Vector2.MoveTowards(transform.position, m_Player.position, m_ReturnSpeed * Time.fixedDeltaTime));
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        m_Returning = true;
+    }
 }
