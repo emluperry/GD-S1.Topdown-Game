@@ -11,6 +11,8 @@ public class Player_Movement : MonoBehaviour
     private Vector2 m_InputDirection;
     private Vector2 m_GoalVelocity;
 
+    [SerializeField] private Camera m_Camera;
+
     [Header("Player Motion")]
     [SerializeField] [Min(0f)] private float m_MaxSpeed = 1f;
     [SerializeField] [Min(0f)] private float m_Acceleration = 200f;
@@ -32,6 +34,8 @@ public class Player_Movement : MonoBehaviour
     private void FixedUpdate()
     {
         ApplyMovement();
+
+        m_Camera.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
     }
 
     private void ApplyMovement()
