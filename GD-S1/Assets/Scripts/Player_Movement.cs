@@ -21,6 +21,8 @@ public class Player_Movement : MonoBehaviour
     [SerializeField] [Min(0f)] private AnimationCurve m_MaxAccelerationCurve;
 
 
+
+
     private void Start()
     {
         m_RB = GetComponent<Rigidbody2D>();
