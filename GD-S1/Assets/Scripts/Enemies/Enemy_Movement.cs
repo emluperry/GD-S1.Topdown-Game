@@ -18,6 +18,7 @@ public class Enemy_Movement : Entity_Movement
 
     [Header("Enemy Variables")]
     [SerializeField] private Player_Movement m_Player;
+    [SerializeField][Min(0f)] private float m_DestinationOffsetRadius = 0.1f;
     [SerializeField][Min(0f)] private float m_WanderingRadius = 1f;
     [SerializeField][Min(0f)] private float m_ChaseRadius = 2f;
 
@@ -61,7 +62,7 @@ public class Enemy_Movement : Entity_Movement
 
         Vector2 currentDestination = m_CurrentPath.corners[m_CurrentPath.corners.Length - 1];
 
-        if((currentDestination - (Vector2)transform.position).magnitude < 0.5f)
+        if((currentDestination - (Vector2)transform.position).magnitude < m_DestinationOffsetRadius)
         {
             currentDestination = NewWanderPoint();
         }
