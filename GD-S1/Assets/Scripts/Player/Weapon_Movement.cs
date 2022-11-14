@@ -90,6 +90,7 @@ public class Weapon_Movement : Entity_Movement
         {
             renderer.enabled = visibility;
         }
+        GetComponent<Collider2D>().enabled = visibility;
     }
 
     private void ReturnToPlayer()

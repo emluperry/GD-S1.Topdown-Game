@@ -16,16 +16,29 @@ public class Enemy_Movement : Entity_Movement
     private NavMeshPath m_CurrentPath;
     private Vector3 m_Target;
 
-    [Header("Enemy Variables")]
+    //Coroutines
+    Coroutine m_AttackingCoroutine;
+
+    [Header("Enemy AI Radius")]
     [SerializeField] private Player_Movement m_Player;
     [SerializeField][Min(0f)] private float m_DestinationOffsetRadius = 0.1f;
     [SerializeField][Min(0f)] private float m_WanderingRadius = 1f;
     [SerializeField][Min(0f)] private float m_ChaseRadius = 2f;
+    [SerializeField][Min(0f)] private float m_AttackingRadius = 2f;
+
+    [Header("Enemy Attacking")]
+    [SerializeField] private float m_AttackChargeDuration = 0.5f;
+
+    [Header("Enemy AI Alternate State Velocity")]
+    [SerializeField] private float m_WanderSpeed = 0.5f;
+    [SerializeField] private float m_ChasingSpeed = 0.5f;
+    [SerializeField] private float m_AttackingSpeed = 5f;
 
     private void Start()
     {
         m_CurrentPath = new NavMeshPath();
         NavMesh.CalculatePath(transform.position, NewWanderPoint(), NavMesh.AllAreas, m_CurrentPath);
+        m_MaxSpeed = m_WanderSpeed;
     }
 
     private void FixedUpdate()
@@ -34,23 +47,46 @@ public class Enemy_Movement : Entity_Movement
         {
             case ENEMY_STATE.WANDERING:
                 Wander();
-                if (IsInPlayerRange())
+                if (IsInRange(m_ChaseRadius))
+                {
                     m_State = ENEMY_STATE.CHASING;
+                    m_MaxSpeed = m_ChasingSpeed;
+                }
+
+                m_InputDirection = (m_Target - transform.position).normalized;
+
+                ApplyMovement();
                 break;
 
             case ENEMY_STATE.CHASING:
                 m_Target = m_Player.transform.position;
-                if (!IsInPlayerRange())
+                if (!IsInRange(m_ChaseRadius))
+                {
                     m_State = ENEMY_STATE.WANDERING;
+                    m_MaxSpeed = m_WanderSpeed;
+                }
+                else if (IsInRange(m_AttackingRadius))
+                {
+                    m_State = ENEMY_STATE.ATTACKING;
+                    m_MaxSpeed = m_AttackingSpeed;
+                }
+
+                m_InputDirection = (m_Target - transform.position).normalized;
+
+                ApplyMovement();
                 break;
 
             case ENEMY_STATE.ATTACKING:
+                if(m_AttackingCoroutine == null)
+                    m_AttackingCoroutine = StartCoroutine(Attacking());
+
+                if (!IsInRange(m_AttackingRadius))
+                {
+                    m_State = ENEMY_STATE.CHASING;
+                    m_MaxSpeed = m_ChasingSpeed;
+                }
                 break;
         }
-
-        m_InputDirection = (m_Target - transform.position).normalized;
-
-        ApplyMovement();
     }
 
     private void Wander()
@@ -65,7 +101,6 @@ public class Enemy_Movement : Entity_Movement
         NavMesh.CalculatePath(transform.position, currentDestination, NavMesh.AllAreas, m_CurrentPath);
 
         m_Target = m_CurrentPath.corners[1];
-
     }
 
     private Vector2 NewWanderPoint()
@@ -73,8 +108,19 @@ public class Enemy_Movement : Entity_Movement
         return (Vector2)transform.position + (Random.insideUnitCircle * m_WanderingRadius);
     }
 
-    private bool IsInPlayerRange()
+    private bool IsInRange(float radius)
     {
-        return ((m_Player.transform.position - transform.position).sqrMagnitude < m_ChaseRadius * m_ChaseRadius);
+        return ((m_Player.transform.position - transform.position).sqrMagnitude < radius * radius);
+    }
+
+    private IEnumerator Attacking()
+    {
+        m_Target = m_Player.transform.position;
+        yield return new WaitForSeconds(m_AttackChargeDuration);
+        yield return new WaitForFixedUpdate();
+        Debug.Log("ATTACK!!!");
+        m_State = ENEMY_STATE.CHASING;
+        StopCoroutine(m_AttackingCoroutine);
+        m_AttackingCoroutine = null;
     }
 }

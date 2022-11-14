@@ -10,9 +10,9 @@ public abstract class Entity_Movement : MonoBehaviour
     private Vector2 m_GoalVelocity;
 
     [Header("Entity Motion")]
-    [SerializeField][Min(0f)] private float m_MaxSpeed = 1f;
-    [SerializeField][Min(0f)] private float m_Acceleration = 200f;
-    [SerializeField][Min(0f)] private float m_MaxAccelerationForce = 150f;
+    [SerializeField][Min(0f)] protected float m_MaxSpeed = 1f;
+    [SerializeField][Min(0f)] protected float m_Acceleration = 200f;
+    [SerializeField][Min(0f)] protected float m_MaxAccelerationForce = 150f;
     [SerializeField][Min(0f)] private AnimationCurve m_AccelerationCurve;
     [SerializeField][Min(0f)] private AnimationCurve m_MaxAccelerationCurve;
 
