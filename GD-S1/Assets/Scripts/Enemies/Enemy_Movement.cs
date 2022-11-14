@@ -55,14 +55,9 @@ public class Enemy_Movement : Entity_Movement
 
     private void Wander()
     {
-        if (m_CurrentPath.corners.Length < 2)
-        {
-            NavMesh.CalculatePath(transform.position, NewWanderPoint(), NavMesh.AllAreas, m_CurrentPath);
-        }
+        Vector2 currentDestination;
 
-        Vector2 currentDestination = m_CurrentPath.corners[m_CurrentPath.corners.Length - 1];
-
-        if((currentDestination - (Vector2)transform.position).magnitude < m_DestinationOffsetRadius)
+        if (m_CurrentPath.corners.Length < 2 || ((currentDestination = m_CurrentPath.corners[m_CurrentPath.corners.Length - 1]) - (Vector2)transform.position).magnitude < m_DestinationOffsetRadius)
         {
             currentDestination = NewWanderPoint();
         }
@@ -75,7 +70,7 @@ public class Enemy_Movement : Entity_Movement
 
     private Vector2 NewWanderPoint()
     {
-        return new Vector2(Random.Range(transform.position.x - m_WanderingRadius, transform.position.x + m_WanderingRadius), Random.Range(transform.position.y - m_WanderingRadius, transform.position.y + m_WanderingRadius));
+        return (Vector2)transform.position + (Random.insideUnitCircle * m_WanderingRadius);
     }
 
     private bool IsInPlayerRange()

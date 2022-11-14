@@ -2116,7 +2116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f68288a7aa7622149a20cbf028f57da3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MaxSpeed: 1
+  m_MaxSpeed: 2
   m_Acceleration: 200
   m_MaxAccelerationForce: 150
   m_AccelerationCurve:
@@ -2186,8 +2186,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   m_Player: {fileID: 1723096003}
-  m_WanderingRadius: 1
-  m_ChaseRadius: 2
+  m_DestinationOffsetRadius: 0.1
+  m_WanderingRadius: 2
+  m_ChaseRadius: 4
 --- !u!50 &289140300
 Rigidbody2D:
   serializedVersion: 4
