@@ -2050,9 +2050,12 @@ GameObject:
   - component: {fileID: 289140297}
   - component: {fileID: 289140300}
   - component: {fileID: 289140296}
+  - component: {fileID: 289140302}
   - component: {fileID: 289140298}
   - component: {fileID: 289140299}
   - component: {fileID: 289140301}
+  - component: {fileID: 289140304}
+  - component: {fileID: 289140303}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Untagged
@@ -2192,7 +2195,6 @@ MonoBehaviour:
   m_ChaseRadius: 4
   m_AttackingRadius: 2
   m_AttackChargeDuration: 1
-  m_AttackFlightRange: 3
   m_AttackDelay: 1.5
   m_FlingImpulse: 40
   m_WanderSpeed: 0.5
@@ -2231,6 +2233,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BaseDamage: 1
+--- !u!95 &289140302
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289140295}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: be021f29ef13ab54baa51a79c5a256c4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &289140303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289140295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48e074313dfb8a74e97b85ae83637a07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &289140304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289140295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f95369a716d6a64692269867ec61964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

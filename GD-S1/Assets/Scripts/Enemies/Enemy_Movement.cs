@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,9 +13,14 @@ enum ENEMY_STATE
 
 public class Enemy_Movement : Entity_Movement
 {
+    public Action<float, float> UpdateInput;
+    public Action ChargingAttack;
+    public Action Attack;
+
     private ENEMY_STATE m_State = ENEMY_STATE.WANDERING;
     private NavMeshPath m_CurrentPath;
     private Vector3 m_Target;
+    private bool m_IsAlive = true;
 
     [Header("Enemy AI Radius")]
     [SerializeField] private Player_Movement m_Player;
@@ -26,7 +32,6 @@ public class Enemy_Movement : Entity_Movement
     [Header("Enemy Attacking")]
     [SerializeField] private float m_AttackChargeDuration = 0.5f;
     private float m_AttackChargeCurrentDuration = 0;
-    [SerializeField] private float m_AttackFlightRange = 3f;
     [SerializeField] private float m_AttackDelay = 1f;
     private float m_CurrentAttackDelay = 0;
     [SerializeField] private float m_FlingImpulse = 5f;
@@ -44,6 +49,9 @@ public class Enemy_Movement : Entity_Movement
 
     private void FixedUpdate()
     {
+        if (!m_IsAlive)
+            return;
+
         switch (m_State)
         {
             case ENEMY_STATE.WANDERING:
@@ -80,6 +88,7 @@ public class Enemy_Movement : Entity_Movement
         {
             m_CurrentAttackDelay += Time.fixedDeltaTime;
             m_InputDirection = (m_Target - transform.position).normalized;
+            UpdateInput?.Invoke(m_InputDirection.x, m_InputDirection.y);
 
             ApplyMovement();
         }
@@ -101,7 +110,7 @@ public class Enemy_Movement : Entity_Movement
 
     private Vector2 NewWanderPoint()
     {
-        return (Vector2)transform.position + (Random.insideUnitCircle * m_WanderingRadius);
+        return (Vector2)transform.position + (UnityEngine.Random.insideUnitCircle * m_WanderingRadius);
     }
 
     private bool IsInRange(float radius)
@@ -111,17 +120,23 @@ public class Enemy_Movement : Entity_Movement
 
     private void Attacking()
     {
+        ChargingAttack?.Invoke();
         m_RB.velocity = new Vector2(0, 0);
         m_AttackChargeCurrentDuration += Time.fixedDeltaTime;
         if (m_AttackChargeCurrentDuration >= m_AttackChargeDuration)
         {
-            m_Target = m_Player.transform.position;
-            Debug.Log("ATTACK!!!");
+            Attack?.Invoke();
             m_RB.AddForce(m_FlingImpulse * m_InputDirection, ForceMode2D.Impulse);
 
             m_State = ENEMY_STATE.CHASING;
             m_MaxSpeed = m_ChasingSpeed;
             m_CurrentAttackDelay = 0;
         }
+    }
+
+    public void SetKilled()
+    {
+        m_IsAlive = false;
+        m_RB.velocity = Vector2.zero;
     }
 }
