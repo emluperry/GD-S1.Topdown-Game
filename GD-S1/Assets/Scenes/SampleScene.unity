@@ -2189,6 +2189,13 @@ MonoBehaviour:
   m_DestinationOffsetRadius: 0.1
   m_WanderingRadius: 2
   m_ChaseRadius: 4
+  m_AttackingRadius: 2
+  m_AttackChargeDuration: 1
+  m_AttackFlightRange: 3
+  m_AttackDelay: 1.5
+  m_FlingImpulse: 40
+  m_WanderSpeed: 0.5
+  m_ChasingSpeed: 1
 --- !u!50 &289140300
 Rigidbody2D:
   serializedVersion: 4

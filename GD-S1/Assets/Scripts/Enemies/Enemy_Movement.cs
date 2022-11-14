@@ -16,9 +16,6 @@ public class Enemy_Movement : Entity_Movement
     private NavMeshPath m_CurrentPath;
     private Vector3 m_Target;
 
-    //Coroutines
-    Coroutine m_AttackingCoroutine;
-
     [Header("Enemy AI Radius")]
     [SerializeField] private Player_Movement m_Player;
     [SerializeField][Min(0f)] private float m_DestinationOffsetRadius = 0.1f;
@@ -28,11 +25,15 @@ public class Enemy_Movement : Entity_Movement
 
     [Header("Enemy Attacking")]
     [SerializeField] private float m_AttackChargeDuration = 0.5f;
+    private float m_AttackChargeCurrentDuration = 0;
+    [SerializeField] private float m_AttackFlightRange = 3f;
+    [SerializeField] private float m_AttackDelay = 1f;
+    private float m_CurrentAttackDelay = 0;
+    [SerializeField] private float m_FlingImpulse = 5f;
 
     [Header("Enemy AI Alternate State Velocity")]
     [SerializeField] private float m_WanderSpeed = 0.5f;
     [SerializeField] private float m_ChasingSpeed = 0.5f;
-    [SerializeField] private float m_AttackingSpeed = 5f;
 
     private void Start()
     {
@@ -52,10 +53,6 @@ public class Enemy_Movement : Entity_Movement
                     m_State = ENEMY_STATE.CHASING;
                     m_MaxSpeed = m_ChasingSpeed;
                 }
-
-                m_InputDirection = (m_Target - transform.position).normalized;
-
-                ApplyMovement();
                 break;
 
             case ENEMY_STATE.CHASING:
@@ -65,27 +62,26 @@ public class Enemy_Movement : Entity_Movement
                     m_State = ENEMY_STATE.WANDERING;
                     m_MaxSpeed = m_WanderSpeed;
                 }
-                else if (IsInRange(m_AttackingRadius))
+                else if (IsInRange(m_AttackingRadius) && m_CurrentAttackDelay >= m_AttackDelay)
                 {
                     m_State = ENEMY_STATE.ATTACKING;
-                    m_MaxSpeed = m_AttackingSpeed;
+                    m_MaxSpeed = m_FlingImpulse;
+                    m_AttackChargeCurrentDuration = 0;
+                    m_RB.velocity = new Vector2(0, 0);
                 }
-
-                m_InputDirection = (m_Target - transform.position).normalized;
-
-                ApplyMovement();
                 break;
 
             case ENEMY_STATE.ATTACKING:
-                if(m_AttackingCoroutine == null)
-                    m_AttackingCoroutine = StartCoroutine(Attacking());
-
-                if (!IsInRange(m_AttackingRadius))
-                {
-                    m_State = ENEMY_STATE.CHASING;
-                    m_MaxSpeed = m_ChasingSpeed;
-                }
+                Attacking();
                 break;
+        }
+
+        if(m_State != ENEMY_STATE.ATTACKING)
+        {
+            m_CurrentAttackDelay += Time.fixedDeltaTime;
+            m_InputDirection = (m_Target - transform.position).normalized;
+
+            ApplyMovement();
         }
     }
 
@@ -113,14 +109,19 @@ public class Enemy_Movement : Entity_Movement
         return ((m_Player.transform.position - transform.position).sqrMagnitude < radius * radius);
     }
 
-    private IEnumerator Attacking()
+    private void Attacking()
     {
-        m_Target = m_Player.transform.position;
-        yield return new WaitForSeconds(m_AttackChargeDuration);
-        yield return new WaitForFixedUpdate();
-        Debug.Log("ATTACK!!!");
-        m_State = ENEMY_STATE.CHASING;
-        StopCoroutine(m_AttackingCoroutine);
-        m_AttackingCoroutine = null;
+        m_RB.velocity = new Vector2(0, 0);
+        m_AttackChargeCurrentDuration += Time.fixedDeltaTime;
+        if (m_AttackChargeCurrentDuration >= m_AttackChargeDuration)
+        {
+            m_Target = m_Player.transform.position;
+            Debug.Log("ATTACK!!!");
+            m_RB.AddForce(m_FlingImpulse * m_InputDirection, ForceMode2D.Impulse);
+
+            m_State = ENEMY_STATE.CHASING;
+            m_MaxSpeed = m_ChasingSpeed;
+            m_CurrentAttackDelay = 0;
+        }
     }
 }
