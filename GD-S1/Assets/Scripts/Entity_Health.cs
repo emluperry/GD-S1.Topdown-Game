@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Entity_Health : MonoBehaviour
 {
+    public Action<float> DamageTaken;
     public Action Killed;
     public Action Destroyable;
 
@@ -20,6 +21,9 @@ public class Entity_Health : MonoBehaviour
     public void TakeDamage(int dmg)
     {
         m_CurrentHealth -= dmg;
+
+        float dec = m_CurrentHealth / (float)m_MaximumHealth;
+        DamageTaken?.Invoke(dec);
 
         if(m_CurrentHealth <= 0)
         {
