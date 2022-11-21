@@ -47,3 +47,6 @@ TagManager:
   - name: Entity
     uniqueID: 717914205
     locked: 0
+  - name: UI
+    uniqueID: 2323299657
+    locked: 0
