@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Core Elements")]
     [SerializeField] private Entity_Health m_Player;
+    [SerializeField] private Enemy_Spawner m_Spawner;
 
 
     void Start()
