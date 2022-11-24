@@ -1,0 +1,63 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class UI_PauseButtonHandler : MonoBehaviour
+{
+    [SerializeField] private UI_OnClickButton m_ResumeButton;
+    [SerializeField] private UI_OnClickButton m_GlossaryButton;
+    [SerializeField] private UI_OnClickButton m_SaveButton;
+    [SerializeField] private UI_OnClickButton m_SettingsButton;
+    [SerializeField] private UI_OnClickButton m_QuitLevelButton;
+    [SerializeField] private UI_OnClickButton m_ExitGameButton;
+
+    private void Awake()
+    {
+        m_ResumeButton.OnClicked += ResumeGame;
+        m_GlossaryButton.OnClicked += LoadGlossaryUI;
+        m_SaveButton.OnClicked += SaveGame;
+        m_SettingsButton.OnClicked += LoadSettingsUI;
+        m_QuitLevelButton.OnClicked += QuitLevel;
+        m_ExitGameButton.OnClicked += QuitToTitle;
+    }
+
+    private void OnDestroy()
+    {
+        m_ResumeButton.OnClicked -= ResumeGame;
+        m_GlossaryButton.OnClicked -= LoadGlossaryUI;
+        m_SaveButton.OnClicked -= SaveGame;
+        m_SettingsButton.OnClicked -= LoadSettingsUI;
+        m_QuitLevelButton.OnClicked -= QuitLevel;
+        m_ExitGameButton.OnClicked -= QuitToTitle;
+    }
+
+    private void ResumeGame()
+    {
+        gameObject.SetActive(false);
+    }
+
+    private void LoadGlossaryUI()
+    {
+        //load glossary UI
+    }
+
+    private void LoadSettingsUI()
+    {
+        //load settings ui
+    }
+
+    private void SaveGame()
+    {
+        //save game
+    }
+
+    private void QuitLevel()
+    {
+        //quit level to level select
+    }
+
+    private void QuitToTitle()
+    {
+        //quit to title screen
+    }
+}
