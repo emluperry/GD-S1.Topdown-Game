@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class Enemy_Spawner : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private GameObject m_EnemyPrefabType;
+    [SerializeField] private int m_NumEnemies;
+
+    private Enemy_Movement[] m_Enemies;
+
+    void Awake()
     {
-        
+        m_Enemies = new Enemy_Movement[m_NumEnemies];
+        for(int i = 0; i < m_NumEnemies; i++)
+        {
+            m_Enemies[i] = Instantiate(m_EnemyPrefabType, transform.position, Quaternion.identity, transform).GetComponent<Enemy_Movement>();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetPause(bool paused)
     {
-        
+        foreach(Enemy_Movement enemy in m_Enemies)
+        {
+            enemy.m_IsPaused = paused;
+        }
     }
 }

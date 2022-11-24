@@ -15,6 +15,9 @@ public class Player_Movement : Entity_Movement
 
     protected void FixedUpdate()
     {
+        if (m_IsPaused)
+            return;
+
         ApplyMovement();
 
         m_Camera.transform.position = new Vector3(transform.position.x, transform.position.y, -10);

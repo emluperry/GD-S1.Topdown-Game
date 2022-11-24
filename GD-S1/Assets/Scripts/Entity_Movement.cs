@@ -6,6 +6,8 @@ public abstract class Entity_Movement : MonoBehaviour
 {
     protected Rigidbody2D m_RB;
 
+    public bool m_IsPaused { protected get; set; } = false;
+
     protected Vector2 m_InputDirection;
     private Vector2 m_GoalVelocity;
 

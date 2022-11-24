@@ -49,7 +49,7 @@ public class Enemy_Movement : Entity_Movement
 
     private void FixedUpdate()
     {
-        if (!m_IsAlive)
+        if (!m_IsAlive || m_IsPaused)
             return;
 
         switch (m_State)
