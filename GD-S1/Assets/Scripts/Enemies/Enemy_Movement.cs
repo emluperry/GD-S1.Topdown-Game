@@ -50,7 +50,10 @@ public class Enemy_Movement : Entity_Movement
     private void FixedUpdate()
     {
         if (!m_IsAlive || m_IsPaused)
+        {
+            m_RB.velocity = new Vector2(0, 0);
             return;
+        }
 
         switch (m_State)
         {

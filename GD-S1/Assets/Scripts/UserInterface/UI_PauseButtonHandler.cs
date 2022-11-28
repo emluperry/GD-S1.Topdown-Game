@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,8 @@ public class UI_PauseButtonHandler : MonoBehaviour
     [SerializeField] private UI_OnClickButton m_SettingsButton;
     [SerializeField] private UI_OnClickButton m_QuitLevelButton;
     [SerializeField] private UI_OnClickButton m_ExitGameButton;
+
+    public Action onContinue;
 
     private void Awake()
     {
@@ -34,6 +37,7 @@ public class UI_PauseButtonHandler : MonoBehaviour
     private void ResumeGame()
     {
         gameObject.SetActive(false);
+        onContinue?.Invoke();
     }
 
     private void LoadGlossaryUI()

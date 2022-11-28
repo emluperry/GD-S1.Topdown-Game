@@ -33,11 +33,14 @@ public class GameManager : MonoBehaviour
         m_PlayerHealth.DamageTaken += m_Healthbar.UpdateHealth;
 
         m_PauseMenu.gameObject.SetActive(false);
+        m_PauseMenu.onContinue += TogglePauseGameObjects;
     }
 
     private void OnDestroy()
     {
         m_PlayerHealth.DamageTaken -= m_Healthbar.UpdateHealth;
+
+        m_PauseMenu.onContinue += TogglePauseGameObjects;
     }
 
     private void Update()
