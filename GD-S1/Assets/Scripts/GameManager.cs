@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,9 +20,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Enemy_Spawner m_Spawner;
 
+    [Header("UI & Scene Management")]
     private float m_pauseDelay = 0f;
     [SerializeField] private float m_maxButtonCooldown = 1f;
-
 
     void Awake()
     {
@@ -34,6 +35,7 @@ public class GameManager : MonoBehaviour
 
         m_PauseMenu.gameObject.SetActive(false);
         m_PauseMenu.onContinue += TogglePauseGameObjects;
+        m_PauseMenu.onQuitGame += QuitApplication;
     }
 
     private void OnDestroy()
@@ -41,6 +43,7 @@ public class GameManager : MonoBehaviour
         m_PlayerHealth.DamageTaken -= m_Healthbar.UpdateHealth;
 
         m_PauseMenu.onContinue += TogglePauseGameObjects;
+        m_PauseMenu.onQuitGame -= QuitApplication;
     }
 
     private void Update()
@@ -65,5 +68,10 @@ public class GameManager : MonoBehaviour
         m_PlayerMov.m_IsPaused = m_IsPaused;
         m_PlayerWeapon.m_IsPaused = m_IsPaused;
         m_Spawner.SetPause(m_IsPaused);
+    }
+
+    private void QuitApplication()
+    {
+        Application.Quit();
     }
 }

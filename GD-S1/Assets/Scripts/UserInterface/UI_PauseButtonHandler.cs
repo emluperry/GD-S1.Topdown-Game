@@ -13,6 +13,8 @@ public class UI_PauseButtonHandler : MonoBehaviour
     [SerializeField] private UI_OnClickButton m_ExitGameButton;
 
     public Action onContinue;
+    public Action onQuitLevel;
+    public Action onQuitGame;
 
     private void Awake()
     {
@@ -57,11 +59,11 @@ public class UI_PauseButtonHandler : MonoBehaviour
 
     private void QuitLevel()
     {
-        //quit level to level select
+        onQuitLevel?.Invoke();
     }
 
     private void QuitToTitle()
     {
-        //quit to title screen
+        onQuitGame?.Invoke();
     }
 }
