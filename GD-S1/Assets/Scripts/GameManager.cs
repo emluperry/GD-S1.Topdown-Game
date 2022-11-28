@@ -20,10 +20,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Enemy_Spawner m_Spawner;
 
 
-    void Start()
+    void Awake()
     {
         m_PlayerHealth = m_Player.GetComponent<Entity_Health>();
         m_PlayerMov = m_Player.GetComponent<Player_Movement>();
+
+        m_Spawner.SetPlayerObject(m_PlayerMov);
 
         m_PlayerHealth.DamageTaken += m_Healthbar.UpdateHealth;
 

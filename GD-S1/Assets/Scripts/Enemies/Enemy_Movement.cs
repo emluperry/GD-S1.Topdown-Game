@@ -23,7 +23,7 @@ public class Enemy_Movement : Entity_Movement
     private bool m_IsAlive = true;
 
     [Header("Enemy AI Radius")]
-    [SerializeField] private Player_Movement m_Player;
+    private Player_Movement m_Player;
     [SerializeField][Min(0f)] private float m_DestinationOffsetRadius = 0.1f;
     [SerializeField][Min(0f)] private float m_WanderingRadius = 1f;
     [SerializeField][Min(0f)] private float m_ChaseRadius = 2f;
@@ -138,5 +138,10 @@ public class Enemy_Movement : Entity_Movement
     {
         m_IsAlive = false;
         m_RB.velocity = Vector2.zero;
+    }
+
+    public void SetPlayerObject(Player_Movement player)
+    {
+        m_Player = player;
     }
 }

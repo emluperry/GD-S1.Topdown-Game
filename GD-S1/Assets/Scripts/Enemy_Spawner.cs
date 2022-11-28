@@ -8,13 +8,15 @@ public class Enemy_Spawner : MonoBehaviour
     [SerializeField] private int m_NumEnemies;
 
     private Enemy_Movement[] m_Enemies;
+    private Player_Movement m_Player;
 
-    void Awake()
+    void Start()
     {
         m_Enemies = new Enemy_Movement[m_NumEnemies];
         for(int i = 0; i < m_NumEnemies; i++)
         {
             m_Enemies[i] = Instantiate(m_EnemyPrefabType, transform.position, Quaternion.identity, transform).GetComponent<Enemy_Movement>();
+            m_Enemies[i].SetPlayerObject(m_Player);
         }
     }
 
@@ -24,5 +26,10 @@ public class Enemy_Spawner : MonoBehaviour
         {
             enemy.m_IsPaused = paused;
         }
+    }
+
+    public void SetPlayerObject(Player_Movement player)
+    {
+        m_Player = player;
     }
 }
