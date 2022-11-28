@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1251485203923666219}
   - component: {fileID: 6537232556781553556}
   - component: {fileID: 680675746752617636}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: healthbar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 4961700410327452092}
   - component: {fileID: 7663645568384311065}
   - component: {fileID: 6759480063769119388}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: heath_bg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 4786295564577218998}
   - component: {fileID: 3842807272305056216}
   - component: {fileID: 502411477700822891}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: 6336778941508639156}
   - component: {fileID: 6336778941508639145}
   - component: {fileID: 6336778941508639158}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Slime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -302,7 +302,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6336778941508639166}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.19, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -394,6 +394,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f68288a7aa7622149a20cbf028f57da3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_InputDirection: {x: 0, y: 0}
+  m_GoalVelocity: {x: 0, y: 0}
   m_MaxSpeed: 2
   m_Acceleration: 200
   m_MaxAccelerationForce: 150
@@ -520,7 +522,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6336778941933673182}
   - component: {fileID: 6336778941933673169}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: slimesprite_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -606,7 +608,7 @@ GameObject:
   - component: {fileID: 2733130049188712518}
   - component: {fileID: 28285445572855961}
   - component: {fileID: 8088051169772881280}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: heath_bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}

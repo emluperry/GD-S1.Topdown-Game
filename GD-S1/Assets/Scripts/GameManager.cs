@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Enemy_Spawner m_Spawner;
 
+    private float m_pauseDelay = 0f;
+    [SerializeField] private float m_maxButtonCooldown = 1f;
+
 
     void Awake()
     {
@@ -39,9 +42,14 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(m_pauseDelay < m_maxButtonCooldown)
+        {
+            m_pauseDelay += Time.deltaTime;
+        }
+        else if (Input.GetAxis("Pause") > 0)
         {
             TogglePauseGameObjects();
+            m_pauseDelay = 0f;
         }
     }
 

@@ -864,12 +864,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 6499453240880162144, guid: 223dff1f270efdd4f85da5aff1e212bd, type: 3}
+      propertyPath: m_NumEnemies
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6499453240880162144, guid: 223dff1f270efdd4f85da5aff1e212bd, type: 3}
       propertyPath: m_EnemyPrefabType
       value: 
       objectReference: {fileID: 6336778941508639166, guid: 5950e1df1525e484ea80cf82e8e12964, type: 3}
     - target: {fileID: 6499453240880162145, guid: 223dff1f270efdd4f85da5aff1e212bd, type: 3}
       propertyPath: m_Name
       value: Spawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 6499453240880162145, guid: 223dff1f270efdd4f85da5aff1e212bd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6499453240880162159, guid: 223dff1f270efdd4f85da5aff1e212bd, type: 3}
       propertyPath: m_RootOrder

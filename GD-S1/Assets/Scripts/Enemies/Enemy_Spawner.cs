@@ -17,6 +17,7 @@ public class Enemy_Spawner : MonoBehaviour
         {
             m_Enemies[i] = Instantiate(m_EnemyPrefabType, transform.position, Quaternion.identity, transform).GetComponent<Enemy_Movement>();
             m_Enemies[i].SetPlayerObject(m_Player);
+            m_Enemies[i].Initialise();
         }
     }
 
