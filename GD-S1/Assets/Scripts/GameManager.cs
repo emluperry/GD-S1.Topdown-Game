@@ -6,11 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    bool m_IsPaused = false;
-
-    [Header("UI Elements")]
+    [Header("UI & Scene Management")]
     [SerializeField] private UI_Healthbar m_Healthbar;
-    [SerializeField] private UI_PauseButtonHandler m_PauseMenu;
+    [SerializeField] private UI_Manager m_UIManager;
+    [SerializeField] private Scene_Manager m_SceneManager;
 
     [Header("Core Elements")]
     [SerializeField] private GameObject m_Player;
@@ -19,10 +18,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Weapon_Movement m_PlayerWeapon;
 
     [SerializeField] private Enemy_Spawner m_Spawner;
-
-    [Header("UI & Scene Management")]
-    private float m_pauseDelay = 0f;
-    [SerializeField] private float m_maxButtonCooldown = 1f;
 
     void Awake()
     {
@@ -33,45 +28,27 @@ public class GameManager : MonoBehaviour
 
         m_PlayerHealth.DamageTaken += m_Healthbar.UpdateHealth;
 
-        m_PauseMenu.gameObject.SetActive(false);
-        m_PauseMenu.onContinue += TogglePauseGameObjects;
-        m_PauseMenu.onQuitGame += QuitApplication;
+        m_UIManager.onPauseWorld += TogglePauseGameObjects;
+        m_UIManager.LoadSceneOnButtonClicked += LoadScene;
     }
 
     private void OnDestroy()
     {
         m_PlayerHealth.DamageTaken -= m_Healthbar.UpdateHealth;
 
-        m_PauseMenu.onContinue += TogglePauseGameObjects;
-        m_PauseMenu.onQuitGame -= QuitApplication;
+        m_UIManager.onPauseWorld += TogglePauseGameObjects;
+        m_UIManager.LoadSceneOnButtonClicked -= LoadScene;
     }
 
-    private void Update()
+    private void TogglePauseGameObjects(bool paused)
     {
-        if(m_pauseDelay < m_maxButtonCooldown)
-        {
-            m_pauseDelay += Time.deltaTime;
-        }
-        else if (Input.GetAxis("Pause") > 0)
-        {
-            TogglePauseGameObjects();
-            m_pauseDelay = 0f;
-        }
+        m_PlayerMov.m_IsPaused = paused;
+        m_PlayerWeapon.m_IsPaused = paused;
+        m_Spawner.SetPause(paused);
     }
 
-    private void TogglePauseGameObjects()
+    private void LoadScene(SCENE_TYPE scene)
     {
-        m_IsPaused = !m_IsPaused;
-
-        m_PauseMenu.gameObject.SetActive(m_IsPaused);
-
-        m_PlayerMov.m_IsPaused = m_IsPaused;
-        m_PlayerWeapon.m_IsPaused = m_IsPaused;
-        m_Spawner.SetPause(m_IsPaused);
-    }
-
-    private void QuitApplication()
-    {
-        Application.Quit();
+        //call in scene manager
     }
 }

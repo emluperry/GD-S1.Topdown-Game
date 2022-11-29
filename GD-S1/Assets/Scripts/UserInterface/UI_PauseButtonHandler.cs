@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class UI_PauseButtonHandler : MonoBehaviour
 {
+    [Header("Buttons")]
     [SerializeField] private UI_OnClickButton m_ResumeButton;
     [SerializeField] private UI_OnClickButton m_GlossaryButton;
     [SerializeField] private UI_OnClickButton m_SaveButton;
@@ -12,11 +13,11 @@ public class UI_PauseButtonHandler : MonoBehaviour
     [SerializeField] private UI_OnClickButton m_QuitLevelButton;
     [SerializeField] private UI_OnClickButton m_ExitGameButton;
 
-    public Action onContinue;
-    public Action onQuitLevel;
-    public Action onQuitGame;
+    public Action<UI_SCREENS> LoadUIOnButtonClicked;
+    public Action onSaveGame;
+    public Action<SCENE_TYPE> LoadSceneOnButtonClicked;
 
-    private void Awake()
+    private void OnEnable()
     {
         m_ResumeButton.OnClicked += ResumeGame;
         m_GlossaryButton.OnClicked += LoadGlossaryUI;
@@ -26,7 +27,7 @@ public class UI_PauseButtonHandler : MonoBehaviour
         m_ExitGameButton.OnClicked += QuitToTitle;
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         m_ResumeButton.OnClicked -= ResumeGame;
         m_GlossaryButton.OnClicked -= LoadGlossaryUI;
@@ -38,32 +39,31 @@ public class UI_PauseButtonHandler : MonoBehaviour
 
     private void ResumeGame()
     {
-        gameObject.SetActive(false);
-        onContinue?.Invoke();
+        LoadUIOnButtonClicked?.Invoke(UI_SCREENS.NONE);
     }
 
     private void LoadGlossaryUI()
     {
-        //load glossary UI
+        LoadUIOnButtonClicked?.Invoke(UI_SCREENS.GLOSSARY_SELECT);
     }
 
     private void LoadSettingsUI()
     {
-        //load settings ui
+        LoadUIOnButtonClicked?.Invoke(UI_SCREENS.SETTINGS);
     }
 
     private void SaveGame()
     {
-        //save game
+        onSaveGame?.Invoke();
     }
 
     private void QuitLevel()
     {
-        onQuitLevel?.Invoke();
+        LoadSceneOnButtonClicked?.Invoke(SCENE_TYPE.LEVEL_SELECT);
     }
 
     private void QuitToTitle()
     {
-        onQuitGame?.Invoke();
+        LoadSceneOnButtonClicked?.Invoke(SCENE_TYPE.QUIT_GAME);
     }
 }
