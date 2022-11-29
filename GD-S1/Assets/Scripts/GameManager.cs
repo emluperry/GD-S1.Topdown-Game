@@ -49,6 +49,6 @@ public class GameManager : MonoBehaviour
 
     private void LoadScene(SCENE_TYPE scene)
     {
-        //call in scene manager
+        m_SceneManager.LoadScene(scene);
     }
 }
