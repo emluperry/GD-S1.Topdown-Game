@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UI_PauseButtonHandler : MonoBehaviour
+public class UI_PauseButtonHandler : UI_Abstract
 {
     [Header("Buttons")]
     [SerializeField] private UI_OnClickButton m_ResumeButton;
@@ -13,9 +13,7 @@ public class UI_PauseButtonHandler : MonoBehaviour
     [SerializeField] private UI_OnClickButton m_QuitLevelButton;
     [SerializeField] private UI_OnClickButton m_ExitGameButton;
 
-    public Action<UI_SCREENS> LoadUIOnButtonClicked;
     public Action onSaveGame;
-    public Action<SCENE_TYPE> LoadSceneOnButtonClicked;
 
     private void OnEnable()
     {

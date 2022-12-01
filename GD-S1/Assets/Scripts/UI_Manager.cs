@@ -16,6 +16,7 @@ public enum UI_SCREENS
 public class UI_Manager : MonoBehaviour
 {
     [Header("UI Prefabs")]
+    [SerializeField] private GameObject m_StartMenuButtonsPrefab;
     [SerializeField] private GameObject m_PauseMenuPrefab;
     [SerializeField] private GameObject m_SettingsMenuPrefab;
     [SerializeField] private GameObject m_GlossarySelectMenuPrefab;
@@ -35,7 +36,7 @@ public class UI_Manager : MonoBehaviour
     public Action<bool> onPauseWorld;
     public Action<SCENE_TYPE> LoadSceneOnButtonClicked;
 
-    private void Start()
+    private void Awake()
     {
         m_UIScreenStack = new Stack<UI_SCREENS>();
         m_UIScreenStack.Push(UI_SCREENS.NONE);
@@ -143,5 +144,17 @@ public class UI_Manager : MonoBehaviour
     private void LoadSceneCall(SCENE_TYPE scene)
     {
         LoadSceneOnButtonClicked?.Invoke(scene);
+    }
+
+    public void StartListeningForUI(UI_Abstract obj)
+    {
+        obj.LoadUIOnButtonClicked += LoadUIScreen;
+        obj.LoadSceneOnButtonClicked += LoadSceneCall;
+    }
+
+    public void StopListeningForUI(UI_Abstract obj)
+    {
+        obj.LoadUIOnButtonClicked -= LoadUIScreen;
+        obj.LoadSceneOnButtonClicked -= LoadSceneCall;
     }
 }

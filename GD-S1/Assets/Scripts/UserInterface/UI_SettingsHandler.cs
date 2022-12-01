@@ -3,11 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UI_SettingsHandler : MonoBehaviour
+public class UI_SettingsHandler : UI_Abstract
 {
     [SerializeField] private UI_OnClickButton m_BackButton;
-
-    public Action onBackButton;
 
     private void OnEnable()
     {
