@@ -35,6 +35,7 @@ public class UI_Manager : MonoBehaviour
 
     public Action<bool> onPauseWorld;
     public Action<SCENE_TYPE> LoadSceneOnButtonClicked;
+    public Action<int> LevelIndexToLoad;
 
     private void Awake()
     {
@@ -146,15 +147,22 @@ public class UI_Manager : MonoBehaviour
         LoadSceneOnButtonClicked?.Invoke(scene);
     }
 
+    private void LoadLevelCall(int index)
+    {
+        LevelIndexToLoad?.Invoke(index);
+    }
+
     public void StartListeningForUI(UI_Abstract obj)
     {
         obj.LoadUIOnButtonClicked += LoadUIScreen;
         obj.LoadSceneOnButtonClicked += LoadSceneCall;
+        obj.LoadLevelByIndex += LoadLevelCall;
     }
 
     public void StopListeningForUI(UI_Abstract obj)
     {
         obj.LoadUIOnButtonClicked -= LoadUIScreen;
         obj.LoadSceneOnButtonClicked -= LoadSceneCall;
+        obj.LoadLevelByIndex -= LoadLevelCall;
     }
 }
