@@ -16,7 +16,7 @@ public class UI_OnClickButton : MonoBehaviour, IPointerClickHandler, IPointerEnt
         m_Image = GetComponent<Image>();
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public virtual void OnPointerClick(PointerEventData eventData)
     {
         OnClicked?.Invoke();
     }

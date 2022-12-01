@@ -25,15 +25,10 @@ public class UI_Manager : MonoBehaviour
     private UI_SettingsHandler m_SettingsMenu;
     private GameObject m_GlossarySelectMenu;
 
-    [Header("Transition Variables")]
-    [SerializeField] private float m_maxButtonCooldown = 1f;
-    private float m_pauseDelay = 0f;
-
     private bool m_IsUIActive = false;
 
     private Stack<UI_SCREENS> m_UIScreenStack;
 
-    public Action<bool> onPauseWorld;
     public Action<SCENE_TYPE> LoadSceneOnButtonClicked;
     public Action<int> LevelIndexToLoad;
 
@@ -41,28 +36,6 @@ public class UI_Manager : MonoBehaviour
     {
         m_UIScreenStack = new Stack<UI_SCREENS>();
         m_UIScreenStack.Push(UI_SCREENS.NONE);
-
-        m_pauseDelay = m_maxButtonCooldown;
-    }
-
-    private void Update()
-    {
-        if (m_pauseDelay < m_maxButtonCooldown)
-        {
-            m_pauseDelay += Time.deltaTime;
-        }
-        else if (Input.GetAxis("Pause") > 0)
-        {
-            if (m_IsUIActive)
-                ClearStackToNone();
-            else
-            {
-                LoadUIScreen(UI_SCREENS.PAUSE);
-                m_IsUIActive = true;
-                onPauseWorld?.Invoke(m_IsUIActive);
-            }
-            m_pauseDelay = 0f;
-        }
     }
 
     private void LoadUIScreen(UI_SCREENS screen)
@@ -127,6 +100,18 @@ public class UI_Manager : MonoBehaviour
         LoadUIScreen(m_UIScreenStack.Peek());
     }
 
+    public void PauseGame(bool isPaused)
+    {
+        if (isPaused)
+        {
+            ClearStackToNone();
+        }
+        else
+        {
+            LoadUIScreen(UI_SCREENS.PAUSE);
+        }
+    }
+
     private void ClearStackToNone()
     {
         UI_SCREENS screen;
@@ -139,7 +124,6 @@ public class UI_Manager : MonoBehaviour
         }
 
         m_IsUIActive = false;
-        onPauseWorld?.Invoke(m_IsUIActive);
     }
 
     private void LoadSceneCall(SCENE_TYPE scene)

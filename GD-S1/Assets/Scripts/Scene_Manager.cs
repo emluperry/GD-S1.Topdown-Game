@@ -18,13 +18,14 @@ public class Scene_Manager : MonoBehaviour
 {
     [SerializeField] private UI_Manager m_UIManager;
     [SerializeField] private GameObject m_LoadScreen;
+    private GameManager m_CurrentGameManager;
 
     private SCENE_TYPE m_CurrentScene = SCENE_TYPE.STARTUP;
 
     private void Awake()
     {
         m_UIManager.LoadSceneOnButtonClicked += LoadScene;
-        //m_UIManager.LevelIndexToLoad += FunctionA;
+        m_UIManager.LevelIndexToLoad += LoadLevel;
 
         if(m_CurrentScene == SCENE_TYPE.STARTUP)
         {
@@ -35,7 +36,7 @@ public class Scene_Manager : MonoBehaviour
     private void OnDestroy()
     {
         m_UIManager.LoadSceneOnButtonClicked -= LoadScene;
-        //m_UIManager.LevelIndexToLoad -= FunctionA;
+        m_UIManager.LevelIndexToLoad -= LoadLevel;
     }
 
     public void LoadScene(SCENE_TYPE scene)
@@ -43,41 +44,64 @@ public class Scene_Manager : MonoBehaviour
         if(scene == SCENE_TYPE.QUIT_GAME)
         {
             QuitApplication();
+            return;
         }
-        else
+        else if(scene == SCENE_TYPE.LEVEL)
         {
-            AsyncOperation deloadOp = SceneManager.UnloadSceneAsync(m_CurrentScene.ToString(), UnloadSceneOptions.None);
-
-            AsyncOperation loadOp = SceneManager.LoadSceneAsync(scene.ToString(), LoadSceneMode.Additive);
-            loadOp.completed += (loadOp) =>
-            {
-                Scene LoadedScene = SceneManager.GetSceneByName(scene.ToString());
-                GameObject[] objects = LoadedScene.GetRootGameObjects();
-                foreach(GameObject obj in objects)
-                {
-                    UI_Abstract UI_Obj = obj.GetComponent<UI_Abstract>();
-                    if(UI_Obj)
-                    {
-                        m_UIManager.StartListeningForUI(UI_Obj);
-                        break;
-                    }
-                }
-
-                m_CurrentScene = scene;
-            };
-
-            StartCoroutine(LoadingScreen(deloadOp, loadOp));
+            Debug.LogError("Load levels with LoadLevel");
         }
+
+        Load(scene.ToString());
+        m_CurrentScene = scene;
     }
 
-    private IEnumerator LoadingScreen(AsyncOperation deload, AsyncOperation loading)
+    private void LoadLevel(int levelIndex)
+    {
+        Load("level_" + levelIndex);
+        m_CurrentScene = SCENE_TYPE.LEVEL;
+    }
+
+    private void Load(string sceneName)
+    {
+        if(m_CurrentGameManager)
+        {
+            m_CurrentGameManager.onPauseWorld -= m_UIManager.PauseGame;
+        }
+        AsyncOperation deloadOp = SceneManager.UnloadSceneAsync(m_CurrentScene.ToString(), UnloadSceneOptions.None);
+
+        AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        loadOp.completed += (loadOp) =>
+        {
+            Scene LoadedScene = SceneManager.GetSceneByName(sceneName);
+            GameObject[] objects = LoadedScene.GetRootGameObjects();
+
+            foreach (GameObject obj in objects)
+            {
+                UI_Abstract UI_Obj = obj.GetComponent<UI_Abstract>();
+                if (UI_Obj)
+                {
+                    m_UIManager.StartListeningForUI(UI_Obj);
+                }
+
+                if(obj.GetComponent<GameManager>())
+                {
+                    m_CurrentGameManager = obj.GetComponent<GameManager>();
+                    m_CurrentGameManager.onPauseWorld += m_UIManager.PauseGame;
+                }
+            }
+        };
+
+        StartCoroutine(LoadingScreen(loadOp));
+    }
+
+    private IEnumerator LoadingScreen(AsyncOperation loading)
     {
         UI_LoadScreen LoadObject = Instantiate(m_LoadScreen, Vector3.zero, Quaternion.identity, transform).GetComponent<UI_LoadScreen>();
 
-        while(!(deload.isDone && loading.isDone))
+        while(!loading.isDone)
         {
             yield return new WaitForEndOfFrame();
-            LoadObject.UpdatePercent((deload.progress + loading.progress) * 50);
+            LoadObject.UpdatePercent(loading.progress * 50);
         }
 
         Destroy(LoadObject.gameObject);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -9,7 +10,6 @@ public class GameManager : MonoBehaviour
     [Header("UI & Scene Management")]
     [SerializeField] private UI_Healthbar m_Healthbar;
     [SerializeField] private UI_Manager m_UIManager;
-    [SerializeField] private Scene_Manager m_SceneManager;
 
     [Header("Core Elements")]
     [SerializeField] private GameObject m_Player;
@@ -19,6 +19,13 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Enemy_Spawner m_Spawner;
 
+    [Header("Transition Variables")]
+    [SerializeField] private float m_maxButtonCooldown = 1f;
+    private float m_pauseDelay = 0f;
+    private bool m_IsPaused = false;
+
+    public Action<bool> onPauseWorld;
+
     void Awake()
     {
         m_PlayerHealth = m_Player.GetComponent<Entity_Health>();
@@ -27,17 +34,27 @@ public class GameManager : MonoBehaviour
         m_Spawner.SetPlayerObject(m_PlayerMov);
 
         m_PlayerHealth.DamageTaken += m_Healthbar.UpdateHealth;
+    }
 
-        m_UIManager.onPauseWorld += TogglePauseGameObjects;
-        m_UIManager.LoadSceneOnButtonClicked += LoadScene;
+    private void Update()
+    {
+        if (m_pauseDelay < m_maxButtonCooldown)
+        {
+            m_pauseDelay += Time.deltaTime;
+        }
+        else if (Input.GetAxis("Pause") > 0)
+        {
+            m_IsPaused = !m_IsPaused;
+            TogglePauseGameObjects(m_IsPaused);
+            onPauseWorld?.Invoke(m_IsPaused);
+
+            m_pauseDelay = 0f;
+        }
     }
 
     private void OnDestroy()
     {
         m_PlayerHealth.DamageTaken -= m_Healthbar.UpdateHealth;
-
-        m_UIManager.onPauseWorld += TogglePauseGameObjects;
-        m_UIManager.LoadSceneOnButtonClicked -= LoadScene;
     }
 
     private void TogglePauseGameObjects(bool paused)
@@ -45,10 +62,5 @@ public class GameManager : MonoBehaviour
         m_PlayerMov.m_IsPaused = paused;
         m_PlayerWeapon.m_IsPaused = paused;
         m_Spawner.SetPause(paused);
-    }
-
-    private void LoadScene(SCENE_TYPE scene)
-    {
-        m_SceneManager.LoadScene(scene);
     }
 }

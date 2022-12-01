@@ -283,7 +283,7 @@ GameObject:
   - component: {fileID: 7745122386086280240}
   - component: {fileID: 4792531850788332143}
   - component: {fileID: 437713608096794235}
-  - component: {fileID: 5356842299742238735}
+  - component: {fileID: 3356660017520739590}
   m_Layer: 5
   m_Name: Level 2
   m_TagString: Untagged
@@ -350,7 +350,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5356842299742238735
+--- !u!114 &3356660017520739590
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -359,10 +359,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3883348853174914015}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4353eeaab14e2745adf60d9eb937f47, type: 3}
+  m_Script: {fileID: 11500000, guid: e3a7fb3474f1ea24db5b04c20d536e73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_HoverColour: {r: 0.8763436, g: 0.514151, b: 1, a: 1}
+  m_LevelNum: 2
 --- !u!1 &4456037756603464117
 GameObject:
   m_ObjectHideFlags: 0
@@ -725,8 +726,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_LevelButtons:
-  - {fileID: 3418351775177490962}
-  - {fileID: 5356842299742238735}
+  - {fileID: 7141464511423034120}
+  - {fileID: 3356660017520739590}
   m_BackButton: {fileID: 2660352871936864774}
 --- !u!1 &4456037758521885612
 GameObject:
@@ -1196,7 +1197,7 @@ GameObject:
   - component: {fileID: 662650522732158786}
   - component: {fileID: 4072238582518810391}
   - component: {fileID: 6894793240506743316}
-  - component: {fileID: 3418351775177490962}
+  - component: {fileID: 7141464511423034120}
   m_Layer: 5
   m_Name: Level 1
   m_TagString: Untagged
@@ -1263,7 +1264,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3418351775177490962
+--- !u!114 &7141464511423034120
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1272,7 +1273,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 6641596160944291778}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4353eeaab14e2745adf60d9eb937f47, type: 3}
+  m_Script: {fileID: 11500000, guid: e3a7fb3474f1ea24db5b04c20d536e73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_HoverColour: {r: 0.8763436, g: 0.514151, b: 1, a: 1}
+  m_LevelNum: 1

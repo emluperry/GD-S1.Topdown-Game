@@ -11,7 +11,7 @@ public abstract class Entity_Movement : MonoBehaviour
     public bool m_IsPaused { protected get; set; } = false;
 
     protected Vector2 m_InputDirection;
-    private Vector2 m_GoalVelocity;
+    private Vector2 m_GoalVelocity = Vector2.zero;
 
     [Header("Entity Motion")]
     [SerializeField][Min(0f)] protected float m_MaxSpeed = 1f;
@@ -23,6 +23,12 @@ public abstract class Entity_Movement : MonoBehaviour
     private void Awake()
     {
         m_RB = GetComponent<Rigidbody2D>();
+    }
+
+    private void Start()
+    {
+        if(!m_RB)
+            m_RB = GetComponent<Rigidbody2D>();
     }
 
     protected void ApplyMovement()
