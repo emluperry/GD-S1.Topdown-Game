@@ -25,16 +25,16 @@ public class UI_StartMenu : UI_Abstract
 
     private void StartGame()
     {
-        LoadSceneOnButtonClicked?.Invoke(SCENE_TYPE.LEVEL_SELECT);
+        LoadScene?.Invoke(SCENE_TYPE.LEVEL_SELECT);
     }
 
     private void LoadSettingsUI()
     {
-        LoadUIOnButtonClicked?.Invoke(UI_SCREENS.SETTINGS);
+        LoadUI?.Invoke(UI_SCREENS.SETTINGS);
     }
 
     private void QuitGame()
     {
-        LoadSceneOnButtonClicked?.Invoke(SCENE_TYPE.QUIT_GAME);
+        LoadScene?.Invoke(SCENE_TYPE.QUIT_GAME);
     }
 }

@@ -11,6 +11,7 @@ public enum SCENE_TYPE
     LOADING,
     LEVEL_SELECT,
     LEVEL,
+    NEXT_LEVEL,
     QUIT_GAME
 }
 

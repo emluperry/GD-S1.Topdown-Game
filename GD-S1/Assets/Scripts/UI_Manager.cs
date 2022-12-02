@@ -10,7 +10,9 @@ public enum UI_SCREENS
     SETTINGS,
     GLOSSARY_SELECT,
     GLOSSARY_TUTORIAL,
-    GLOSSARY_BESTIARY
+    GLOSSARY_BESTIARY,
+    GAME_LOSE,
+    GAME_WIN
 }
 
 public class UI_Manager : MonoBehaviour
@@ -20,12 +22,15 @@ public class UI_Manager : MonoBehaviour
     [SerializeField] private GameObject m_PauseMenuPrefab;
     [SerializeField] private GameObject m_SettingsMenuPrefab;
     [SerializeField] private GameObject m_GlossarySelectMenuPrefab;
+    [SerializeField] private GameObject m_GameWinScreenPrefab;
+    [SerializeField] private GameObject m_GameLoseScreenPrefab;
 
+    private UI_Abstract m_StartMenu;
     private UI_PauseButtonHandler m_PauseMenu;
     private UI_SettingsHandler m_SettingsMenu;
-    private GameObject m_GlossarySelectMenu;
-
-    private bool m_IsUIActive = false;
+    private UI_Abstract m_GlossarySelectMenu;
+    private UI_WinScreen m_WinScreenMenu;
+    private UI_Abstract m_LoseScreenMenu;
 
     private Stack<UI_SCREENS> m_UIScreenStack;
 
@@ -50,8 +55,8 @@ public class UI_Manager : MonoBehaviour
                 else
                     m_PauseMenu.gameObject.SetActive(true);
 
-                m_PauseMenu.LoadUIOnButtonClicked += LoadUIScreen;
-                m_PauseMenu.LoadSceneOnButtonClicked += LoadSceneCall;
+                m_PauseMenu.LoadUI += LoadUIScreen;
+                m_PauseMenu.LoadScene += LoadSceneCall;
                 break;
                 
             case UI_SCREENS.SETTINGS:
@@ -64,10 +69,24 @@ public class UI_Manager : MonoBehaviour
 
             case UI_SCREENS.GLOSSARY_SELECT:
                 if (m_GlossarySelectMenu == null)
-                    m_GlossarySelectMenu = Instantiate(m_GlossarySelectMenuPrefab, Vector3.zero, Quaternion.identity, transform);
+                    m_GlossarySelectMenu = Instantiate(m_GlossarySelectMenuPrefab, Vector3.zero, Quaternion.identity, transform).GetComponent<UI_Abstract>();
                 else
                     m_GlossarySelectMenu.gameObject.SetActive(true);
-                //m_GlossarySelectMenu.onBackButton += BackButton;
+                m_GlossarySelectMenu.onBackButton += BackButton;
+                break;
+
+            case UI_SCREENS.GAME_WIN:
+                if (m_WinScreenMenu == null)
+                    m_WinScreenMenu = Instantiate(m_GameWinScreenPrefab, Vector3.zero, Quaternion.identity, transform).GetComponent<UI_WinScreen>();
+                else
+                    m_WinScreenMenu.gameObject.SetActive(true);
+                break;
+
+            case UI_SCREENS.GAME_LOSE:
+                if (m_LoseScreenMenu == null)
+                    m_LoseScreenMenu = Instantiate(m_GameLoseScreenPrefab, Vector3.zero, Quaternion.identity, transform).GetComponent<UI_Abstract>();
+                else
+                    m_LoseScreenMenu.gameObject.SetActive(true);
                 break;
         }
 
@@ -80,8 +99,8 @@ public class UI_Manager : MonoBehaviour
         {
             case UI_SCREENS.PAUSE:
                 m_PauseMenu.gameObject.SetActive(false);
-                m_PauseMenu.LoadUIOnButtonClicked -= LoadUIScreen;
-                m_PauseMenu.LoadSceneOnButtonClicked -= LoadSceneCall;
+                m_PauseMenu.LoadUI -= LoadUIScreen;
+                m_PauseMenu.LoadScene -= LoadSceneCall;
                 break;
             case UI_SCREENS.SETTINGS:
                 m_SettingsMenu.gameObject.SetActive(false);
@@ -89,6 +108,12 @@ public class UI_Manager : MonoBehaviour
                 break;
             case UI_SCREENS.GLOSSARY_SELECT:
                 m_GlossarySelectMenu.gameObject.SetActive(false);
+                break;
+            case UI_SCREENS.GAME_WIN:
+                m_WinScreenMenu.gameObject.SetActive(false);
+                break;
+            case UI_SCREENS.GAME_LOSE:
+                m_LoseScreenMenu.gameObject.SetActive(false);
                 break;
         }
     }
@@ -122,8 +147,6 @@ public class UI_Manager : MonoBehaviour
         {
             m_UIScreenStack.Pop();
         }
-
-        m_IsUIActive = false;
     }
 
     private void LoadSceneCall(SCENE_TYPE scene)
@@ -138,15 +161,15 @@ public class UI_Manager : MonoBehaviour
 
     public void StartListeningForUI(UI_Abstract obj)
     {
-        obj.LoadUIOnButtonClicked += LoadUIScreen;
-        obj.LoadSceneOnButtonClicked += LoadSceneCall;
+        obj.LoadUI += LoadUIScreen;
+        obj.LoadScene += LoadSceneCall;
         obj.LoadLevelByIndex += LoadLevelCall;
     }
 
     public void StopListeningForUI(UI_Abstract obj)
     {
-        obj.LoadUIOnButtonClicked -= LoadUIScreen;
-        obj.LoadSceneOnButtonClicked -= LoadSceneCall;
+        obj.LoadUI -= LoadUIScreen;
+        obj.LoadScene -= LoadSceneCall;
         obj.LoadLevelByIndex -= LoadLevelCall;
     }
 }

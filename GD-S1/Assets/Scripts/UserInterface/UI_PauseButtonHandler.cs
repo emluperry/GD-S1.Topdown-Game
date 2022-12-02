@@ -37,17 +37,17 @@ public class UI_PauseButtonHandler : UI_Abstract
 
     private void ResumeGame()
     {
-        LoadUIOnButtonClicked?.Invoke(UI_SCREENS.NONE);
+        LoadUI?.Invoke(UI_SCREENS.NONE);
     }
 
     private void LoadGlossaryUI()
     {
-        LoadUIOnButtonClicked?.Invoke(UI_SCREENS.GLOSSARY_SELECT);
+        LoadUI?.Invoke(UI_SCREENS.GLOSSARY_SELECT);
     }
 
     private void LoadSettingsUI()
     {
-        LoadUIOnButtonClicked?.Invoke(UI_SCREENS.SETTINGS);
+        LoadUI?.Invoke(UI_SCREENS.SETTINGS);
     }
 
     private void SaveGame()
@@ -57,11 +57,11 @@ public class UI_PauseButtonHandler : UI_Abstract
 
     private void QuitLevel()
     {
-        LoadSceneOnButtonClicked?.Invoke(SCENE_TYPE.LEVEL_SELECT);
+        LoadScene?.Invoke(SCENE_TYPE.LEVEL_SELECT);
     }
 
     private void QuitToTitle()
     {
-        LoadSceneOnButtonClicked?.Invoke(SCENE_TYPE.QUIT_GAME);
+        LoadScene?.Invoke(SCENE_TYPE.QUIT_GAME);
     }
 }
