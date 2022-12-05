@@ -12,8 +12,8 @@ TagManager:
   - Water
   - UI
   - Enemy
-  - 
-  - 
+  - TilemapObjects
+  - Tilemap
   - 
   - 
   - 
@@ -43,6 +43,9 @@ TagManager:
     locked: 0
   - name: World
     uniqueID: 910111797
+    locked: 0
+  - name: WorldObject
+    uniqueID: 2460024995
     locked: 0
   - name: Entity
     uniqueID: 717914205
