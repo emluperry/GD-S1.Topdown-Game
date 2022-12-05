@@ -13,6 +13,7 @@ public enum SCENE_TYPE
     LEVEL_SELECT,
     LEVEL,
     NEXT_LEVEL,
+    RESTART_LEVEL,
     QUIT_GAME
 }
 
@@ -31,12 +32,12 @@ public class Scene_Manager : MonoBehaviour
         m_UIManager.LevelIndexToLoad += LoadLevel;
         m_UIManager.OnPauseWorld += CallPauseGame;
 
-        if(SceneManager.GetActiveScene().buildIndex == 0)
-        {
-            LoadScene(SCENE_TYPE.START_MENU);
-        }
-
         SceneManager.sceneLoaded += OnSceneLoaded;
+
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
+        }
     }
 
     private void OnDestroy()
@@ -76,7 +77,7 @@ public class Scene_Manager : MonoBehaviour
         {
             m_CurrentGameManager.OnPauseWorld -= m_UIManager.PauseGame;
         }
-        SceneManager.UnloadSceneAsync(m_CurrentScene.ToString(), UnloadSceneOptions.None);
+        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene(), UnloadSceneOptions.None);
 
         AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
@@ -102,7 +103,8 @@ public class Scene_Manager : MonoBehaviour
         if (m_CurrentGameManager)
             m_CurrentGameManager.OnPauseWorld += m_UIManager.PauseGame;
 
-        StopCoroutine(m_LoadingCoroutine);
+        if(m_LoadingCoroutine != null)
+            StopCoroutine(m_LoadingCoroutine);
 
         m_LoadingCoroutine = StartCoroutine(m_UIManager.LoadScreenFadeOut());
     }

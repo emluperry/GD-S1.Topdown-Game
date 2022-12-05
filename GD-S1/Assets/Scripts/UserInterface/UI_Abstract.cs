@@ -10,7 +10,7 @@ public class UI_Abstract : MonoBehaviour
     public Action<UI_SCREENS> LoadUI;
     public Action onBackButton;
 
-    [Header("OPTIONAL common buttons")]
+    [Header("Buttons")]
     [SerializeField] private UI_OnClickButton m_BackButton;
 
     private void OnEnable()

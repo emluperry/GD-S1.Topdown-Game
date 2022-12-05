@@ -8,7 +8,7 @@ public class Player_Movement : Entity_Movement
     [Header("Player Variables")]
     private Camera m_Camera;
 
-    private void Awake()
+    private void Start()
     {
         m_Camera = Camera.main;
     }

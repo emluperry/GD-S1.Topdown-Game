@@ -7,6 +7,7 @@ using UnityEngine;
 public abstract class Entity_Movement : MonoBehaviour
 {
     protected Rigidbody2D m_RB;
+    protected Entity_Health m_Health;
 
     public bool m_IsPaused { protected get; set; } = false;
 
@@ -19,16 +20,27 @@ public abstract class Entity_Movement : MonoBehaviour
     [SerializeField][Min(0f)] protected float m_MaxAccelerationForce = 150f;
     [SerializeField][Min(0f)] private AnimationCurve m_AccelerationCurve;
     [SerializeField][Min(0f)] private AnimationCurve m_MaxAccelerationCurve;
+    [SerializeField][Min(0f)] private float m_MinKnockbackForce = 20;
 
     private void Awake()
     {
         m_RB = GetComponent<Rigidbody2D>();
+        m_Health = GetComponent<Entity_Health>();
     }
 
     private void Start()
     {
         if(!m_RB)
             m_RB = GetComponent<Rigidbody2D>();
+        if (!m_Health)
+            m_Health = GetComponent<Entity_Health>();
+
+        m_Health.KnockbackEvent += ApplyKnockback;
+    }
+
+    private void OnDestroy()
+    {
+        m_Health.KnockbackEvent -= ApplyKnockback;
     }
 
     protected void ApplyMovement()
@@ -45,5 +57,10 @@ public abstract class Entity_Movement : MonoBehaviour
         NeededAcceleration = Vector3.ClampMagnitude(NeededAcceleration, MaxAcceleration);
 
         m_RB.AddForce(NeededAcceleration, ForceMode2D.Force);
+    }
+
+    protected void ApplyKnockback(int dmg, Vector2 ForcePos, Vector2 ForceNormal)
+    {
+        m_RB.AddForceAtPosition(dmg * m_MinKnockbackForce * -ForceNormal, ForcePos);
     }
 }

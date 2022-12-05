@@ -1043,6 +1043,10 @@ PrefabInstance:
       propertyPath: m_MaximumHealth
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2215505389874919854, guid: 523c5c00d8822e542ac2102d97ff3fef, type: 3}
+      propertyPath: m_BaseDamage
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7002259321251887098, guid: 523c5c00d8822e542ac2102d97ff3fef, type: 3}
       propertyPath: m_Name
       value: Player

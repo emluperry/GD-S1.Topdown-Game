@@ -840,7 +840,7 @@ Transform:
   - {fileID: 7002259321510264105}
   - {fileID: 7002259321569067271}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7002259321251887096
 MonoBehaviour:
@@ -1218,7 +1218,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_Camera: {fileID: 0}
+  m_MinKnockbackForce: 40
 --- !u!114 &1071292297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1232,6 +1232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MaximumHealth: 1
+  m_KillDelay: 1
 --- !u!1 &7002259321521617923
 GameObject:
   m_ObjectHideFlags: 0
@@ -1428,6 +1429,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  m_MinKnockbackForce: 20
   m_Player: {fileID: 7002259321510264105}
   m_MaxDistance: 4
   m_MaxReturnDistance: 0.4

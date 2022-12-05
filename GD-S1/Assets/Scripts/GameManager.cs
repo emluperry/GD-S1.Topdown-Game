@@ -36,6 +36,11 @@ public class GameManager : MonoBehaviour
         m_PlayerHealth.DamageTaken += m_Healthbar.UpdateHealth;
     }
 
+    private void OnDestroy()
+    {
+        m_PlayerHealth.DamageTaken -= m_Healthbar.UpdateHealth;
+    }
+
     private void Update()
     {
         if (m_pauseDelay < m_maxButtonCooldown)
@@ -47,11 +52,6 @@ public class GameManager : MonoBehaviour
             TogglePauseGameObjects(!m_IsPaused);
             OnPauseWorld?.Invoke(m_IsPaused);
         }
-    }
-
-    private void OnDestroy()
-    {
-        m_PlayerHealth.DamageTaken -= m_Healthbar.UpdateHealth;
     }
 
     public void TogglePauseGameObjects(bool paused)

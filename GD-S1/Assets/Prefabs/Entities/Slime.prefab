@@ -394,8 +394,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f68288a7aa7622149a20cbf028f57da3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_InputDirection: {x: 0, y: 0}
-  m_GoalVelocity: {x: 0, y: 0}
   m_MaxSpeed: 2
   m_Acceleration: 200
   m_MaxAccelerationForce: 150
@@ -465,6 +463,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  m_MinKnockbackForce: 500
   m_Player: {fileID: 0}
   m_DestinationOffsetRadius: 0.1
   m_WanderingRadius: 2

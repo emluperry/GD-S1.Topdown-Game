@@ -8,6 +8,6 @@ public class Attack_Damage : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        collision.gameObject.GetComponent<Entity_Health>()?.TakeDamage(m_BaseDamage);
+        collision.gameObject.GetComponent<Entity_Health>()?.TakeDamage(m_BaseDamage, collision);
     }
 }

@@ -11,6 +11,7 @@ public class Player_Animation : MonoBehaviour
 
     private SpriteRenderer m_ChainSpriteRenderer;
     private BoxCollider2D m_ChainCollider;
+    private Entity_Health m_PlayerHealth;
 
     [Header("Player Animation")]
     [SerializeField] private Animator m_PlayerAnimator;
@@ -26,6 +27,14 @@ public class Player_Animation : MonoBehaviour
 
         m_ChainSpriteRenderer = m_WeaponChain.GetComponent<SpriteRenderer>();
         m_ChainCollider = m_WeaponChain.GetComponent<BoxCollider2D>();
+        m_PlayerHealth = m_PlayerAnimator.GetComponent<Entity_Health>();
+
+        m_PlayerHealth.Killed += KillPlayer;
+    }
+
+    private void OnDestroy()
+    {
+        m_PlayerHealth.Killed -= KillPlayer;
     }
 
     private void Update()
@@ -91,4 +100,10 @@ public class Player_Animation : MonoBehaviour
             m_ChainCollider.size = size;
         }
     }
+
+    private void KillPlayer()
+    {
+        //m_PlayerAnimator.SetTrigger("Die");
+    }
+
 }
