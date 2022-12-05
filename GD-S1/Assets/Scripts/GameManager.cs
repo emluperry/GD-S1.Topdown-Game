@@ -1,21 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     [Header("UI & Scene Management")]
     [SerializeField] private UI_Healthbar m_Healthbar;
-    [SerializeField] private UI_Manager m_UIManager;
 
     [Header("Core Elements")]
-    [SerializeField] private GameObject m_Player;
-    private Entity_Health m_PlayerHealth;
-    private Player_Movement m_PlayerMov;
-    [SerializeField] private Weapon_Movement m_PlayerWeapon;
+    [SerializeField] private Player_Handler m_Player;
 
     [SerializeField] private Enemy_Spawner m_Spawner;
 
@@ -25,20 +19,21 @@ public class GameManager : MonoBehaviour
     private bool m_IsPaused = false;
 
     public Action<bool> OnPauseWorld;
+    public Action OnPlayerKilled;
+    public Action OnLevelComplete;
 
     void Awake()
     {
-        m_PlayerHealth = m_Player.GetComponent<Entity_Health>();
-        m_PlayerMov = m_Player.GetComponent<Player_Movement>();
+        m_Spawner.SetPlayerObject(m_Player.GetPlayerMovementComponent());
 
-        m_Spawner.SetPlayerObject(m_PlayerMov);
-
-        m_PlayerHealth.DamageTaken += m_Healthbar.UpdateHealth;
+        m_Player.OnDamageTaken += m_Healthbar.UpdateHealth;
+        m_Player.OnKilled += PlayerKilled;
     }
 
     private void OnDestroy()
     {
-        m_PlayerHealth.DamageTaken -= m_Healthbar.UpdateHealth;
+        m_Player.OnDamageTaken -= m_Healthbar.UpdateHealth;
+        m_Player.OnKilled -= PlayerKilled;
     }
 
     private void Update()
@@ -57,10 +52,15 @@ public class GameManager : MonoBehaviour
     public void TogglePauseGameObjects(bool paused)
     {
         m_IsPaused = paused;
-        m_PlayerMov.m_IsPaused = paused;
-        m_PlayerWeapon.m_IsPaused = paused;
+        m_Player.SetPause(paused);
         m_Spawner.SetPause(paused);
 
         m_pauseDelay = 0f;
+    }
+
+    private void PlayerKilled()
+    {
+        OnPlayerKilled?.Invoke();
+        TogglePauseGameObjects(true);
     }
 }

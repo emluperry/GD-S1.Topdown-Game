@@ -26,6 +26,6 @@ public class UI_LoseScreen : UI_Abstract
 
     private void QuitToTitle()
     {
-        LoadScene?.Invoke(SCENE_TYPE.QUIT_GAME);
+        LoadScene?.Invoke(SCENE_TYPE.LEVEL_SELECT);
     }
 }

@@ -30,7 +30,7 @@ public class UI_Manager : MonoBehaviour
     private UI_SettingsHandler m_SettingsMenu;
     private UI_Abstract m_GlossarySelectMenu;
     private UI_WinScreen m_WinScreenMenu;
-    private UI_Abstract m_LoseScreenMenu;
+    private UI_LoseScreen m_LoseScreenMenu;
 
     [Header("Loading Variables")]
     [SerializeField] private GameObject m_LoadScreenPrefab;
@@ -61,9 +61,7 @@ public class UI_Manager : MonoBehaviour
                     m_PauseMenu = Instantiate(m_PauseMenuPrefab, Vector3.zero, Quaternion.identity, transform).GetComponent<UI_PauseButtonHandler>();
                 else
                     m_PauseMenu.gameObject.SetActive(true);
-
-                m_PauseMenu.LoadUI += LoadUIScreen;
-                m_PauseMenu.LoadScene += LoadSceneCall;
+                StartListeningForUI(m_PauseMenu);
                 break;
                 
             case UI_SCREENS.SETTINGS:
@@ -87,13 +85,15 @@ public class UI_Manager : MonoBehaviour
                     m_WinScreenMenu = Instantiate(m_GameWinScreenPrefab, Vector3.zero, Quaternion.identity, transform).GetComponent<UI_WinScreen>();
                 else
                     m_WinScreenMenu.gameObject.SetActive(true);
+                StartListeningForUI(m_WinScreenMenu);
                 break;
 
             case UI_SCREENS.GAME_LOSE:
                 if (m_LoseScreenMenu == null)
-                    m_LoseScreenMenu = Instantiate(m_GameLoseScreenPrefab, Vector3.zero, Quaternion.identity, transform).GetComponent<UI_Abstract>();
+                    m_LoseScreenMenu = Instantiate(m_GameLoseScreenPrefab, Vector3.zero, Quaternion.identity, transform).GetComponent<UI_LoseScreen>();
                 else
                     m_LoseScreenMenu.gameObject.SetActive(true);
+                StartListeningForUI(m_LoseScreenMenu);
                 break;
             case UI_SCREENS.NONE:
                 ClearStackToNone();
@@ -129,25 +129,6 @@ public class UI_Manager : MonoBehaviour
         }
     }
 
-    private void BackButton()
-    {
-        HideUIScreen(m_UIScreenStack.Pop());
-
-        LoadUIScreen(m_UIScreenStack.Peek());
-    }
-
-    public void PauseGame(bool isPaused)
-    {
-        if (isPaused)
-        {
-            LoadUIScreen(UI_SCREENS.PAUSE);
-        }
-        else
-        {
-            ClearStackToNone();
-        }
-    }
-
     private void ClearStackToNone()
     {
         if (m_UIScreenStack.Count <= 0)
@@ -166,11 +147,13 @@ public class UI_Manager : MonoBehaviour
     private void LoadSceneCall(SCENE_TYPE scene)
     {
         LoadSceneOnButtonClicked?.Invoke(scene);
+        ClearStackToNone();
     }
 
     private void LoadLevelCall(int index)
     {
         LevelIndexToLoad?.Invoke(index);
+        ClearStackToNone();
     }
 
     public void StartListeningForUI(UI_Abstract obj)
@@ -236,5 +219,29 @@ public class UI_Manager : MonoBehaviour
         }
 
         m_LoadScreen.gameObject.SetActive(false);
+    }
+
+    private void BackButton()
+    {
+        HideUIScreen(m_UIScreenStack.Pop());
+
+        LoadUIScreen(m_UIScreenStack.Peek());
+    }
+
+    public void PauseGame(bool isPaused)
+    {
+        if (isPaused)
+        {
+            LoadUIScreen(UI_SCREENS.PAUSE);
+        }
+        else
+        {
+            ClearStackToNone();
+        }
+    }
+
+    public void GameOver()
+    {
+        LoadUIScreen(UI_SCREENS.GAME_LOSE);
     }
 }

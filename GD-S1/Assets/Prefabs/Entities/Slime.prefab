@@ -463,7 +463,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_MinKnockbackForce: 500
+  m_MinKnockbackForce: 400
   m_Player: {fileID: 0}
   m_DestinationOffsetRadius: 0.1
   m_WanderingRadius: 2
@@ -582,7 +582,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 717914205
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 1724820138, guid: c4a46f5362a5bea4088efda92ce8fc33, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

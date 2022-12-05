@@ -24,8 +24,6 @@ public class Scene_Manager : MonoBehaviour
 
     Coroutine m_LoadingCoroutine;
 
-    private SCENE_TYPE m_CurrentScene = SCENE_TYPE.STARTUP;
-
     private void Awake()
     {
         m_UIManager.LoadSceneOnButtonClicked += LoadScene;
@@ -57,16 +55,20 @@ public class Scene_Manager : MonoBehaviour
         else if(scene == SCENE_TYPE.LEVEL)
         {
             Debug.LogError("Load levels with LoadLevel");
+            return;
+        }
+        else if(scene == SCENE_TYPE.RESTART_LEVEL)
+        {
+            Load(SceneManager.GetActiveScene().name);
+            return;
         }
 
         Load(scene.ToString());
-        m_CurrentScene = scene;
     }
 
     private void LoadLevel(int levelIndex)
     {
         Load("level_" + levelIndex);
-        m_CurrentScene = SCENE_TYPE.LEVEL;
     }
 
     private void Load(string sceneName)
@@ -76,6 +78,7 @@ public class Scene_Manager : MonoBehaviour
         if(m_CurrentGameManager)
         {
             m_CurrentGameManager.OnPauseWorld -= m_UIManager.PauseGame;
+            m_CurrentGameManager.OnPlayerKilled -= m_UIManager.GameOver;
         }
         SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene(), UnloadSceneOptions.None);
 
@@ -101,7 +104,10 @@ public class Scene_Manager : MonoBehaviour
 
         m_CurrentGameManager = FindObjectOfType<GameManager>();
         if (m_CurrentGameManager)
+        {
             m_CurrentGameManager.OnPauseWorld += m_UIManager.PauseGame;
+            m_CurrentGameManager.OnPlayerKilled += m_UIManager.GameOver;
+        }
 
         if(m_LoadingCoroutine != null)
             StopCoroutine(m_LoadingCoroutine);

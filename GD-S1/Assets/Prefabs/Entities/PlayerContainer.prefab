@@ -818,8 +818,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7002259321251887099}
   - component: {fileID: 7002259321251887096}
+  - component: {fileID: 2239478931556411377}
   m_Layer: 3
-  m_Name: Player
+  m_Name: PlayerContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -858,6 +859,20 @@ MonoBehaviour:
   m_AttackArmJoint: {fileID: 7002259320620783547}
   m_WeaponHead: {fileID: 7002259321569067271}
   m_WeaponChain: {fileID: 7002259321425743650}
+--- !u!114 &2239478931556411377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7002259321251887098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49d7da498205ab448bd2c43d71819885, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Player: {fileID: 7002259321510264107}
+  m_Weapon: {fileID: 7002259321569067267}
 --- !u!1 &7002259321412079449
 GameObject:
   m_ObjectHideFlags: 0
@@ -1030,7 +1045,7 @@ GameObject:
   - component: {fileID: 7002259321510264107}
   - component: {fileID: 1071292297}
   m_Layer: 3
-  m_Name: Body
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1231,7 +1246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bd4ffdf14149bc4d963df2278e8c737, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MaximumHealth: 1
+  m_MaximumHealth: 10
   m_KillDelay: 1
 --- !u!1 &7002259321521617923
 GameObject:

@@ -134,11 +134,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9907d3eb07ddaa94bb819fef0a2d752e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &199982442 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7002259321510264108, guid: 523c5c00d8822e542ac2102d97ff3fef, type: 3}
+--- !u!114 &557924217 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2239478931556411377, guid: 523c5c00d8822e542ac2102d97ff3fef, type: 3}
   m_PrefabInstance: {fileID: 7002259321649357486}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49d7da498205ab448bd2c43d71819885, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -639,14 +645,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1071292297, guid: 523c5c00d8822e542ac2102d97ff3fef, type: 3}
-      propertyPath: m_MaximumHealth
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2215505389874919854, guid: 523c5c00d8822e542ac2102d97ff3fef, type: 3}
-      propertyPath: m_BaseDamage
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 7002259321251887098, guid: 523c5c00d8822e542ac2102d97ff3fef, type: 3}
       propertyPath: m_Name
       value: Player
@@ -694,10 +692,6 @@ PrefabInstance:
     - target: {fileID: 7002259321251887099, guid: 523c5c00d8822e542ac2102d97ff3fef, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7002259321510264107, guid: 523c5c00d8822e542ac2102d97ff3fef, type: 3}
-      propertyPath: m_Camera
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -761,7 +755,7 @@ PrefabInstance:
     - target: {fileID: 7951704377043055085, guid: 6dd192fb8975a6b4589655e277680e2d, type: 3}
       propertyPath: m_Player
       value: 
-      objectReference: {fileID: 199982442}
+      objectReference: {fileID: 557924217}
     - target: {fileID: 7951704377043055085, guid: 6dd192fb8975a6b4589655e277680e2d, type: 3}
       propertyPath: m_Spawner
       value: 
