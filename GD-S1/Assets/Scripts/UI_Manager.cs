@@ -32,6 +32,11 @@ public class UI_Manager : MonoBehaviour
     private UI_WinScreen m_WinScreenMenu;
     private UI_Abstract m_LoseScreenMenu;
 
+    [Header("Loading Variables")]
+    [SerializeField] private GameObject m_LoadScreenPrefab;
+    private UI_LoadScreen m_LoadScreen;
+    [SerializeField] private float m_FadeInOutTime = 0.5f;
+
     private Stack<UI_SCREENS> m_UIScreenStack;
 
     public Action<SCENE_TYPE> LoadSceneOnButtonClicked;
@@ -180,5 +185,56 @@ public class UI_Manager : MonoBehaviour
         obj.LoadUI -= LoadUIScreen;
         obj.LoadScene -= LoadSceneCall;
         obj.LoadLevelByIndex -= LoadLevelCall;
+    }
+
+    public IEnumerator LoadScreenFadeIn()
+    {
+        if (m_LoadScreen)
+            m_LoadScreen.UpdatePercent(0);
+        else
+            m_LoadScreen = Instantiate(m_LoadScreenPrefab, Vector3.zero, Quaternion.identity, transform).GetComponent<UI_LoadScreen>();
+        
+        m_LoadScreen.gameObject.SetActive(true);
+        
+        CanvasGroup LoadCanvasGroup = m_LoadScreen.GetComponent<CanvasGroup>();
+        LoadCanvasGroup.alpha = 0;
+
+        float AlphaIncrement = 1 / m_FadeInOutTime;
+
+        while (LoadCanvasGroup.alpha < 1)
+        {
+            LoadCanvasGroup.alpha += AlphaIncrement * Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+    }
+
+    public IEnumerator UpdateLoadScreen(AsyncOperation loading)
+    {
+        while (!loading.isDone)
+        {
+            yield return new WaitForEndOfFrame();
+            m_LoadScreen.UpdatePercent(loading.progress * 100);
+        }
+    }
+
+    public IEnumerator LoadScreenFadeOut()
+    {
+        if (m_LoadScreen)
+            m_LoadScreen.UpdatePercent(1);
+        else
+            m_LoadScreen = Instantiate(m_LoadScreenPrefab, Vector3.zero, Quaternion.identity, transform).GetComponent<UI_LoadScreen>();
+
+        CanvasGroup LoadCanvasGroup = m_LoadScreen.GetComponent<CanvasGroup>();
+        LoadCanvasGroup.alpha = 1;
+
+        float AlphaIncrement = 1 / m_FadeInOutTime;
+
+        while (LoadCanvasGroup.alpha > 0)
+        {
+            LoadCanvasGroup.alpha -= AlphaIncrement * Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+
+        m_LoadScreen.gameObject.SetActive(false);
     }
 }

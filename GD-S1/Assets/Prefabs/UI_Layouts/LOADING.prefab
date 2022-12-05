@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 4456037757535662199}
   - component: {fileID: 4456037757535662198}
   - component: {fileID: 4857893782688144292}
+  - component: {fileID: 4980984656171859838}
   m_Layer: 5
   m_Name: LOADING
   m_TagString: Untagged
@@ -253,6 +254,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_LoadText: {fileID: 5585266379504220715}
+--- !u!225 &4980984656171859838
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4456037757535662197}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6721131982978092084
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,7 +408,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0.9999
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

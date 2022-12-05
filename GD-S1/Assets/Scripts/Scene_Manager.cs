@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.SceneManagement;
 
 public enum SCENE_TYPE
@@ -18,8 +19,9 @@ public enum SCENE_TYPE
 public class Scene_Manager : MonoBehaviour
 {
     [SerializeField] private UI_Manager m_UIManager;
-    [SerializeField] private GameObject m_LoadScreen;
     private GameManager m_CurrentGameManager;
+
+    Coroutine m_LoadingCoroutine;
 
     private SCENE_TYPE m_CurrentScene = SCENE_TYPE.STARTUP;
 
@@ -33,6 +35,8 @@ public class Scene_Manager : MonoBehaviour
         {
             LoadScene(SCENE_TYPE.START_MENU);
         }
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnDestroy()
@@ -66,48 +70,41 @@ public class Scene_Manager : MonoBehaviour
 
     private void Load(string sceneName)
     {
+        m_LoadingCoroutine = StartCoroutine(m_UIManager.LoadScreenFadeIn());
+
         if(m_CurrentGameManager)
         {
             m_CurrentGameManager.OnPauseWorld -= m_UIManager.PauseGame;
         }
-        AsyncOperation deloadOp = SceneManager.UnloadSceneAsync(m_CurrentScene.ToString(), UnloadSceneOptions.None);
+        SceneManager.UnloadSceneAsync(m_CurrentScene.ToString(), UnloadSceneOptions.None);
 
         AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-        loadOp.completed += (loadOp) =>
-        {
-            Scene LoadedScene = SceneManager.GetSceneByName(sceneName);
-            GameObject[] objects = LoadedScene.GetRootGameObjects();
 
-            foreach (GameObject obj in objects)
-            {
-                UI_Abstract UI_Obj = obj.GetComponent<UI_Abstract>();
-                if (UI_Obj)
-                {
-                    m_UIManager.StartListeningForUI(UI_Obj);
-                }
-
-                if(obj.GetComponent<GameManager>())
-                {
-                    m_CurrentGameManager = obj.GetComponent<GameManager>();
-                    m_CurrentGameManager.OnPauseWorld += m_UIManager.PauseGame;
-                }
-            }
-        };
-
-        StartCoroutine(LoadingScreen(loadOp));
+        StartCoroutine(m_UIManager.UpdateLoadScreen(loadOp));
     }
 
-    private IEnumerator LoadingScreen(AsyncOperation loading)
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        UI_LoadScreen LoadObject = Instantiate(m_LoadScreen, Vector3.zero, Quaternion.identity, transform).GetComponent<UI_LoadScreen>();
+        SceneManager.SetActiveScene(scene);
 
-        while(!loading.isDone)
+        GameObject[] objects = scene.GetRootGameObjects();
+
+        foreach (GameObject obj in objects)
         {
-            yield return new WaitForEndOfFrame();
-            LoadObject.UpdatePercent(loading.progress * 50);
+            UI_Abstract UI_Obj = obj.GetComponent<UI_Abstract>();
+            if (UI_Obj)
+            {
+                m_UIManager.StartListeningForUI(UI_Obj);
+            }
         }
 
-        Destroy(LoadObject.gameObject);
+        m_CurrentGameManager = FindObjectOfType<GameManager>();
+        if (m_CurrentGameManager)
+            m_CurrentGameManager.OnPauseWorld += m_UIManager.PauseGame;
+
+        StopCoroutine(m_LoadingCoroutine);
+
+        m_LoadingCoroutine = StartCoroutine(m_UIManager.LoadScreenFadeOut());
     }
 
     private void CallPauseGame(bool paused)
