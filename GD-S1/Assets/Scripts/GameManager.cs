@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     private float m_pauseDelay = 0f;
     private bool m_IsPaused = false;
 
-    public Action<bool> onPauseWorld;
+    public Action<bool> OnPauseWorld;
 
     void Awake()
     {
@@ -44,11 +44,8 @@ public class GameManager : MonoBehaviour
         }
         else if (Input.GetAxis("Pause") > 0)
         {
-            m_IsPaused = !m_IsPaused;
-            TogglePauseGameObjects(m_IsPaused);
-            onPauseWorld?.Invoke(m_IsPaused);
-
-            m_pauseDelay = 0f;
+            TogglePauseGameObjects(!m_IsPaused);
+            OnPauseWorld?.Invoke(m_IsPaused);
         }
     }
 
@@ -57,10 +54,13 @@ public class GameManager : MonoBehaviour
         m_PlayerHealth.DamageTaken -= m_Healthbar.UpdateHealth;
     }
 
-    private void TogglePauseGameObjects(bool paused)
+    public void TogglePauseGameObjects(bool paused)
     {
+        m_IsPaused = paused;
         m_PlayerMov.m_IsPaused = paused;
         m_PlayerWeapon.m_IsPaused = paused;
         m_Spawner.SetPause(paused);
+
+        m_pauseDelay = 0f;
     }
 }

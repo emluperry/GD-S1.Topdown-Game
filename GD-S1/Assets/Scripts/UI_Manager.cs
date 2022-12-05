@@ -36,6 +36,7 @@ public class UI_Manager : MonoBehaviour
 
     public Action<SCENE_TYPE> LoadSceneOnButtonClicked;
     public Action<int> LevelIndexToLoad;
+    public Action<bool> OnPauseWorld;
 
     private void Awake()
     {
@@ -45,7 +46,8 @@ public class UI_Manager : MonoBehaviour
 
     private void LoadUIScreen(UI_SCREENS screen)
     {
-        HideUIScreen(m_UIScreenStack.Peek());
+        if(m_UIScreenStack.TryPeek(out UI_SCREENS s))
+            HideUIScreen(s);
 
         switch (screen)
         {
@@ -88,6 +90,10 @@ public class UI_Manager : MonoBehaviour
                 else
                     m_LoseScreenMenu.gameObject.SetActive(true);
                 break;
+            case UI_SCREENS.NONE:
+                ClearStackToNone();
+                OnPauseWorld?.Invoke(false);
+                break;
         }
 
         m_UIScreenStack.Push(screen);
@@ -129,16 +135,19 @@ public class UI_Manager : MonoBehaviour
     {
         if (isPaused)
         {
-            ClearStackToNone();
+            LoadUIScreen(UI_SCREENS.PAUSE);
         }
         else
         {
-            LoadUIScreen(UI_SCREENS.PAUSE);
+            ClearStackToNone();
         }
     }
 
     private void ClearStackToNone()
     {
+        if (m_UIScreenStack.Count <= 0)
+            return;
+
         UI_SCREENS screen;
         if (m_UIScreenStack.TryPop(out screen))
             HideUIScreen(screen);

@@ -27,8 +27,9 @@ public class Scene_Manager : MonoBehaviour
     {
         m_UIManager.LoadSceneOnButtonClicked += LoadScene;
         m_UIManager.LevelIndexToLoad += LoadLevel;
+        m_UIManager.OnPauseWorld += CallPauseGame;
 
-        if(m_CurrentScene == SCENE_TYPE.STARTUP)
+        if(SceneManager.GetActiveScene().buildIndex == 0)
         {
             LoadScene(SCENE_TYPE.START_MENU);
         }
@@ -38,6 +39,7 @@ public class Scene_Manager : MonoBehaviour
     {
         m_UIManager.LoadSceneOnButtonClicked -= LoadScene;
         m_UIManager.LevelIndexToLoad -= LoadLevel;
+        m_UIManager.OnPauseWorld -= CallPauseGame;
     }
 
     public void LoadScene(SCENE_TYPE scene)
@@ -66,7 +68,7 @@ public class Scene_Manager : MonoBehaviour
     {
         if(m_CurrentGameManager)
         {
-            m_CurrentGameManager.onPauseWorld -= m_UIManager.PauseGame;
+            m_CurrentGameManager.OnPauseWorld -= m_UIManager.PauseGame;
         }
         AsyncOperation deloadOp = SceneManager.UnloadSceneAsync(m_CurrentScene.ToString(), UnloadSceneOptions.None);
 
@@ -87,7 +89,7 @@ public class Scene_Manager : MonoBehaviour
                 if(obj.GetComponent<GameManager>())
                 {
                     m_CurrentGameManager = obj.GetComponent<GameManager>();
-                    m_CurrentGameManager.onPauseWorld += m_UIManager.PauseGame;
+                    m_CurrentGameManager.OnPauseWorld += m_UIManager.PauseGame;
                 }
             }
         };
@@ -106,6 +108,12 @@ public class Scene_Manager : MonoBehaviour
         }
 
         Destroy(LoadObject.gameObject);
+    }
+
+    private void CallPauseGame(bool paused)
+    {
+        if (m_CurrentGameManager)
+            m_CurrentGameManager.TogglePauseGameObjects(paused);
     }
 
     private void QuitApplication()
