@@ -589,7 +589,7 @@ TextureImporter:
       name: walls_24
       rect:
         serializedVersion: 2
-        x: 201
+        x: 0
         y: 0
         width: 200
         height: 200
@@ -610,7 +610,7 @@ TextureImporter:
       name: walls_25
       rect:
         serializedVersion: 2
-        x: 402
+        x: 201
         y: 0
         width: 200
         height: 200
@@ -631,7 +631,7 @@ TextureImporter:
       name: walls_26
       rect:
         serializedVersion: 2
-        x: 603
+        x: 402
         y: 0
         width: 200
         height: 200
@@ -652,7 +652,7 @@ TextureImporter:
       name: walls_27
       rect:
         serializedVersion: 2
-        x: 804
+        x: 603
         y: 0
         width: 200
         height: 200
@@ -665,6 +665,27 @@ TextureImporter:
       bones: []
       spriteID: 33f7b719189770641be9f7c2e6d347ad
       internalID: 1279162892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: walls_28
+      rect:
+        serializedVersion: 2
+        x: 804
+        y: 0
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c10600e14e63544d935f598d9646af7
+      internalID: 1253717156
       vertices: []
       indices: 
       edges: []
@@ -702,6 +723,7 @@ TextureImporter:
       walls_6: 992472436
       walls_16: 1581966076
       walls_17: -2014120994
+      walls_28: 1253717156
       walls_19: 2000101048
       walls_18: -1105585044
       walls_23: -450020140

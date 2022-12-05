@@ -110,7 +110,8 @@ public class Enemy_Movement : Entity_Movement
 
         NavMesh.CalculatePath(transform.position, currentDestination, NavMesh.AllAreas, m_CurrentPath);
 
-        m_Target = m_CurrentPath.corners[1];
+        if (m_CurrentPath.corners.Length >= 2)
+            m_Target = m_CurrentPath.corners[1];
     }
 
     private Vector2 NewWanderPoint()
