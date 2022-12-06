@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Player_Handler m_Player;
 
     [SerializeField] private Enemy_Spawner[] m_Spawners;
+    private int m_SpawnerCount = 0;
 
     [Header("Transition Variables")]
     [SerializeField] private float m_maxButtonCooldown = 1f;
@@ -25,7 +26,11 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         foreach (Enemy_Spawner spawner in m_Spawners)
+        {
             spawner.SetPlayerObject(m_Player.GetPlayerMovementComponent());
+            spawner.OnAllEnemiesKilled += OnSpawnerCleared;
+        }
+        m_SpawnerCount = m_Spawners.Length;
 
         m_Player.OnDamageTaken += m_Healthbar.UpdateHealth;
         m_Player.OnKilled += PlayerKilled;
@@ -35,6 +40,11 @@ public class GameManager : MonoBehaviour
     {
         m_Player.OnDamageTaken -= m_Healthbar.UpdateHealth;
         m_Player.OnKilled -= PlayerKilled;
+
+        foreach(Enemy_Spawner spawner in m_Spawners)
+        {
+            spawner.OnAllEnemiesKilled -= OnSpawnerCleared;
+        }
     }
 
     private void Update()
@@ -67,5 +77,13 @@ public class GameManager : MonoBehaviour
     {
         OnPlayerKilled?.Invoke();
         TogglePauseGameObjects(true);
+    }
+
+    private void OnSpawnerCleared()
+    {
+        m_SpawnerCount--;
+
+        if(m_SpawnerCount <= 0)
+            OnLevelComplete?.Invoke();
     }
 }

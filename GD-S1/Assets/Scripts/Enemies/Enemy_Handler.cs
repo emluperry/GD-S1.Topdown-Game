@@ -10,6 +10,8 @@ public class Enemy_Handler : MonoBehaviour
     private Entity_Health m_Health;
     private UI_Healthbar m_UIHealthbar;
 
+    private bool m_IsAlive = true;
+
     public Action OnEnemyKilled;
 
     void Awake()
@@ -44,10 +46,14 @@ public class Enemy_Handler : MonoBehaviour
 
     private void SlimeKilled()
     {
-        m_Animation.SetDeadTrigger();
-        m_Movement.SetKilled();
+        if (m_IsAlive)
+        {
+            m_Animation.SetDeadTrigger();
+            m_Movement.SetKilled();
 
-        OnEnemyKilled?.Invoke();
+            OnEnemyKilled?.Invoke();
+            m_IsAlive = false;
+        }
     }
 
     public void Initialise(Player_Movement player)

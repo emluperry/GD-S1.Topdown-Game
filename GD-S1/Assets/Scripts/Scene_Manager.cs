@@ -79,6 +79,7 @@ public class Scene_Manager : MonoBehaviour
         {
             m_CurrentGameManager.OnPauseWorld -= m_UIManager.PauseGame;
             m_CurrentGameManager.OnPlayerKilled -= m_UIManager.GameOver;
+            m_CurrentGameManager.OnLevelComplete -= m_UIManager.GameWin;
         }
         SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene(), UnloadSceneOptions.None);
 
@@ -107,6 +108,7 @@ public class Scene_Manager : MonoBehaviour
         {
             m_CurrentGameManager.OnPauseWorld += m_UIManager.PauseGame;
             m_CurrentGameManager.OnPlayerKilled += m_UIManager.GameOver;
+            m_CurrentGameManager.OnLevelComplete += m_UIManager.GameWin;
         }
 
         if(m_LoadingCoroutine != null)

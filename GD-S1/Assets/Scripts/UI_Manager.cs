@@ -110,8 +110,7 @@ public class UI_Manager : MonoBehaviour
         {
             case UI_SCREENS.PAUSE:
                 m_PauseMenu.gameObject.SetActive(false);
-                m_PauseMenu.LoadUI -= LoadUIScreen;
-                m_PauseMenu.LoadScene -= LoadSceneCall;
+                StopListeningForUI(m_PauseMenu);
                 break;
             case UI_SCREENS.SETTINGS:
                 m_SettingsMenu.gameObject.SetActive(false);
@@ -122,9 +121,11 @@ public class UI_Manager : MonoBehaviour
                 break;
             case UI_SCREENS.GAME_WIN:
                 m_WinScreenMenu.gameObject.SetActive(false);
+                StopListeningForUI(m_WinScreenMenu);
                 break;
             case UI_SCREENS.GAME_LOSE:
                 m_LoseScreenMenu.gameObject.SetActive(false);
+                StopListeningForUI(m_LoseScreenMenu);
                 break;
         }
     }
@@ -243,5 +244,10 @@ public class UI_Manager : MonoBehaviour
     public void GameOver()
     {
         LoadUIScreen(UI_SCREENS.GAME_LOSE);
+    }
+
+    public void GameWin()
+    {
+        LoadUIScreen(UI_SCREENS.GAME_WIN);
     }
 }
