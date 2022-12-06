@@ -89,6 +89,7 @@ public class Player_Animation : MonoBehaviour
             size = new Vector2(0, m_ChainSpriteRenderer.size.y);
             m_ChainSpriteRenderer.size = size;
             m_ChainCollider.size = size;
+            m_WeaponChain.transform.localPosition = new Vector3(0, 0, 0);
         }
     }
 

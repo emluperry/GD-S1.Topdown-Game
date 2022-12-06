@@ -8,7 +8,8 @@ enum ENEMY_STATE
 {
     WANDERING,
     CHASING,
-    ATTACKING
+    ATTACKING,
+    DEAD
 }
 
 public class Enemy_Movement : Entity_Movement
@@ -143,6 +144,7 @@ public class Enemy_Movement : Entity_Movement
     public void SetKilled()
     {
         m_IsAlive = false;
+        m_State = ENEMY_STATE.DEAD;
         m_RB.velocity = Vector2.zero;
     }
 
