@@ -1,13 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_ComponentHandler : MonoBehaviour
+public class Enemy_Handler : MonoBehaviour
 {
     private Enemy_Movement m_Movement;
     private Enemy_Animation m_Animation;
     private Entity_Health m_Health;
     private UI_Healthbar m_UIHealthbar;
+
+    public Action OnEnemyKilled;
 
     void Awake()
     {
@@ -20,9 +23,7 @@ public class Enemy_ComponentHandler : MonoBehaviour
         m_Movement.ChargingAttack += m_Animation.SetChargingBool;
         m_Movement.Attack += m_Animation.SetAttackTrigger;
 
-        m_Health.Killed += m_Animation.SetDeadTrigger;
-        m_Health.Killed += m_Movement.SetKilled;
-
+        m_Health.Killed += SlimeKilled;
         m_Health.DamageTaken += m_UIHealthbar.UpdateHealth;
 
         m_Health.Destroyable += SetInactive;
@@ -34,9 +35,6 @@ public class Enemy_ComponentHandler : MonoBehaviour
         m_Movement.ChargingAttack -= m_Animation.SetChargingBool;
         m_Movement.Attack -= m_Animation.SetAttackTrigger;
 
-        m_Health.Killed -= m_Animation.SetDeadTrigger;
-        m_Health.Killed -= m_Movement.SetKilled;
-
         m_Health.DamageTaken -= m_UIHealthbar.UpdateHealth;
 
         m_Health.Destroyable -= SetInactive;
@@ -44,5 +42,21 @@ public class Enemy_ComponentHandler : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    private void SlimeKilled()
+    {
+        m_Animation.SetDeadTrigger();
+        m_Movement.SetKilled();
 
+        OnEnemyKilled?.Invoke();
+    }
+
+    public void Initialise(Player_Movement player)
+    {
+        m_Movement.Initialise(player);
+    }
+
+    public void SetPaused(bool paused)
+    {
+        m_Movement.m_IsPaused = paused;
+    }
 }

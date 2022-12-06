@@ -282,11 +282,11 @@ GameObject:
   - component: {fileID: 6336778941508639157}
   - component: {fileID: 6336778941508639153}
   - component: {fileID: 6336778941508639159}
-  - component: {fileID: 6336778941508639155}
-  - component: {fileID: 6336778941508639154}
-  - component: {fileID: 6336778941508639156}
-  - component: {fileID: 6336778941508639145}
   - component: {fileID: 6336778941508639158}
+  - component: {fileID: 6336778941508639154}
+  - component: {fileID: 6336778941508639145}
+  - component: {fileID: 6336778941508639155}
+  - component: {fileID: 6336778941508639156}
   m_Layer: 6
   m_Name: Slime
   m_TagString: Untagged
@@ -368,7 +368,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &6336778941508639155
+--- !u!114 &6336778941508639158
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -377,11 +377,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6336778941508639166}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bd4ffdf14149bc4d963df2278e8c737, type: 3}
+  m_Script: {fileID: 11500000, guid: 48e074313dfb8a74e97b85ae83637a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MaximumHealth: 5
-  m_KillDelay: 1
 --- !u!114 &6336778941508639154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -474,6 +472,32 @@ MonoBehaviour:
   m_FlingImpulse: 40
   m_WanderSpeed: 0.5
   m_ChasingSpeed: 1
+--- !u!114 &6336778941508639145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6336778941508639166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f95369a716d6a64692269867ec61964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6336778941508639155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6336778941508639166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bd4ffdf14149bc4d963df2278e8c737, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MaximumHealth: 5
+  m_KillDelay: 1
 --- !u!114 &6336778941508639156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -487,30 +511,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BaseDamage: 1
---- !u!114 &6336778941508639145
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6336778941508639166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f95369a716d6a64692269867ec61964, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &6336778941508639158
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6336778941508639166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48e074313dfb8a74e97b85ae83637a07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6336778941933673183
 GameObject:
   m_ObjectHideFlags: 0

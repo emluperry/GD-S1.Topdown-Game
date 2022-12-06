@@ -24,7 +24,7 @@ public class Enemy_Movement : Entity_Movement
     private bool m_IsAlive = true;
 
     [Header("Enemy AI Radius")]
-    [SerializeField] private Player_Movement m_Player;
+    private Player_Movement m_Player;
     [SerializeField][Min(0f)] private float m_DestinationOffsetRadius = 0.1f;
     [SerializeField][Min(0f)] private float m_WanderingRadius = 1f;
     [SerializeField][Min(0f)] private float m_ChaseRadius = 2f;
@@ -41,8 +41,11 @@ public class Enemy_Movement : Entity_Movement
     [SerializeField] private float m_WanderSpeed = 0.5f;
     [SerializeField] private float m_ChasingSpeed = 0.5f;
 
-    public void Initialise()
+    public void Initialise(Player_Movement player = null)
     {
+        if(player != null)
+            m_Player = player;
+
         m_CurrentPath = new NavMeshPath();
         NavMesh.CalculatePath(transform.position, NewWanderPoint(), NavMesh.AllAreas, m_CurrentPath);
         m_MaxSpeed = m_WanderSpeed;
@@ -146,10 +149,5 @@ public class Enemy_Movement : Entity_Movement
         m_IsAlive = false;
         m_State = ENEMY_STATE.DEAD;
         m_RB.velocity = Vector2.zero;
-    }
-
-    public void SetPlayerObject(Player_Movement player)
-    {
-        m_Player = player;
     }
 }

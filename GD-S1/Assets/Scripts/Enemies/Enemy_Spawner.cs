@@ -7,25 +7,24 @@ public class Enemy_Spawner : MonoBehaviour
     [SerializeField] private GameObject m_EnemyPrefabType;
     [SerializeField] private int m_NumEnemies;
 
-    private Enemy_Movement[] m_Enemies;
+    private Enemy_Handler[] m_Enemies;
     private Player_Movement m_Player;
 
     void Start()
     {
-        m_Enemies = new Enemy_Movement[m_NumEnemies];
+        m_Enemies = new Enemy_Handler[m_NumEnemies];
         for(int i = 0; i < m_NumEnemies; i++)
         {
-            m_Enemies[i] = Instantiate(m_EnemyPrefabType, transform.position, Quaternion.identity, transform).GetComponent<Enemy_Movement>();
-            m_Enemies[i].SetPlayerObject(m_Player);
-            m_Enemies[i].Initialise();
+            m_Enemies[i] = Instantiate(m_EnemyPrefabType, transform.position, Quaternion.identity, transform).GetComponent<Enemy_Handler>();
+            m_Enemies[i].Initialise(m_Player);
         }
     }
 
     public void SetPause(bool paused)
     {
-        foreach(Enemy_Movement enemy in m_Enemies)
+        foreach(Enemy_Handler enemy in m_Enemies)
         {
-            enemy.m_IsPaused = paused;
+            enemy.SetPaused(paused);
         }
     }
 
