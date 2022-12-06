@@ -47,20 +47,26 @@ public class Scene_Manager : MonoBehaviour
 
     public void LoadScene(SCENE_TYPE scene)
     {
-        if(scene == SCENE_TYPE.QUIT_GAME)
+        switch (scene)
         {
-            QuitApplication();
-            return;
-        }
-        else if(scene == SCENE_TYPE.LEVEL)
-        {
-            Debug.LogError("Load levels with LoadLevel");
-            return;
-        }
-        else if(scene == SCENE_TYPE.RESTART_LEVEL)
-        {
-            Load(SceneManager.GetActiveScene().name);
-            return;
+            case SCENE_TYPE.QUIT_GAME:
+                QuitApplication();
+                break;
+            case SCENE_TYPE.LEVEL:
+                Debug.LogError("USE LoadLevel INSTEAD OF LOADSCENE");
+                break;
+            case SCENE_TYPE.NEXT_LEVEL:
+                int BuildIndex = SceneManager.GetActiveScene().buildIndex + 1;
+                if (BuildIndex >= SceneManager.sceneCountInBuildSettings)
+                    BuildIndex = 1;
+                Load(SceneManager.GetSceneByBuildIndex(BuildIndex).name);
+                break;
+            case SCENE_TYPE.RESTART_LEVEL:
+                Load(SceneManager.GetActiveScene().name);
+                break;
+            default:
+                Load(scene.ToString());
+                break;
         }
 
         Load(scene.ToString());
