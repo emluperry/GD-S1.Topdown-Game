@@ -147,7 +147,6 @@ GameObject:
   - component: {fileID: 4456037757535662184}
   - component: {fileID: 4456037757535662199}
   - component: {fileID: 4456037757535662198}
-  - component: {fileID: 4857893782688144292}
   - component: {fileID: 4980984656171859838}
   m_Layer: 5
   m_Name: LOADING
@@ -155,7 +154,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4456037757535662185
 RectTransform:
   m_ObjectHideFlags: 0
@@ -241,19 +240,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &4857893782688144292
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4456037757535662197}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f4cc8e80dcd4c84e8133ba98ba557e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_LoadText: {fileID: 5585266379504220715}
 --- !u!225 &4980984656171859838
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -262,9 +248,9 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4456037757535662197}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 0
-  m_BlocksRaycasts: 1
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!1 &6721131982978092084
 GameObject:

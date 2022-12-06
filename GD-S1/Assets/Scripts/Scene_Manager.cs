@@ -1,136 +1,128 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
-using UnityEngine.Analytics;
 using UnityEngine.SceneManagement;
-
-public enum SCENE_TYPE
-{
-    STARTUP,
-    START_MENU,
-    LOADING,
-    LEVEL_SELECT,
-    LEVEL,
-    NEXT_LEVEL,
-    RESTART_LEVEL,
-    QUIT_GAME
-}
+using Enums;
 
 public class Scene_Manager : MonoBehaviour
 {
-    [SerializeField] private UI_Manager m_UIManager;
+    [Header("Other Managers")]
+    [SerializeField] private UIManager m_UIManager;
+    [SerializeField] private SettingsManager m_SettingsManager;
     private GameManager m_CurrentGameManager;
 
-    Coroutine m_LoadingCoroutine;
+    [SerializeField] private Camera m_Camera;
 
     private void Awake()
     {
-        m_UIManager.LoadSceneOnButtonClicked += LoadScene;
-        m_UIManager.LevelIndexToLoad += LoadLevel;
-        m_UIManager.OnPauseWorld += CallPauseGame;
-
-        SceneManager.sceneLoaded += OnSceneLoaded;
-
-        if (SceneManager.GetActiveScene().buildIndex == 0)
+        if(SceneManager.GetActiveScene().buildIndex == 0)
         {
             SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
         }
+
+        if (m_SettingsManager)
+            m_SettingsManager.RestoreSavedSettings();
     }
 
-    private void OnDestroy()
+    private void OnEnable()
     {
-        m_UIManager.LoadSceneOnButtonClicked -= LoadScene;
-        m_UIManager.LevelIndexToLoad -= LoadLevel;
-        m_UIManager.OnPauseWorld -= CallPauseGame;
+        SceneManager.sceneLoaded += OnLevelLoaded;
+
+        m_UIManager.CallLoadScene += LoadScene;
+        m_UIManager.CallLoadNextScene += LoadNextLevel;
+        m_UIManager.OnGamePaused += PauseGame;
+        m_UIManager.CallQuitApp += QuitApplication;
+        m_UIManager.CallReloadScene += RestartLevel;
+        m_UIManager.OnLoadSettings += LoadSettings;
     }
 
-    public void LoadScene(SCENE_TYPE scene)
+    private void OnDisable()
     {
-        switch (scene)
-        {
-            case SCENE_TYPE.QUIT_GAME:
-                QuitApplication();
-                break;
-            case SCENE_TYPE.LEVEL:
-                Debug.LogError("USE LoadLevel INSTEAD OF LOADSCENE");
-                break;
-            case SCENE_TYPE.NEXT_LEVEL:
-                int BuildIndex = SceneManager.GetActiveScene().buildIndex + 1;
-                if (BuildIndex >= SceneManager.sceneCountInBuildSettings)
-                    BuildIndex = 1;
-                Load(SceneManager.GetSceneByBuildIndex(BuildIndex).name);
-                break;
-            case SCENE_TYPE.RESTART_LEVEL:
-                Load(SceneManager.GetActiveScene().name);
-                break;
-            default:
-                Load(scene.ToString());
-                break;
-        }
+        SceneManager.sceneLoaded -= OnLevelLoaded;
 
-        Load(scene.ToString());
+        m_UIManager.CallLoadScene -= LoadScene;
+        m_UIManager.CallLoadNextScene -= LoadNextLevel;
+        m_UIManager.OnGamePaused -= PauseGame;
+        m_UIManager.CallQuitApp -= QuitApplication;
+        m_UIManager.CallReloadScene -= RestartLevel;
+        m_UIManager.OnLoadSettings -= LoadSettings;
     }
 
-    private void LoadLevel(int levelIndex)
+    private void OnLevelLoaded(Scene scene, LoadSceneMode mode)
     {
-        Load("level_" + levelIndex);
-    }
+        m_UIManager.OnLevelLoaded();
 
-    private void Load(string sceneName)
-    {
-        m_LoadingCoroutine = StartCoroutine(m_UIManager.LoadScreenFadeIn());
-
-        if(m_CurrentGameManager)
-        {
-            m_CurrentGameManager.OnPauseWorld -= m_UIManager.PauseGame;
-            m_CurrentGameManager.OnPlayerKilled -= m_UIManager.GameOver;
-            m_CurrentGameManager.OnLevelComplete -= m_UIManager.GameWin;
-        }
-        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene(), UnloadSceneOptions.None);
-
-        AsyncOperation loadOp = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-
-        StartCoroutine(m_UIManager.UpdateLoadScreen(loadOp));
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
         SceneManager.SetActiveScene(scene);
-
-        GameObject[] objects = scene.GetRootGameObjects();
-
-        foreach (GameObject obj in objects)
-        {
-            UI_Abstract UI_Obj = obj.GetComponent<UI_Abstract>();
-            if (UI_Obj)
-            {
-                m_UIManager.StartListeningForUI(UI_Obj);
-            }
-        }
 
         m_CurrentGameManager = FindObjectOfType<GameManager>();
         if (m_CurrentGameManager)
         {
-            m_CurrentGameManager.OnPauseWorld += m_UIManager.PauseGame;
-            m_CurrentGameManager.OnPlayerKilled += m_UIManager.GameOver;
-            m_CurrentGameManager.OnLevelComplete += m_UIManager.GameWin;
+            m_CurrentGameManager.OnPauseWorld += m_UIManager.LoadPauseMenu;
+            m_CurrentGameManager.OnLevelEnd += m_UIManager.LoadWinLoseScreen;
         }
 
-        if(m_LoadingCoroutine != null)
-            StopCoroutine(m_LoadingCoroutine);
-
-        m_LoadingCoroutine = StartCoroutine(m_UIManager.LoadScreenFadeOut());
+        StartCoroutine(m_UIManager.FadeOut());
     }
 
-    private void CallPauseGame(bool paused)
+    private void StopListeningForEvents()
     {
         if (m_CurrentGameManager)
-            m_CurrentGameManager.TogglePauseGameObjects(paused);
+        {
+            m_CurrentGameManager.OnPauseWorld -= m_UIManager.LoadPauseMenu;
+            m_CurrentGameManager.OnLevelEnd -= m_UIManager.LoadWinLoseScreen;
+        }
+
+        m_UIManager.StopListeningForEvents(ref m_SettingsManager);
+    }
+
+    private void LoadScene(int BuildIndex)
+    {
+        StartCoroutine(m_UIManager.FadeIn());
+
+        StopListeningForEvents();
+
+        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+        SceneManager.LoadSceneAsync(BuildIndex, LoadSceneMode.Additive);
+    }
+
+    private void RestartLevel()
+    {
+        int BuildIndex = SceneManager.GetActiveScene().buildIndex;
+        LoadScene(BuildIndex);
+    }
+
+    private void LoadNextLevel()
+    {
+        int BuildIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        if(BuildIndex >= SceneManager.sceneCountInBuildSettings)
+        {
+            BuildIndex = 1;
+        }
+        LoadScene(BuildIndex);
     }
 
     private void QuitApplication()
     {
         Application.Quit();
+    }
+
+    private void PauseGame(bool paused)
+    {
+        if(!paused)
+        {
+            m_SettingsManager.RestoreSavedSettings();
+        }
+
+        m_CurrentGameManager.TogglePauseGameObjects(paused);
+    }
+
+    private void LoadSettings(bool ShouldListenForEvents)
+    {
+        if (!ShouldListenForEvents)
+        {
+            m_UIManager.LoadSettings(m_SettingsManager);
+        }
+        m_SettingsManager.RestoreSettingMenuValues();
     }
 }

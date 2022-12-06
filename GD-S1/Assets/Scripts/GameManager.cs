@@ -20,8 +20,7 @@ public class GameManager : MonoBehaviour
     private bool m_IsPaused = false;
 
     public Action<bool> OnPauseWorld;
-    public Action OnPlayerKilled;
-    public Action OnLevelComplete;
+    public Action<bool> OnLevelEnd;
 
     void Awake()
     {
@@ -75,7 +74,7 @@ public class GameManager : MonoBehaviour
 
     private void PlayerKilled()
     {
-        OnPlayerKilled?.Invoke();
+        OnLevelEnd?.Invoke(false);
         TogglePauseGameObjects(true);
     }
 
@@ -84,6 +83,6 @@ public class GameManager : MonoBehaviour
         m_SpawnerCount--;
 
         if(m_SpawnerCount <= 0)
-            OnLevelComplete?.Invoke();
+            OnLevelEnd?.Invoke(true);
     }
 }

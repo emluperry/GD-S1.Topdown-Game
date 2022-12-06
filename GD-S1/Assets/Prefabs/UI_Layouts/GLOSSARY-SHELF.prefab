@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 8479691470835352104}
   - component: {fileID: 8479691470835352103}
   - component: {fileID: 8479691470835352102}
-  - component: {fileID: 8988545084187062039}
+  - component: {fileID: 2327193107002460135}
   m_Layer: 5
   m_Name: GLOSSARY-SHELF
   m_TagString: Untagged
@@ -186,7 +186,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &8988545084187062039
+--- !u!114 &2327193107002460135
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -195,10 +195,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8479691470835352101}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9690be3a715d140b93a151f2215ee0, type: 3}
+  m_Script: {fileID: 11500000, guid: b93ba9c1abb1d794fad510bb25ac3783, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BackButton: {fileID: 1860597282728376760}
+  m_BackButton: {fileID: 3808973403568424907}
 --- !u!1 &8479691470846725370
 GameObject:
   m_ObjectHideFlags: 0
@@ -805,7 +805,7 @@ GameObject:
   - component: {fileID: 8541240207399425098}
   - component: {fileID: 8541240207399425096}
   - component: {fileID: 8541240207399425099}
-  - component: {fileID: 1860597282728376760}
+  - component: {fileID: 3808973403568424907}
   m_Layer: 5
   m_Name: BACK BUTTON
   m_TagString: Untagged
@@ -871,7 +871,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1860597282728376760
+--- !u!114 &3808973403568424907
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -880,7 +880,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8541240207399425101}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4353eeaab14e2745adf60d9eb937f47, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ad742b3136dbd842aaa4143daad7afa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_HoverColour: {r: 0.764151, g: 0.764151, b: 0.764151, a: 1}
