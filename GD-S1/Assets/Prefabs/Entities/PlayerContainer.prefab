@@ -1234,6 +1234,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   m_MinKnockbackForce: 40
+  m_SafePosOffsetDistance: 1.5
+  m_InputDelay: 0.5
 --- !u!114 &1071292297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1248,6 +1250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MaximumHealth: 10
   m_KillDelay: 1
+  m_FallDamage: 2
 --- !u!1 &7002259321521617923
 GameObject:
   m_ObjectHideFlags: 0
@@ -1445,6 +1448,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   m_MinKnockbackForce: 20
+  m_SafePosOffsetDistance: 3
+  m_InputDelay: 1
   m_Player: {fileID: 7002259321510264105}
   m_MaxDistance: 4
   m_MaxReturnDistance: 0.4

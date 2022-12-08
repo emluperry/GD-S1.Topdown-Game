@@ -10,9 +10,16 @@ public class Entity_Health : MonoBehaviour
     public Action Killed;
     public Action Destroyable;
 
+    public Action onLeftSolidGround;
+    public Action onPitfall;
+
     [SerializeField][Min(0f)] private int m_MaximumHealth = 1;
     private int m_CurrentHealth;
     [SerializeField][Min(0f)] private float m_KillDelay = 1f;
+
+    private bool m_IsGrounded = false;
+    [SerializeField] private int m_FallDamage = 2;
+    private Coroutine m_FallingCoroutine;
 
     private void Awake()
     {
@@ -25,7 +32,9 @@ public class Entity_Health : MonoBehaviour
 
         float dec = m_CurrentHealth / (float)m_MaximumHealth;
         DamageTaken?.Invoke(dec);
-        KnockbackEvent?.Invoke(dmg, collision.GetContact(0).point, collision.GetContact(0).normal);
+
+        if(collision != null)
+            KnockbackEvent?.Invoke(dmg, collision.GetContact(0).point, collision.GetContact(0).normal);
         
 
         if (m_CurrentHealth <= 0)
@@ -39,5 +48,32 @@ public class Entity_Health : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(m_KillDelay);
         Destroyable?.Invoke();
+    }
+
+    public void TouchingPit(bool isTouchingPit)
+    {
+        if (isTouchingPit)
+        {
+            m_FallingCoroutine = StartCoroutine(CheckForFall());
+            onLeftSolidGround?.Invoke();
+        }
+        else
+        {
+            if (m_FallingCoroutine != null)
+                StopCoroutine(m_FallingCoroutine);
+        }
+    }
+
+    private IEnumerator CheckForFall()
+    {
+        yield return new WaitUntil(() => m_IsGrounded == false);
+
+        TakeDamage(m_FallDamage, null);
+        onPitfall?.Invoke();
+    }
+
+    public void SetGrounded(bool isGrounded)
+    {
+        m_IsGrounded = isGrounded;
     }
 }

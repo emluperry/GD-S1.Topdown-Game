@@ -19,7 +19,7 @@ public class Weapon_Movement : Entity_Movement
     [SerializeField][Min(0f)] private float m_MaxReturnDistanceOffset = 0.1f;
     [SerializeField][Min(0f)] private float m_ReturnSpeed = 20f;
 
-    private void Start()
+    protected override void Start()
     {
         ToggleVisibility(false);
         m_PrevLocation = transform.position;
