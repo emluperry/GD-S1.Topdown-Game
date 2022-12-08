@@ -288,7 +288,7 @@ MonoBehaviour:
   m_GlossaryButton: {fileID: 6128702794386649220}
   m_SettingsButton: {fileID: 2987118930078514541}
   m_SaveButton: {fileID: 5872538436559510583}
-  m_QuitToTitleButton: {fileID: 247101366600810908}
+  m_QuitToTitleButton: {fileID: 0}
   m_QuitGameButton: {fileID: 3583155474711902308}
 --- !u!1 &226726720013490036
 GameObject:
@@ -939,7 +939,7 @@ GameObject:
   - component: {fileID: 226726721090710165}
   - component: {fileID: 226726721090710167}
   - component: {fileID: 226726721090710164}
-  - component: {fileID: 247101366600810908}
+  - component: {fileID: 4665630833722714337}
   m_Layer: 5
   m_Name: leavelevel
   m_TagString: Untagged
@@ -1005,7 +1005,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &247101366600810908
+--- !u!114 &4665630833722714337
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1014,11 +1014,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 226726721090710162}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a0a0bc6447af2246b43a9c3a8b41df6, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ad742b3136dbd842aaa4143daad7afa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_HoverColour: {r: 0.764151, g: 0.764151, b: 0.764151, a: 1}
-  m_SceneIndexToLoad: 1
 --- !u!1 &226726721360677360
 GameObject:
   m_ObjectHideFlags: 0
