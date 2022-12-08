@@ -3,19 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Object_Switch : MonoBehaviour
+public class Object_Switch : Trigger
 {
     private SpriteRenderer m_Renderer;
 
     [SerializeField] private Sprite m_DeactivatedSprite;
     [SerializeField] private Sprite m_ActivatedSprite;
-    private bool m_CurrentState = false;
 
     [SerializeField] private bool m_CanDeactivate;
     [SerializeField][Min(0f)] private float m_ActivationDuration = 1;
     private Coroutine m_DurationCoroutine;
-
-    public Action<bool> OnStateChange;
 
     private void Awake()
     {
@@ -37,9 +34,9 @@ public class Object_Switch : MonoBehaviour
         ChangeState(false);
     }
 
-    private void ChangeState(bool state)
+    protected override void ChangeState(bool state)
     {
-        m_CurrentState = state;
+        base.ChangeState(state);
 
         if (state)
         {
@@ -53,7 +50,5 @@ public class Object_Switch : MonoBehaviour
             if (m_CanDeactivate)
                 StopCoroutine(m_DurationCoroutine);
         }
-
-        OnStateChange?.Invoke(m_CurrentState);
     }
 }

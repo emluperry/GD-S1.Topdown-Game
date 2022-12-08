@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Spawner : MonoBehaviour
+public class Enemy_Spawner : Trigger
 {
     [SerializeField] private GameObject m_EnemyPrefabType;
     [SerializeField] private int m_NumEnemies;
@@ -11,11 +11,9 @@ public class Enemy_Spawner : MonoBehaviour
     private Enemy_Handler[] m_Enemies;
     private Player_Movement m_Player;
 
-    private bool m_SpawnerCleared = false;
-
     public Action OnAllEnemiesKilled;
 
-    void Start()
+    private void Start()
     {
         m_Enemies = new Enemy_Handler[m_NumEnemies];
         for(int i = 0; i < m_NumEnemies; i++)
@@ -51,10 +49,10 @@ public class Enemy_Spawner : MonoBehaviour
     {
         m_NumEnemies--;
 
-        if (m_NumEnemies <= 0 && !m_SpawnerCleared)
+        if (m_NumEnemies <= 0 && !m_CurrentState)
         {
             OnAllEnemiesKilled?.Invoke();
-            m_SpawnerCleared = true;
+            ChangeState(true);
         }
     }
 }

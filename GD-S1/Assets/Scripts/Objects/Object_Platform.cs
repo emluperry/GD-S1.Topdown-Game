@@ -1,8 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Object_Platform : MonoBehaviour
+public class Object_Platform : TriggerableObject
 {
     private Vector2 m_StartingPos;
     [SerializeField] private Vector2 m_Destination = Vector2.zero;
@@ -12,46 +11,23 @@ public class Object_Platform : MonoBehaviour
 
     private Rigidbody2D m_RB;
 
-    [SerializeField] private Object_Switch[] m_Switches;
-    private int m_ActiveSwitches = 0;
-
-    private void Awake()
+    protected override void Awake()
     {
         m_RB = GetComponent<Rigidbody2D>();
         m_StartingPos = transform.position;
 
-        foreach(Object_Switch switchObj in m_Switches)
-        {
-            switchObj.OnStateChange += UpdateSwitchState;
-        }
+        base.Awake();
     }
 
-    private void OnDestroy()
-    {
-        foreach (Object_Switch switchObj in m_Switches)
-        {
-            switchObj.OnStateChange -= UpdateSwitchState;
-        }
-    }
-
-    private void UpdateSwitchState(bool state)
+    protected override void ChangeState(bool state)
     {
         if (state)
-            m_ActiveSwitches++;
+            MoveTo(m_Destination);
         else
-            m_ActiveSwitches--;
-
-        if (m_ActiveSwitches >= m_Switches.Length)
-        {
-            UpdateState(m_Destination);
-        }
-        else
-        {
-            UpdateState(m_StartingPos);
-        }
+            MoveTo(m_StartingPos);
     }
 
-    private void UpdateState(Vector2 destination)
+    private void MoveTo(Vector2 destination)
     {
         if (m_MovingCoroutine != null)
             StopCoroutine(m_MovingCoroutine);
