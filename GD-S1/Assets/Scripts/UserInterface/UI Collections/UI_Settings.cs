@@ -7,10 +7,8 @@ using UnityEngine.UI;
 
 using Enums;
 
-public class UI_Settings : UI_Abstract
+public class UI_Settings : UI_SimpleScreen
 {
-    [SerializeField] private Button_UIOnClick m_BackButton;
-
     [Header("SOUND")]
     [SerializeField] private Slider m_MasterVolumeSlider;
     [SerializeField] private Slider m_MusicVolumeSlider;
@@ -19,20 +17,20 @@ public class UI_Settings : UI_Abstract
     public Action<VOLUME_SLIDER, float> onSliderChanged;
     public Action onSaveValues;
 
-    private void Awake()
+    protected override void Awake()
     {
-        m_BackButton.OnClicked += BackButton;
+        base.Awake();
 
         m_MasterVolumeSlider.onValueChanged.AddListener(delegate { ChangeMasterVolume(); });
         m_MusicVolumeSlider.onValueChanged.AddListener(delegate { ChangeMusicVolume(); });
         m_SFXVolumeSlider.onValueChanged.AddListener(delegate { ChangeSFXVolume(); });
     }
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
         m_MasterVolumeSlider.onValueChanged.RemoveAllListeners();
 
-        m_BackButton.OnClicked -= BackButton;
+        base.OnDestroy();
     }
 
     protected override void BackButton()

@@ -117,9 +117,9 @@ public class Scene_Manager : MonoBehaviour
         m_CurrentGameManager.TogglePauseGameObjects(paused);
     }
 
-    private void LoadSettings(bool ShouldListenForEvents)
+    private void LoadSettings(bool SettingsExists)
     {
-        if (!ShouldListenForEvents)
+        if (SettingsExists)
         {
             m_UIManager.LoadSettings(m_SettingsManager);
         }
