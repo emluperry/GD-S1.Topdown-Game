@@ -8,7 +8,8 @@ enum ENEMY_STATE
 {
     WANDERING,
     CHASING,
-    ATTACKING
+    ATTACKING,
+    DEAD
 }
 
 public class Enemy_Movement : Entity_Movement
@@ -23,7 +24,7 @@ public class Enemy_Movement : Entity_Movement
     private bool m_IsAlive = true;
 
     [Header("Enemy AI Radius")]
-    [SerializeField] private Player_Movement m_Player;
+    private Player_Movement m_Player;
     [SerializeField][Min(0f)] private float m_DestinationOffsetRadius = 0.1f;
     [SerializeField][Min(0f)] private float m_WanderingRadius = 1f;
     [SerializeField][Min(0f)] private float m_ChaseRadius = 2f;
@@ -40,8 +41,11 @@ public class Enemy_Movement : Entity_Movement
     [SerializeField] private float m_WanderSpeed = 0.5f;
     [SerializeField] private float m_ChasingSpeed = 0.5f;
 
-    private void Start()
+    public void Initialise(Player_Movement player = null)
     {
+        if(player != null)
+            m_Player = player;
+
         m_CurrentPath = new NavMeshPath();
         NavMesh.CalculatePath(transform.position, NewWanderPoint(), NavMesh.AllAreas, m_CurrentPath);
         m_MaxSpeed = m_WanderSpeed;
@@ -49,8 +53,11 @@ public class Enemy_Movement : Entity_Movement
 
     private void FixedUpdate()
     {
-        if (!m_IsAlive)
+        if (!m_IsAlive || m_IsPaused)
+        {
+            m_RB.velocity = new Vector2(0, 0);
             return;
+        }
 
         switch (m_State)
         {
@@ -86,7 +93,9 @@ public class Enemy_Movement : Entity_Movement
 
         if(m_State != ENEMY_STATE.ATTACKING)
         {
-            m_CurrentAttackDelay += Time.fixedDeltaTime;
+            if(m_CurrentAttackDelay < m_AttackDelay)
+                m_CurrentAttackDelay += Time.fixedDeltaTime;
+
             m_InputDirection = (m_Target - transform.position).normalized;
             UpdateInput?.Invoke(m_InputDirection.x, m_InputDirection.y);
 
@@ -105,7 +114,8 @@ public class Enemy_Movement : Entity_Movement
 
         NavMesh.CalculatePath(transform.position, currentDestination, NavMesh.AllAreas, m_CurrentPath);
 
-        m_Target = m_CurrentPath.corners[1];
+        if (m_CurrentPath.corners.Length >= 2)
+            m_Target = m_CurrentPath.corners[1];
     }
 
     private Vector2 NewWanderPoint()
@@ -137,6 +147,7 @@ public class Enemy_Movement : Entity_Movement
     public void SetKilled()
     {
         m_IsAlive = false;
+        m_State = ENEMY_STATE.DEAD;
         m_RB.velocity = Vector2.zero;
     }
 }

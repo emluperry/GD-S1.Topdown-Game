@@ -38,6 +38,9 @@ public class Weapon_Movement : Entity_Movement
 
     private void FixedUpdate()
     {
+        if (m_IsPaused)
+            return;
+
         if (m_InputDirection.magnitude == 0 && m_IsActive == true)
         {
             m_Returning = true;
