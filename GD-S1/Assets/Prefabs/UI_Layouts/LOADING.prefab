@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 4456037757535662199}
   - component: {fileID: 4456037757535662198}
   - component: {fileID: 4980984656171859838}
+  - component: {fileID: 1060764526974720592}
   m_Layer: 5
   m_Name: LOADING
   m_TagString: Untagged
@@ -171,7 +172,7 @@ RectTransform:
   - {fileID: 4832024159282786369}
   - {fileID: 1908520713471323914}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -252,6 +253,19 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!114 &1060764526974720592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4456037757535662197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf49ac04ab31f2c409f8edce07d4bc07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LoadText: {fileID: 5585266379504220715}
 --- !u!1 &6721131982978092084
 GameObject:
   m_ObjectHideFlags: 0

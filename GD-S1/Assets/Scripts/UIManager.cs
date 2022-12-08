@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -25,7 +26,7 @@ public class UIManager : MonoBehaviour
     private UI_Abstract m_Lose;
 
     [Header("Loading Variables")]
-    [SerializeField] private CanvasGroup m_LoadScreenObject;
+    [SerializeField] private UI_Loading m_LoadScreenObject;
     [SerializeField] private float m_FadeInOutTime = 1f;
 
     private Stack<UI_Abstract> m_UIStack;
@@ -98,31 +99,16 @@ public class UIManager : MonoBehaviour
     private void LoadNextLevel() { CallLoadNextScene?.Invoke(); }
     private void RestartLevel() { CallReloadScene?.Invoke(); }
 
-    public IEnumerator FadeIn()
+    public void FadeIn(AsyncOperation loadOperation)
     {
-        float Increment = 1 / m_FadeInOutTime;
         m_LoadScreenObject.gameObject.SetActive(true);
-        m_LoadScreenObject.blocksRaycasts = true;
-        m_LoadScreenObject.alpha = 0;
-        while (m_LoadScreenObject.alpha < 1)
-        {
-            m_LoadScreenObject.alpha += Increment;
-            yield return new WaitForFixedUpdate();
-        }
-        m_LoadScreenObject.alpha = 1;
+        StartCoroutine(m_LoadScreenObject.FadeIn(m_FadeInOutTime));
+        StartCoroutine(m_LoadScreenObject.UpdateLoadText(loadOperation));
     }
 
-    public IEnumerator FadeOut()
+    public void FadeOut()
     {
-        float Increment = 1 / m_FadeInOutTime;
-        m_LoadScreenObject.alpha = 1;
-        while (m_LoadScreenObject.alpha < 1)
-        {
-            m_LoadScreenObject.alpha -= Increment;
-            yield return new WaitForFixedUpdate();
-        }
-        m_LoadScreenObject.alpha = 0;
-        m_LoadScreenObject.blocksRaycasts = false;
+        StartCoroutine(m_LoadScreenObject.FadeOut(m_FadeInOutTime));
         m_LoadScreenObject.gameObject.SetActive(false);
     }
 
@@ -184,10 +170,12 @@ public class UIManager : MonoBehaviour
 
             case UI_STATE.WIN:
                 LoadUI(ref m_WinPrefab, ref m_Win);
+                OnGamePaused?.Invoke(true);
                 break;
 
             case UI_STATE.LOSE:
                 LoadUI(ref m_LosePrefab, ref m_Lose);
+                OnGamePaused?.Invoke(true);
                 break;
 
             case UI_STATE.LEVEL_SELECT:

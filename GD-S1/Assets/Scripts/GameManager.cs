@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float m_maxButtonCooldown = 1f;
     private float m_pauseDelay = 0f;
     private bool m_IsPaused = false;
+    private bool m_IsLevelActive = true;
 
     public Action<bool> OnPauseWorld;
     public Action<bool> OnLevelEnd;
@@ -48,6 +49,9 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (!m_IsLevelActive)
+            return;
+
         if (m_pauseDelay < m_maxButtonCooldown)
         {
             m_pauseDelay += Time.deltaTime;
@@ -76,6 +80,7 @@ public class GameManager : MonoBehaviour
     {
         OnLevelEnd?.Invoke(false);
         TogglePauseGameObjects(true);
+        m_IsLevelActive = false;
     }
 
     private void OnSpawnerCleared()
@@ -83,6 +88,10 @@ public class GameManager : MonoBehaviour
         m_SpawnerCount--;
 
         if(m_SpawnerCount <= 0)
+        {
             OnLevelEnd?.Invoke(true);
+            TogglePauseGameObjects(true);
+            m_IsLevelActive = false;
+        }
     }
 }

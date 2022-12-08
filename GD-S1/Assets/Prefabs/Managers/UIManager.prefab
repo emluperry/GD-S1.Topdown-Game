@@ -51,7 +51,7 @@ MonoBehaviour:
   m_PausePrefab: {fileID: 226726719829489284, guid: ee57b31dc759e2140b9fcdacf18dc34a, type: 3}
   m_WinPrefab: {fileID: 1155025738559321095, guid: b97096ffd6466d4419e07ec8281febdf, type: 3}
   m_LosePrefab: {fileID: 1155025738559321095, guid: 60dea0c5b59f0e04c98c9f1fc233d9ea, type: 3}
-  m_LoadScreenObject: {fileID: 3663648726156249870}
+  m_LoadScreenObject: {fileID: 8741330244003802656}
   m_FadeInOutTime: 1
 --- !u!1001 &8644631157525214320
 PrefabInstance:
@@ -152,13 +152,19 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 83d9061ca8b74864ea61ed0eab715087, type: 3}
---- !u!225 &3663648726156249870 stripped
-CanvasGroup:
-  m_CorrespondingSourceObject: {fileID: 4980984656171859838, guid: 83d9061ca8b74864ea61ed0eab715087, type: 3}
-  m_PrefabInstance: {fileID: 8644631157525214320}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5341516031526716441 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4456037757535662185, guid: 83d9061ca8b74864ea61ed0eab715087, type: 3}
   m_PrefabInstance: {fileID: 8644631157525214320}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8741330244003802656 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1060764526974720592, guid: 83d9061ca8b74864ea61ed0eab715087, type: 3}
+  m_PrefabInstance: {fileID: 8644631157525214320}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf49ac04ab31f2c409f8edce07d4bc07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

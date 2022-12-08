@@ -62,7 +62,7 @@ public class Scene_Manager : MonoBehaviour
             m_CurrentGameManager.OnLevelEnd += m_UIManager.LoadWinLoseScreen;
         }
 
-        StartCoroutine(m_UIManager.FadeOut());
+        m_UIManager.FadeOut();
     }
 
     private void StopListeningForEvents()
@@ -78,12 +78,12 @@ public class Scene_Manager : MonoBehaviour
 
     private void LoadScene(int BuildIndex)
     {
-        StartCoroutine(m_UIManager.FadeIn());
-
         StopListeningForEvents();
 
         SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-        SceneManager.LoadSceneAsync(BuildIndex, LoadSceneMode.Additive);
+        AsyncOperation loadOperation = SceneManager.LoadSceneAsync(BuildIndex, LoadSceneMode.Additive);
+
+        m_UIManager.FadeIn(loadOperation);
     }
 
     private void RestartLevel()

@@ -400,7 +400,7 @@ TextureImporter:
       name: walls_15
       rect:
         serializedVersion: 2
-        x: 603
+        x: 804
         y: 402
         width: 200
         height: 200
@@ -421,7 +421,7 @@ TextureImporter:
       name: walls_16
       rect:
         serializedVersion: 2
-        x: 804
+        x: 1005
         y: 402
         width: 200
         height: 200
@@ -442,8 +442,8 @@ TextureImporter:
       name: walls_17
       rect:
         serializedVersion: 2
-        x: 1005
-        y: 402
+        x: 201
+        y: 201
         width: 200
         height: 200
       alignment: 0
@@ -463,7 +463,7 @@ TextureImporter:
       name: walls_18
       rect:
         serializedVersion: 2
-        x: 0
+        x: 402
         y: 201
         width: 200
         height: 200
@@ -484,7 +484,7 @@ TextureImporter:
       name: walls_19
       rect:
         serializedVersion: 2
-        x: 201
+        x: 603
         y: 201
         width: 200
         height: 200
@@ -505,7 +505,7 @@ TextureImporter:
       name: walls_20
       rect:
         serializedVersion: 2
-        x: 402
+        x: 804
         y: 201
         width: 200
         height: 200
@@ -526,8 +526,8 @@ TextureImporter:
       name: walls_21
       rect:
         serializedVersion: 2
-        x: 603
-        y: 201
+        x: 0
+        y: 0
         width: 200
         height: 200
       alignment: 0
@@ -547,8 +547,8 @@ TextureImporter:
       name: walls_22
       rect:
         serializedVersion: 2
-        x: 804
-        y: 201
+        x: 201
+        y: 0
         width: 200
         height: 200
       alignment: 0
@@ -568,8 +568,8 @@ TextureImporter:
       name: walls_23
       rect:
         serializedVersion: 2
-        x: 1005
-        y: 201
+        x: 402
+        y: 0
         width: 200
         height: 200
       alignment: 0
@@ -589,7 +589,7 @@ TextureImporter:
       name: walls_24
       rect:
         serializedVersion: 2
-        x: 0
+        x: 603
         y: 0
         width: 200
         height: 200
@@ -610,7 +610,7 @@ TextureImporter:
       name: walls_25
       rect:
         serializedVersion: 2
-        x: 201
+        x: 804
         y: 0
         width: 200
         height: 200
@@ -627,69 +627,6 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: walls_26
-      rect:
-        serializedVersion: 2
-        x: 402
-        y: 0
-        width: 200
-        height: 200
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1536ae15ca2da4f4984e88a27bdfbfbc
-      internalID: 1256914053
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: walls_27
-      rect:
-        serializedVersion: 2
-        x: 603
-        y: 0
-        width: 200
-        height: 200
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 33f7b719189770641be9f7c2e6d347ad
-      internalID: 1279162892
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: walls_28
-      rect:
-        serializedVersion: 2
-        x: 804
-        y: 0
-        width: 200
-        height: 200
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5c10600e14e63544d935f598d9646af7
-      internalID: 1253717156
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -701,7 +638,6 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      walls_27: 1279162892
       walls_9: 972555074
       walls_22: 868772273
       walls_11: -1121825684
@@ -710,7 +646,6 @@ TextureImporter:
       walls_1: -941469528
       walls_21: 125560200
       walls_24: 641998425
-      walls_26: 1256914053
       walls_2: 56787021
       walls_12: 519932828
       walls_8: -1651629811
@@ -723,7 +658,6 @@ TextureImporter:
       walls_6: 992472436
       walls_16: 1581966076
       walls_17: -2014120994
-      walls_28: 1253717156
       walls_19: 2000101048
       walls_18: -1105585044
       walls_23: -450020140
