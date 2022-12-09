@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Enemy_Spawner[] m_Spawners;
     private int m_SpawnerCount = 0;
 
-    [SerializeField] private Object_Breakable[] m_BreakableObjects;
+    [SerializeField] private Object_Container[] m_ContainerObjects;
     [SerializeField] private Object_Unlockable[] m_UnlockableObjects;
 
     [Header("Transition Variables")]
@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
         }
         m_SpawnerCount = m_Spawners.Length;
 
-        foreach(Object_Breakable breakable in m_BreakableObjects)
+        foreach(Object_Container breakable in m_ContainerObjects)
         {
             breakable.OnCollectableCollected += UpdateCollectedItems;
         }
@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
             spawner.OnAllEnemiesKilled -= OnSpawnerCleared;
         }
 
-        foreach (Object_Breakable breakable in m_BreakableObjects)
+        foreach (Object_Container breakable in m_ContainerObjects)
         {
             breakable.OnCollectableCollected -= UpdateCollectedItems;
         }
