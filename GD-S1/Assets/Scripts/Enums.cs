@@ -33,5 +33,13 @@ namespace Enums
         MAGIC
     }
 
+    public enum AFFINITY_TYPE
+    {
+        STANDARD,
+        FIRE,
+        ICE,
+        WIND
+    }
+
 }
 
