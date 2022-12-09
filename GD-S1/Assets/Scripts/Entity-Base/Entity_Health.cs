@@ -55,7 +55,6 @@ public class Entity_Health : MonoBehaviour
         else if ((m_HealthAffinityType == AFFINITY_TYPE.FIRE && type == AFFINITY_TYPE.WIND) || (m_HealthAffinityType == AFFINITY_TYPE.ICE && type == AFFINITY_TYPE.FIRE) || (m_HealthAffinityType == AFFINITY_TYPE.WIND && type == AFFINITY_TYPE.ICE))
             damage *= 2;
 
-        Debug.Log(damage);
         return damage;
     }
 
