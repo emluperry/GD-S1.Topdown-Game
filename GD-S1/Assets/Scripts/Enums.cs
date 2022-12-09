@@ -33,6 +33,13 @@ namespace Enums
         MAGIC
     }
 
+    public enum SEGMENT_TYPE
+    {
+        HEALTH,
+        MAGIC,
+        ABILITY_TIMER
+    }
+
     public enum AFFINITY_TYPE
     {
         STANDARD,

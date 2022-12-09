@@ -1,10 +1,7 @@
 using Enums;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -18,6 +15,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject m_LosePrefab;
 
     [Header("Objects")]
+    private UI_HUD m_HUD;
     private UI_Abstract m_LevelSelect;
     private UI_Abstract m_Settings;
     private UI_Abstract m_Glossary;
@@ -54,6 +52,10 @@ public class UIManager : MonoBehaviour
         foreach (UI_Abstract uiObject in m_ActiveUIObjects)
         {
             ListenForEventsIn(uiObject);
+
+            UI_HUD m_HUDObject;
+            if (!m_HUD && uiObject.TryGetComponent<UI_HUD>(out m_HUDObject))
+                m_HUD = m_HUDObject;
 
             m_UIStack.Push(uiObject);
         }
@@ -206,5 +208,15 @@ public class UIManager : MonoBehaviour
         else
             uiObject.gameObject.SetActive(true);
         m_UIStack.Push(uiObject);
+    }
+
+    public void UpdateBar(SEGMENT_TYPE type, float value)
+    {
+        m_HUD.UpdateBar(type, value);
+    }
+
+    public void UpdateValue(COLLECTABLE_TYPE type, int increment)
+    {
+        m_HUD.UpdateValue(type, increment);
     }
 }

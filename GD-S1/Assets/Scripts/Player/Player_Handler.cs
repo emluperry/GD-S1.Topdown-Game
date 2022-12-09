@@ -3,26 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Enums;
+
 public class Player_Handler : MonoBehaviour
 {
     [SerializeField] private Player_Movement m_Player;
     private Entity_Health m_Health;
     [SerializeField] private Weapon_Movement m_Weapon;
 
-    public Action<float> OnDamageTaken;
+    public Action<SEGMENT_TYPE, float> OnStatValueChange;
     public Action OnKilled;
 
     private void Awake()
     {
         m_Health = m_Player.GetComponent<Entity_Health>();
 
-        m_Health.DamageTaken += TookDamage;
+        m_Health.DamageTaken += HealthChanged;
         m_Health.Killed += PlayerKilled;
     }
 
     private void OnDestroy()
     {
-        m_Health.DamageTaken -= TookDamage;
+        m_Health.DamageTaken -= HealthChanged;
         m_Health.Killed -= PlayerKilled;
     }
 
@@ -31,9 +33,9 @@ public class Player_Handler : MonoBehaviour
         OnKilled?.Invoke();
     }
 
-    private void TookDamage(float dec)
+    private void HealthChanged(float dec)
     {
-        OnDamageTaken?.Invoke(dec);
+        OnStatValueChange?.Invoke(SEGMENT_TYPE.HEALTH, dec);
     }
 
     public void SetPause(bool paused)

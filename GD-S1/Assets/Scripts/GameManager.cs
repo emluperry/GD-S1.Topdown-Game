@@ -6,9 +6,6 @@ using Enums;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("UI & Scene Management")]
-    [SerializeField] private UI_Healthbar m_Healthbar;
-
     [Header("Core Elements")]
     [SerializeField] private Player_Handler m_Player;
     [SerializeField] private int m_NumKeys = 0;
@@ -25,6 +22,9 @@ public class GameManager : MonoBehaviour
     private float m_pauseDelay = 0f;
     private bool m_IsPaused = false;
     private bool m_IsLevelActive = true;
+
+    public Action<SEGMENT_TYPE, float> OnStatValueChange;
+    public Action<COLLECTABLE_TYPE, int> OnCollectableValueChange;
 
     public Action<bool> OnPauseWorld;
     public Action<bool> OnLevelEnd;
@@ -49,13 +49,13 @@ public class GameManager : MonoBehaviour
             m_UnlockableObjects[i].OnUnlockAttempt += UnlockAttempt;
         }
 
-        m_Player.OnDamageTaken += m_Healthbar.UpdateHealth;
+        m_Player.OnStatValueChange += UpdateHUDBar;
         m_Player.OnKilled += PlayerKilled;
     }
 
     private void OnDestroy()
     {
-        m_Player.OnDamageTaken -= m_Healthbar.UpdateHealth;
+        m_Player.OnStatValueChange -= UpdateHUDBar;
         m_Player.OnKilled -= PlayerKilled;
 
         foreach(Enemy_Spawner spawner in m_Spawners)
@@ -104,6 +104,16 @@ public class GameManager : MonoBehaviour
         m_pauseDelay = 0f;
     }
 
+    private void UpdateHUDBar(SEGMENT_TYPE statType, float dec)
+    {
+        OnStatValueChange?.Invoke(statType, dec);
+    }
+
+    private void UpdateHUDValue(COLLECTABLE_TYPE valueType, int increment)
+    {
+        OnCollectableValueChange?.Invoke(valueType, increment);
+    }
+
     private void PlayerKilled()
     {
         OnLevelEnd?.Invoke(false);
@@ -128,7 +138,16 @@ public class GameManager : MonoBehaviour
         switch (collectable)
         {
             case COLLECTABLE_TYPE.KEY:
+                UpdateHUDValue(collectable, value);
                 m_NumKeys += value;
+                break;
+            case COLLECTABLE_TYPE.BOSS_KEY:
+                m_HasBossKey = true;
+                UpdateHUDValue(collectable, value);
+                break;
+            case COLLECTABLE_TYPE.COIN:
+                //save elsewhere for transfer between scenes/levels
+                UpdateHUDValue(collectable, value);
                 break;
         }
     }
@@ -140,6 +159,7 @@ public class GameManager : MonoBehaviour
         {
             m_NumKeys--;
             CanUnlock = true;
+            UpdateHUDValue(COLLECTABLE_TYPE.KEY, -1);
         }
 
         m_UnlockableObjects[UnlockableID].ShouldUnlock(CanUnlock);
