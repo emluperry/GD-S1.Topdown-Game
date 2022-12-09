@@ -1,3 +1,4 @@
+using Enums;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,6 +6,8 @@ using UnityEngine;
 
 public class Entity_Health : MonoBehaviour
 {
+    [SerializeField] private AFFINITY_TYPE m_HealthAffinityType = AFFINITY_TYPE.STANDARD;
+
     public Action<float> DamageTaken;
     public Action<int, Vector2, Vector2> KnockbackEvent;
     public Action Killed;
@@ -26,9 +29,9 @@ public class Entity_Health : MonoBehaviour
         m_CurrentHealth = m_MaximumHealth;
     }
 
-    public void TakeDamage(int dmg, Collision2D collision)
+    public void TakeDamage(int dmg, AFFINITY_TYPE type, Collision2D collision)
     {
-        m_CurrentHealth -= dmg;
+        m_CurrentHealth -= CalculateDamage(dmg, type);
 
         float dec = m_CurrentHealth / (float)m_MaximumHealth;
         DamageTaken?.Invoke(dec);
@@ -42,6 +45,18 @@ public class Entity_Health : MonoBehaviour
             Killed?.Invoke();
             StartCoroutine(Dying());
         }
+    }
+
+    private int CalculateDamage(int dmg, AFFINITY_TYPE type)
+    {
+        int damage = dmg;
+        if ((m_HealthAffinityType == AFFINITY_TYPE.FIRE && type == AFFINITY_TYPE.ICE) || (m_HealthAffinityType == AFFINITY_TYPE.ICE && type == AFFINITY_TYPE.WIND) || (m_HealthAffinityType == AFFINITY_TYPE.WIND && type == AFFINITY_TYPE.FIRE))
+            damage /= 2;
+        else if ((m_HealthAffinityType == AFFINITY_TYPE.FIRE && type == AFFINITY_TYPE.WIND) || (m_HealthAffinityType == AFFINITY_TYPE.ICE && type == AFFINITY_TYPE.FIRE) || (m_HealthAffinityType == AFFINITY_TYPE.WIND && type == AFFINITY_TYPE.ICE))
+            damage *= 2;
+
+        Debug.Log(damage);
+        return damage;
     }
 
     public IEnumerator Dying()
@@ -68,7 +83,7 @@ public class Entity_Health : MonoBehaviour
     {
         yield return new WaitUntil(() => m_IsGrounded == false);
 
-        TakeDamage(m_FallDamage, null);
+        TakeDamage(m_FallDamage, AFFINITY_TYPE.STANDARD, null);
         onPitfall?.Invoke();
     }
 

@@ -108,7 +108,7 @@ Transform:
   - {fileID: 2597070676863931794}
   - {fileID: 6363293361675193324}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5044070783999400134
 GameObject:
@@ -10537,7 +10537,7 @@ PrefabInstance:
     - target: {fileID: 6499453240880162144, guid: 223dff1f270efdd4f85da5aff1e212bd, type: 3}
       propertyPath: m_EnemyPrefabType
       value: 
-      objectReference: {fileID: 6336778941508639166, guid: 5950e1df1525e484ea80cf82e8e12964, type: 3}
+      objectReference: {fileID: 6336778941508639166, guid: 6a03fdb9e1ccf49478e8c91751c358af, type: 3}
     - target: {fileID: 6499453240880162145, guid: 223dff1f270efdd4f85da5aff1e212bd, type: 3}
       propertyPath: m_Name
       value: Spawner

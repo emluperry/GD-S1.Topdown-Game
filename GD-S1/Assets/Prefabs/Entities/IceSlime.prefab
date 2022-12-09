@@ -288,7 +288,7 @@ GameObject:
   - component: {fileID: 6336778941508639155}
   - component: {fileID: 6336778941508639156}
   m_Layer: 6
-  m_Name: Slime
+  m_Name: IceSlime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -497,7 +497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bd4ffdf14149bc4d963df2278e8c737, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HealthAffinityType: 0
+  m_HealthAffinityType: 2
   m_MaximumHealth: 5
   m_KillDelay: 1
   m_FallDamage: 2
@@ -513,7 +513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8de0efe353ff9404998b167bfece8824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_DamageAffinityType: 0
+  m_DamageAffinityType: 2
   m_BaseDamage: 1
 --- !u!1 &6336778941933673183
 GameObject:
@@ -589,7 +589,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 1724820138, guid: c4a46f5362a5bea4088efda92ce8fc33, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.18431371, g: 0.979416, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

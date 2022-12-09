@@ -622,6 +622,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1071292297, guid: 523c5c00d8822e542ac2102d97ff3fef, type: 3}
+      propertyPath: m_HealthAffinityType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7002259321251887098, guid: 523c5c00d8822e542ac2102d97ff3fef, type: 3}
       propertyPath: m_Name
       value: Player

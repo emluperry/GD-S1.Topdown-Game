@@ -11,7 +11,7 @@ public class UI_HUD : UI_Abstract
     [SerializeField] private UI_SegmentBar m_Healthbar;
     [SerializeField] private UI_SegmentBar m_Magicbar;
 
-    [SerializeField] private UI_SegmentBar m_Abilitybar;
+    [SerializeField] private UI_SegmentBar m_Timerbar;
     [SerializeField] private Image m_FlameDecor;
     [SerializeField] private Image[] m_AbilityIcons;
     [SerializeField] private Image[] m_AbilityPips;
@@ -36,7 +36,7 @@ public class UI_HUD : UI_Abstract
                 break;
 
             case SEGMENT_TYPE.ABILITY_TIMER:
-                m_Abilitybar.UpdateValue(value);
+                m_Timerbar.UpdateValue(value);
                 break;
         }
     }
