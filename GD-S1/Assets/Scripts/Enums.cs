@@ -24,5 +24,14 @@ namespace Enums
         SFXVOLUME
     }
 
+    public enum COLLECTABLE_TYPE
+    { 
+        COIN,
+        KEY,
+        BOSS_KEY,
+        HEALTH,
+        MAGIC
+    }
+
 }
 

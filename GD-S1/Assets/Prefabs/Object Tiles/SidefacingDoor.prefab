@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4031651068253560346}
   - component: {fileID: 4552834554969857931}
   - component: {fileID: -7376024566687204367}
-  - component: {fileID: 6899030442123247380}
+  - component: {fileID: 1303562356772970795}
   m_Layer: 0
   m_Name: SidefacingDoor
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4552834554969857931
 SpriteRenderer:
@@ -112,7 +112,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3, y: 2}
   m_EdgeRadius: 0
---- !u!114 &6899030442123247380
+--- !u!114 &1303562356772970795
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,6 +121,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6961814378818673410}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c9e342dfa5e3c744a596e8a7847714a, type: 3}
+  m_Script: {fileID: 11500000, guid: d87f9ba0daeaa9c46bb8d8cfe3803a92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Triggers: []

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2559795852010073687}
   - component: {fileID: 2559795852010073686}
   - component: {fileID: -6359554344723142957}
-  - component: {fileID: 4892588446556644321}
+  - component: {fileID: 4184181953719605052}
   m_Layer: 7
   m_Name: FrontfacingDoor
   m_TagString: Untagged
@@ -112,7 +112,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 1.7}
   m_EdgeRadius: 0
---- !u!114 &4892588446556644321
+--- !u!114 &4184181953719605052
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,6 +121,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2559795852010073689}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c9e342dfa5e3c744a596e8a7847714a, type: 3}
+  m_Script: {fileID: 11500000, guid: d87f9ba0daeaa9c46bb8d8cfe3803a92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Triggers: []
