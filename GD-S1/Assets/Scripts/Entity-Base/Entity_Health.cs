@@ -58,6 +58,11 @@ public class Entity_Health : MonoBehaviour
         return damage;
     }
 
+    public void SetAffinity(AFFINITY_TYPE type)
+    {
+        m_HealthAffinityType = type;
+    }
+
     public IEnumerator Dying()
     {
         yield return new WaitForSecondsRealtime(m_KillDelay);

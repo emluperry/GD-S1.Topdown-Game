@@ -13,4 +13,9 @@ public class Attack_Damage : MonoBehaviour
     {
         collision.gameObject.GetComponent<Entity_Health>()?.TakeDamage(m_BaseDamage, m_DamageAffinityType, collision);
     }
+
+    public void SetAffinity(AFFINITY_TYPE type)
+    {
+        m_DamageAffinityType = type;
+    }
 }
