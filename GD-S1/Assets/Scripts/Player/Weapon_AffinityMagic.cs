@@ -102,7 +102,7 @@ public class Weapon_AffinityMagic : Attack_Damage
             DealDamage(collision);
 
             if (m_MagicIsActive)
-                UpdateMagic(m_MagicCost);
+                LoseMagic(m_MagicCost);
         }
     }
 
@@ -116,14 +116,29 @@ public class Weapon_AffinityMagic : Attack_Damage
             OnAffinitySet?.Invoke(type, true);
     }
 
-    private void UpdateMagic(int decrement)
+    private void LoseMagic(int decrement)
     {
-        m_CurrentMagic -= decrement;
+        UpdateMagic(-decrement);
         if(m_CurrentMagic <= 0)
         {
             ApplyAffinity(AFFINITY_TYPE.STANDARD);
             m_MagicIsActive = false;
         }
+    }
+
+    public void GainMagic(int increment)
+    {
+        UpdateMagic(increment);
+    }
+
+    private void UpdateMagic(int amount)
+    {
+        m_CurrentMagic += amount;
+
+        if (m_CurrentMagic < 0)
+            m_CurrentMagic = 0;
+        else if (m_CurrentMagic > m_MaximumMagic)
+            m_CurrentMagic = m_MaximumMagic;
 
         float dec = m_CurrentMagic / (float)m_MaximumMagic;
         MagicUpdated?.Invoke(dec);

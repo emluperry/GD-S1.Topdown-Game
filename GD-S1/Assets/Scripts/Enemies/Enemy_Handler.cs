@@ -26,7 +26,7 @@ public class Enemy_Handler : MonoBehaviour
         m_Movement.Attack += m_Animation.SetAttackTrigger;
 
         m_Health.Killed += SlimeKilled;
-        m_Health.DamageTaken += m_UIHealthbar.UpdateValue;
+        m_Health.DamageUpdated += m_UIHealthbar.UpdateValue;
 
         m_Health.Destroyable += SetInactive;
     }
@@ -37,7 +37,7 @@ public class Enemy_Handler : MonoBehaviour
         m_Movement.ChargingAttack -= m_Animation.SetChargingBool;
         m_Movement.Attack -= m_Animation.SetAttackTrigger;
 
-        m_Health.DamageTaken -= m_UIHealthbar.UpdateValue;
+        m_Health.DamageUpdated -= m_UIHealthbar.UpdateValue;
 
         m_Health.Destroyable -= SetInactive;
 

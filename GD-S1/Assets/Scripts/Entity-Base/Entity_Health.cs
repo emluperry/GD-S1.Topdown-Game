@@ -8,7 +8,7 @@ public class Entity_Health : MonoBehaviour
 {
     [SerializeField] private AFFINITY_TYPE m_HealthAffinityType = AFFINITY_TYPE.STANDARD;
 
-    public Action<float> DamageTaken;
+    public Action<float> DamageUpdated;
     public Action<int, Vector2, Vector2> KnockbackEvent;
     public Action Killed;
     public Action Destroyable;
@@ -31,14 +31,28 @@ public class Entity_Health : MonoBehaviour
 
     public void TakeDamage(int dmg, AFFINITY_TYPE type, Collision2D collision)
     {
-        m_CurrentHealth -= CalculateDamage(dmg, type);
-
-        float dec = m_CurrentHealth / (float)m_MaximumHealth;
-        DamageTaken?.Invoke(dec);
+        UpdateHealth(-CalculateDamage(dmg, type));
 
         if(collision != null)
             KnockbackEvent?.Invoke(dmg, collision.GetContact(0).point, collision.GetContact(0).normal);
-        
+    }
+
+    public void HealHealth(int recovered)
+    {
+        UpdateHealth(recovered);
+    }
+
+    private void UpdateHealth(int amount)
+    {
+        if (m_CurrentHealth < 0)
+            m_CurrentHealth = 0;
+        else if (m_CurrentHealth > m_MaximumHealth)
+            m_CurrentHealth = m_MaximumHealth;
+
+        m_CurrentHealth += amount;
+
+        float dec = m_CurrentHealth / (float)m_MaximumHealth;
+        DamageUpdated?.Invoke(dec);
 
         if (m_CurrentHealth <= 0)
         {

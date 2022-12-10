@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6351681575495772389}
   - component: {fileID: 8858927298595015644}
   m_Layer: 7
-  m_Name: Coin
+  m_Name: HealthPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: -1834942301
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 906603623, guid: 2f7229c78bbe05f4d85b27d5f09893bb, type: 3}
+  m_Sprite: {fileID: 497539778, guid: 2f7229c78bbe05f4d85b27d5f09893bb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -114,5 +114,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c72d17f1c15ed446977809838e31661, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Type: 0
+  m_Type: 3
   m_CollectableWorth: 1

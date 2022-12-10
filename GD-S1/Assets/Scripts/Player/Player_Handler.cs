@@ -23,7 +23,7 @@ public class Player_Handler : MonoBehaviour
     {
         m_Health = m_Player.GetComponent<Entity_Health>();
 
-        m_Health.DamageTaken += HealthChanged;
+        m_Health.DamageUpdated += HealthChanged;
         m_Health.Killed += PlayerKilled;
 
         m_WeaponAffinity = m_Weapon.GetComponent<Weapon_AffinityMagic>();
@@ -37,7 +37,7 @@ public class Player_Handler : MonoBehaviour
 
     private void OnDestroy()
     {
-        m_Health.DamageTaken -= HealthChanged;
+        m_Health.DamageUpdated -= HealthChanged;
         m_Health.Killed -= PlayerKilled;
 
         m_WeaponAffinity.MagicUpdated -= MagicChanged;
@@ -80,5 +80,19 @@ public class Player_Handler : MonoBehaviour
     public Player_Movement GetPlayerMovementComponent()
     {
         return m_Player;
+    }
+
+    public void RecoverStat(int amount, COLLECTABLE_TYPE type)
+    {
+        switch(type)
+        {
+            case COLLECTABLE_TYPE.HEALTH:
+                m_Health.HealHealth(amount);
+                break;
+
+            case COLLECTABLE_TYPE.MAGIC:
+                m_WeaponAffinity.GainMagic(amount);
+                break;
+        }
     }
 }

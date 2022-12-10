@@ -163,6 +163,12 @@ public class GameManager : MonoBehaviour
                 //save elsewhere for transfer between scenes/levels
                 UpdateHUDValue(collectable, value);
                 break;
+            case COLLECTABLE_TYPE.HEALTH:
+                m_Player.RecoverStat(value, collectable);
+                break;
+            case COLLECTABLE_TYPE.MAGIC:
+                m_Player.RecoverStat(value, collectable);
+                break;
         }
     }
 
