@@ -28,6 +28,7 @@ public class Player_Handler : MonoBehaviour
 
         m_WeaponAffinity = m_Weapon.GetComponent<Weapon_AffinityMagic>();
 
+        m_WeaponAffinity.MagicUpdated += MagicChanged;
         m_WeaponAffinity.OnAffinitySwapped += SwapSavedAffinity;
         m_WeaponAffinity.OnAffinitySet += SetAffinity;
 
@@ -38,6 +39,10 @@ public class Player_Handler : MonoBehaviour
     {
         m_Health.DamageTaken -= HealthChanged;
         m_Health.Killed -= PlayerKilled;
+
+        m_WeaponAffinity.MagicUpdated -= MagicChanged;
+        m_WeaponAffinity.OnAffinitySwapped -= SwapSavedAffinity;
+        m_WeaponAffinity.OnAffinitySet -= SetAffinity;
     }
 
     private void PlayerKilled()
@@ -48,6 +53,11 @@ public class Player_Handler : MonoBehaviour
     private void HealthChanged(float dec)
     {
         OnStatValueChange?.Invoke(SEGMENT_TYPE.HEALTH, dec);
+    }
+
+    private void MagicChanged(float dec)
+    {
+        OnStatValueChange?.Invoke(SEGMENT_TYPE.MAGIC, dec);
     }
 
     private void SwapSavedAffinity(AFFINITY_TYPE type)
