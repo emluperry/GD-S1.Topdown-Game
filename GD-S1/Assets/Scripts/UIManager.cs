@@ -219,4 +219,14 @@ public class UIManager : MonoBehaviour
     {
         m_HUD.UpdateValue(type, increment);
     }
+
+    public void UpdateAffinityTypeChange(AFFINITY_TYPE type)
+    {
+        m_HUD.UpdateAffinityType(type);
+    }
+
+    public void UpdateAffinitySet(bool wasSet)
+    {
+        m_HUD.SetAffinityActive(wasSet);
+    }
 }

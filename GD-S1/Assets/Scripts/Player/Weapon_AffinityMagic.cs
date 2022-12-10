@@ -19,7 +19,7 @@ public class Weapon_AffinityMagic : MonoBehaviour
     private Attack_Damage m_AttackDamageComponent;
 
     public Action<AFFINITY_TYPE> OnAffinitySwapped;
-    public Action<AFFINITY_TYPE> OnAffinitySet;
+    public Action<AFFINITY_TYPE, bool> OnAffinitySet;
 
     private void Awake()
     {
@@ -31,13 +31,22 @@ public class Weapon_AffinityMagic : MonoBehaviour
 
     private void Update()
     {
-        m_QInput = Input.GetKeyDown(KeyCode.Q);
-        m_EInput = Input.GetKeyDown(KeyCode.E);
+        if (m_CurrentSwapDelay >= m_SwapInputDelay)
+        {
+            m_QInput = Input.GetKey(KeyCode.Q);
+            m_CurrentSwapDelay = 0;
+        }
+
+        if (m_CurrentApplyDelay >= m_ApplyInputDelay)
+        {
+            m_EInput = Input.GetKey(KeyCode.E);
+            m_CurrentApplyDelay = 0;
+        }
     }
 
     private void FixedUpdate()
     {
-        if(m_QInput && m_CurrentSwapDelay >= m_SwapInputDelay)
+        if(m_QInput)
         {
             m_CurrentAffinity++;
             if((int)m_CurrentAffinity > 3)
@@ -52,11 +61,10 @@ public class Weapon_AffinityMagic : MonoBehaviour
 
             OnAffinitySwapped?.Invoke(m_CurrentAffinity);
 
-            m_CurrentSwapDelay = 0;
             m_QInput = false;
         }
 
-        if(m_EInput && m_CurrentApplyDelay >= m_ApplyInputDelay)
+        if(m_EInput)
         {
             if(m_MagicIsActive)
             {
@@ -69,7 +77,6 @@ public class Weapon_AffinityMagic : MonoBehaviour
                 m_MagicIsActive = true;
             }
 
-            m_CurrentApplyDelay = 0;
             m_EInput = false;
         }
 
@@ -84,6 +91,9 @@ public class Weapon_AffinityMagic : MonoBehaviour
     {
         m_AttackDamageComponent.SetAffinity(type);
 
-        OnAffinitySet?.Invoke(type);
+        if (type == AFFINITY_TYPE.STANDARD)
+            OnAffinitySet?.Invoke(type, false);
+        else
+            OnAffinitySet?.Invoke(type, true);
     }
 }

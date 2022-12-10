@@ -60,6 +60,8 @@ public class Scene_Manager : MonoBehaviour
         {
             m_CurrentGameManager.OnStatValueChange += m_UIManager.UpdateBar;
             m_CurrentGameManager.OnCollectableValueChange += m_UIManager.UpdateValue;
+            m_CurrentGameManager.OnAffinityTypeChange += m_UIManager.UpdateAffinityTypeChange;
+            m_CurrentGameManager.OnAffinitySet += m_UIManager.UpdateAffinitySet;
             m_CurrentGameManager.OnPauseWorld += m_UIManager.LoadPauseMenu;
             m_CurrentGameManager.OnLevelEnd += m_UIManager.LoadWinLoseScreen;
         }

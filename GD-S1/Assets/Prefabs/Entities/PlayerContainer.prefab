@@ -841,7 +841,7 @@ Transform:
   - {fileID: 7002259321510264105}
   - {fileID: 7002259321569067271}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7002259321251887096
 MonoBehaviour:
@@ -856,6 +856,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PlayerAnimator: {fileID: 7002259321510264102}
+  m_AffinityColours:
+  - {r: 0.8763436, g: 0.514151, b: 1, a: 1}
+  - {r: 1, g: 0.18396229, b: 0.18396229, a: 1}
+  - {r: 0.18431371, g: 0.979416, b: 1, a: 1}
+  - {r: 0.21614078, g: 1, b: 0.18431371, a: 1}
   m_AttackArmJoint: {fileID: 7002259320620783547}
   m_WeaponHead: {fileID: 7002259321569067271}
   m_WeaponChain: {fileID: 7002259321425743650}
@@ -1029,6 +1034,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8de0efe353ff9404998b167bfece8824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_DamageAffinityType: 0
   m_BaseDamage: 1
 --- !u!1 &7002259321510264108
 GameObject:
@@ -1248,6 +1254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bd4ffdf14149bc4d963df2278e8c737, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_HealthAffinityType: 0
   m_MaximumHealth: 10
   m_KillDelay: 1
   m_FallDamage: 2
@@ -1296,6 +1303,7 @@ GameObject:
   - component: {fileID: 7002259321569067264}
   - component: {fileID: 7002259321569067267}
   - component: {fileID: 2215505389874919854}
+  - component: {fileID: 868248599}
   m_Layer: 9
   m_Name: Weapon
   m_TagString: Untagged
@@ -1467,7 +1475,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8de0efe353ff9404998b167bfece8824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_DamageAffinityType: 0
   m_BaseDamage: 3
+--- !u!114 &868248599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7002259321569067270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5aa47154e8222314d8845d3e99b4f1e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SwapInputDelay: 0.1
+  m_ApplyInputDelay: 0.5
 --- !u!1 &7002259321856428992
 GameObject:
   m_ObjectHideFlags: 0

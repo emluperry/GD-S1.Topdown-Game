@@ -10,7 +10,12 @@ public class Player_Handler : MonoBehaviour
     [SerializeField] private Player_Movement m_Player;
     private Entity_Health m_Health;
     [SerializeField] private Weapon_Movement m_Weapon;
+    private Weapon_AffinityMagic m_WeaponAffinity;
 
+    private Player_Animation m_PlayerAnim;
+
+    public Action<AFFINITY_TYPE> UpdateCurrentAffinity;
+    public Action<bool> SetCurrentAffinity;
     public Action<SEGMENT_TYPE, float> OnStatValueChange;
     public Action OnKilled;
 
@@ -20,6 +25,13 @@ public class Player_Handler : MonoBehaviour
 
         m_Health.DamageTaken += HealthChanged;
         m_Health.Killed += PlayerKilled;
+
+        m_WeaponAffinity = m_Weapon.GetComponent<Weapon_AffinityMagic>();
+
+        m_WeaponAffinity.OnAffinitySwapped += SwapSavedAffinity;
+        m_WeaponAffinity.OnAffinitySet += SetAffinity;
+
+        m_PlayerAnim = GetComponent<Player_Animation>();
     }
 
     private void OnDestroy()
@@ -36,6 +48,17 @@ public class Player_Handler : MonoBehaviour
     private void HealthChanged(float dec)
     {
         OnStatValueChange?.Invoke(SEGMENT_TYPE.HEALTH, dec);
+    }
+
+    private void SwapSavedAffinity(AFFINITY_TYPE type)
+    {
+        UpdateCurrentAffinity?.Invoke(type);
+    }
+
+    private void SetAffinity(AFFINITY_TYPE type, bool wasSet)
+    {
+        SetCurrentAffinity?.Invoke(wasSet);
+        m_PlayerAnim.UpdateAffinityColours(type);
     }
 
     public void SetPause(bool paused)

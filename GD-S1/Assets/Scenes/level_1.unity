@@ -622,17 +622,21 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1071292297, guid: 523c5c00d8822e542ac2102d97ff3fef, type: 3}
-      propertyPath: m_HealthAffinityType
-      value: 0
+    - target: {fileID: 7002259320958634823, guid: 523c5c00d8822e542ac2102d97ff3fef, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7002259320958634823, guid: 523c5c00d8822e542ac2102d97ff3fef, type: 3}
+      propertyPath: m_Color.g
+      value: 0.514151
+      objectReference: {fileID: 0}
+    - target: {fileID: 7002259320958634823, guid: 523c5c00d8822e542ac2102d97ff3fef, type: 3}
+      propertyPath: m_Color.r
+      value: 0.8763436
       objectReference: {fileID: 0}
     - target: {fileID: 7002259321251887098, guid: 523c5c00d8822e542ac2102d97ff3fef, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 7002259321251887098, guid: 523c5c00d8822e542ac2102d97ff3fef, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7002259321251887099, guid: 523c5c00d8822e542ac2102d97ff3fef, type: 3}
       propertyPath: m_RootOrder
@@ -640,11 +644,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7002259321251887099, guid: 523c5c00d8822e542ac2102d97ff3fef, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.18
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 7002259321251887099, guid: 523c5c00d8822e542ac2102d97ff3fef, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.16
+      value: -2.33
       objectReference: {fileID: 0}
     - target: {fileID: 7002259321251887099, guid: 523c5c00d8822e542ac2102d97ff3fef, type: 3}
       propertyPath: m_LocalPosition.z
@@ -678,13 +682,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7002259321510264105, guid: 523c5c00d8822e542ac2102d97ff3fef, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 2.1
+    - target: {fileID: 7002259321425743651, guid: 523c5c00d8822e542ac2102d97ff3fef, type: 3}
+      propertyPath: m_Color.g
+      value: 0.514151
       objectReference: {fileID: 0}
-    - target: {fileID: 7002259321510264105, guid: 523c5c00d8822e542ac2102d97ff3fef, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -11.58
+    - target: {fileID: 7002259321425743651, guid: 523c5c00d8822e542ac2102d97ff3fef, type: 3}
+      propertyPath: m_Color.r
+      value: 0.8763436
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

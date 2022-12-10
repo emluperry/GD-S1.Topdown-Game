@@ -14,14 +14,15 @@ public class UI_HUD : UI_Abstract
     [SerializeField] private UI_SegmentBar m_Timerbar;
     [SerializeField] private Image m_FlameDecor;
     [SerializeField] private Image[] m_AbilityIcons;
+    private int m_CurrentAbilityIcon = 1;
     [SerializeField] private Image[] m_AbilityPips;
+    [SerializeField] private Color[] m_AbilityColours;
 
     [SerializeField] private TextMeshProUGUI m_CoinValueText;
     private int m_CoinNum = 0;
     [SerializeField] private TextMeshProUGUI m_KeyValueText;
     private int m_KeyNum = 0;
     [SerializeField] private Image m_BossKey;
-    private int m_BossKeyNum = 0;
 
     public void UpdateBar(SEGMENT_TYPE type, float value)
     {
@@ -56,12 +57,35 @@ public class UI_HUD : UI_Abstract
                 break;
 
             case COLLECTABLE_TYPE.BOSS_KEY:
-                m_BossKeyNum = increment;
                 if (increment == 0)
                     m_BossKey.enabled = false;
                 else
                     m_BossKey.enabled = true;
                 break;
         }
+    }
+
+    public void UpdateAffinityType(AFFINITY_TYPE type)
+    {
+        m_AbilityIcons[m_CurrentAbilityIcon].enabled = false;
+        m_CurrentAbilityIcon = (int)type;
+
+        m_AbilityIcons[m_CurrentAbilityIcon].enabled = true;
+        m_Timerbar.GetComponent<Image>().color = m_AbilityColours[m_CurrentAbilityIcon];
+
+        int next = m_CurrentAbilityIcon + 1;
+        if (next > 3)
+            next = 1;
+        m_AbilityPips[0].color = m_AbilityColours[next];
+
+        next++;
+        if (next > 3)
+            next = 1;
+        m_AbilityPips[1].color = m_AbilityColours[next];
+    }
+
+    public void SetAffinityActive(bool wasSet)
+    {
+        m_FlameDecor.enabled = wasSet;
     }
 }

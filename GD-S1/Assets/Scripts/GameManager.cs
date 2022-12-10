@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
 
     public Action<SEGMENT_TYPE, float> OnStatValueChange;
     public Action<COLLECTABLE_TYPE, int> OnCollectableValueChange;
+    public Action<AFFINITY_TYPE> OnAffinityTypeChange;
+    public Action<bool> OnAffinitySet;
 
     public Action<bool> OnPauseWorld;
     public Action<bool> OnLevelEnd;
@@ -49,6 +51,8 @@ public class GameManager : MonoBehaviour
             m_UnlockableObjects[i].OnUnlockAttempt += UnlockAttempt;
         }
 
+        m_Player.UpdateCurrentAffinity += UpdateHUDAbility;
+        m_Player.SetCurrentAffinity += SetHUDAbility;
         m_Player.OnStatValueChange += UpdateHUDBar;
         m_Player.OnKilled += PlayerKilled;
     }
@@ -112,6 +116,16 @@ public class GameManager : MonoBehaviour
     private void UpdateHUDValue(COLLECTABLE_TYPE valueType, int increment)
     {
         OnCollectableValueChange?.Invoke(valueType, increment);
+    }
+
+    private void UpdateHUDAbility(AFFINITY_TYPE type)
+    {
+        OnAffinityTypeChange?.Invoke(type);
+    }
+
+    private void SetHUDAbility(bool wasSet)
+    {
+        OnAffinitySet?.Invoke(wasSet);
     }
 
     private void PlayerKilled()
