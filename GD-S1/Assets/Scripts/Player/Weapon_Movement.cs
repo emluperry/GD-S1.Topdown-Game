@@ -50,6 +50,10 @@ public class Weapon_Movement : Entity_Movement
             m_RB.MovePosition(m_Player.position);
             ToggleVisibility(true);
         }
+        else if (!m_IsActive)
+        {
+            m_RB.MovePosition(m_Player.position);
+        }
 
         ApplyWeaponMovement();
 
