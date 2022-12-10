@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Object_Container[] m_ContainerObjects;
     [SerializeField] private Object_Unlockable[] m_UnlockableObjects;
+    [SerializeField] private Object_FireSwitch[] m_FireSwitches;
+    [SerializeField] private Object_WaterCollection[] m_WaterCollections;
 
     [Header("Transition Variables")]
     [SerializeField] private float m_maxButtonCooldown = 1f;
@@ -33,6 +35,16 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        foreach(Object_FireSwitch switchObj in m_FireSwitches)
+        {
+            switchObj.OnMagicHit += LoseMagic;
+        }
+
+        foreach(Object_WaterCollection waterCol in m_WaterCollections)
+        {
+            waterCol.OnMagicHit += LoseMagic;
+        }
+
         foreach (Enemy_Spawner spawner in m_Spawners)
         {
             spawner.SetPlayerObject(m_Player.GetPlayerMovementComponent());
@@ -74,8 +86,12 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < m_UnlockableObjects.Length; i++)
         {
-            m_UnlockableObjects[i].m_UnlockableID = i;
             m_UnlockableObjects[i].OnUnlockAttempt -= UnlockAttempt;
+        }
+
+        foreach (Object_FireSwitch switchObj in m_FireSwitches)
+        {
+            switchObj.OnMagicHit -= LoseMagic;
         }
     }
 
@@ -183,5 +199,10 @@ public class GameManager : MonoBehaviour
         }
 
         m_UnlockableObjects[UnlockableID].ShouldUnlock(CanUnlock);
+    }
+
+    private void LoseMagic(int cost)
+    {
+        m_Player.LoseMagic(cost);
     }
 }

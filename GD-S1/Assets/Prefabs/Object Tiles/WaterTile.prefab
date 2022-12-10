@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 74996792121978175}
   - component: {fileID: 6647437002284003259}
-  - component: {fileID: -5549709843315566717}
-  - component: {fileID: 4344342640071800056}
+  - component: {fileID: 6921451378594633283}
   m_Layer: 7
-  m_Name: Water
+  m_Name: WaterTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,30 +58,9 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 10, y: 10}
+  m_Size: {x: 2.1, y: 2.1}
   m_EdgeRadius: 0
---- !u!50 &-5549709843315566717
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1655995590527231418}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 7
---- !u!114 &4344342640071800056
+--- !u!114 &6921451378594633283
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,9 +69,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1655995590527231418}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 842c78ca401da2b479e65af0da25e9bc, type: 3}
+  m_Script: {fileID: 11500000, guid: 3499c6e838ce79c4984d673069cf6214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Triggers: []
+  m_WaterSprite: {fileID: 2021037727, guid: f24ccb3f1c11d93458923358661035d7, type: 3}
+  m_FrozenSprite: {fileID: 768587107, guid: f24ccb3f1c11d93458923358661035d7, type: 3}
+  m_MagicCost: 1
 --- !u!1 &8869525645202506018
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,7 +102,7 @@ Transform:
   m_GameObject: {fileID: 8869525645202506018}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.05, y: 1.05, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 74996792121978175}
@@ -164,8 +146,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1834942301
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 2021037727, guid: f24ccb3f1c11d93458923358661035d7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

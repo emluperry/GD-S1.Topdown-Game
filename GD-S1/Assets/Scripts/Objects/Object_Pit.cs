@@ -5,13 +5,15 @@ using UnityEngine;
 
 public class Object_Pit : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        collision.gameObject.GetComponent<Entity_Health>()?.TouchingPit(true);
+        if(collision.gameObject.layer != 9)
+            collision.gameObject.GetComponent<Entity_Health>()?.TouchingPit(true);
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    protected virtual void OnTriggerExit2D(Collider2D collision)
     {
-        collision.gameObject.GetComponent<Entity_Health>()?.TouchingPit(false);
+        if (collision.gameObject.layer != 9)
+            collision.gameObject.GetComponent<Entity_Health>()?.TouchingPit(false);
     }
 }

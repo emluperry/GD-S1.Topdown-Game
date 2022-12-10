@@ -95,4 +95,9 @@ public class Player_Handler : MonoBehaviour
                 break;
         }
     }
+
+    public void LoseMagic(int cost)
+    {
+        m_WeaponAffinity.LoseMagic(cost);
+    }
 }

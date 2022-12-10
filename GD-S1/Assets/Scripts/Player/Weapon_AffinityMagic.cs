@@ -109,7 +109,7 @@ public class Weapon_AffinityMagic : Attack_Damage
 
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == 6 || collision.gameObject.layer == 7)
+        if (collision.gameObject.layer == 6)
         {
             DealDamage(collision);
 
@@ -139,7 +139,7 @@ public class Weapon_AffinityMagic : Attack_Damage
             OnAffinitySet?.Invoke(type, true);
     }
 
-    private void LoseMagic(int decrement)
+    public void LoseMagic(int decrement)
     {
         UpdateMagic(-decrement);
         if(m_CurrentMagic <= 0)

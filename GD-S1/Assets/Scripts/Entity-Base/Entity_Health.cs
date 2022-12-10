@@ -22,6 +22,7 @@ public class Entity_Health : MonoBehaviour
 
     private bool m_IsGrounded = false;
     [SerializeField] private int m_FallDamage = 2;
+    [SerializeField] private float m_SolidGroundCheckDelay = 0.05f;
     private Coroutine m_FallingCoroutine;
 
     private void Awake()
@@ -99,7 +100,11 @@ public class Entity_Health : MonoBehaviour
 
     private IEnumerator CheckForFall()
     {
-        yield return new WaitUntil(() => m_IsGrounded == false);
+        while(m_IsGrounded)
+        {
+            yield return new WaitUntil(() => m_IsGrounded == false);
+            yield return new WaitForSecondsRealtime(m_SolidGroundCheckDelay);
+        }
 
         TakeDamage(m_FallDamage, AFFINITY_TYPE.STANDARD, null);
         onPitfall?.Invoke();
