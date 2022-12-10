@@ -26,4 +26,9 @@ public class Attack_Damage : MonoBehaviour
     {
         m_DamageAffinityType = type;
     }
+
+    public AFFINITY_TYPE GetAffinity()
+    {
+        return m_DamageAffinityType;
+    }
 }

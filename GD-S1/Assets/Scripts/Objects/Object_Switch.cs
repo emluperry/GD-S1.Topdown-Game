@@ -19,7 +19,7 @@ public class Object_Switch : Trigger
         m_Renderer = GetComponent<SpriteRenderer>();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.layer == 9) //player weapon layer
         {
