@@ -22,16 +22,28 @@ public class Weapon_AffinityMagic : Attack_Damage
     private bool m_MagicIsActive;
     private AFFINITY_TYPE m_CurrentAffinity = AFFINITY_TYPE.FIRE;
 
+    [SerializeField] private GameObject m_WindProjectile;
+    private Wind_Projectile m_ProjectileInstance;
+
     public Action<float> MagicUpdated;
     public Action<AFFINITY_TYPE> OnAffinitySwapped;
     public Action<AFFINITY_TYPE, bool> OnAffinitySet;
 
     private void Awake()
     {
+        m_ProjectileInstance = Instantiate(m_WindProjectile, Vector2.zero, Quaternion.identity).GetComponent<Wind_Projectile>();
+        m_ProjectileInstance.gameObject.SetActive(false);
+        GetComponent<Weapon_Movement>().OnWeaponFired += FireProjectile;
+
         m_CurrentSwapDelay = m_SwapInputDelay;
         m_CurrentApplyDelay = m_ApplyInputDelay;
 
         m_CurrentMagic = m_MaximumMagic;
+    }
+
+    private void OnDestroy()
+    {
+        GetComponent<Weapon_Movement>().OnWeaponFired -= FireProjectile;
     }
 
     private void Update()
@@ -39,13 +51,11 @@ public class Weapon_AffinityMagic : Attack_Damage
         if (m_CurrentSwapDelay >= m_SwapInputDelay)
         {
             m_QInput = Input.GetKey(KeyCode.Q);
-            m_CurrentSwapDelay = 0;
         }
 
         if (m_CurrentApplyDelay >= m_ApplyInputDelay)
         {
             m_EInput = Input.GetKey(KeyCode.E);
-            m_CurrentApplyDelay = 0;
         }
     }
 
@@ -67,6 +77,7 @@ public class Weapon_AffinityMagic : Attack_Damage
             OnAffinitySwapped?.Invoke(m_CurrentAffinity);
 
             m_QInput = false;
+            m_CurrentSwapDelay = 0;
         }
 
         if(m_EInput)
@@ -86,6 +97,7 @@ public class Weapon_AffinityMagic : Attack_Damage
             }
 
             m_EInput = false;
+            m_CurrentApplyDelay = 0;
         }
 
         if (m_CurrentSwapDelay < m_SwapInputDelay)
@@ -103,6 +115,17 @@ public class Weapon_AffinityMagic : Attack_Damage
 
             if (m_MagicIsActive)
                 LoseMagic(m_MagicCost);
+        }
+    }
+
+    private void FireProjectile(Vector2 direction)
+    {
+        if(m_CurrentAffinity == AFFINITY_TYPE.WIND && !m_ProjectileInstance.m_IsActive)
+        {
+            LoseMagic(m_MagicCost);
+            m_ProjectileInstance.gameObject.SetActive(true);
+            m_ProjectileInstance.transform.position = transform.position;
+            m_ProjectileInstance.SetDirection(direction.normalized);
         }
     }
 
