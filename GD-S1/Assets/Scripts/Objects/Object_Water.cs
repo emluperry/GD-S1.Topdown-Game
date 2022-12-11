@@ -7,7 +7,6 @@ using System;
 public class Object_Water : Object_Platform
 {
     private SpriteRenderer m_Renderer;
-    private int m_WaterID;
 
     [SerializeField] private Sprite m_WaterSprite;
     [SerializeField] private Sprite m_FrozenSprite;
@@ -72,11 +71,5 @@ public class Object_Water : Object_Platform
         {
             m_Renderer.sprite = m_WaterSprite;
         }
-        OnWaterStateChange?.Invoke(m_WaterID, isFrozen);
-    }
-
-    public void SetID(int id)
-    {
-        m_WaterID = id;
     }
 }

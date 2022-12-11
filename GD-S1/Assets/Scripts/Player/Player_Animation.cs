@@ -56,18 +56,17 @@ public class Player_Animation : MonoBehaviour
         {
             m_PlayerAnimator.transform.localScale = new Vector2(-1, 1);
             m_AttackArmJoint.localScale = new Vector2(-1, 1);
-            m_PlayerAnimator.SetBool("isWalking", true);
         }
         else if (m_InputDirection.x < 0)
         {
             m_PlayerAnimator.transform.localScale = new Vector2(1, 1);
             m_AttackArmJoint.localScale = new Vector2(1, 1);
+        }
+
+        if(m_InputDirection.sqrMagnitude > 0)
             m_PlayerAnimator.SetBool("isWalking", true);
-        }
         else
-        {
             m_PlayerAnimator.SetBool("isWalking", false);
-        }
     }
 
     private void AdjustWeaponSprites()
