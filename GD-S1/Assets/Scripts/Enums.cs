@@ -24,5 +24,29 @@ namespace Enums
         SFXVOLUME
     }
 
+    public enum COLLECTABLE_TYPE
+    { 
+        COIN,
+        KEY,
+        BOSS_KEY,
+        HEALTH,
+        MAGIC
+    }
+
+    public enum SEGMENT_TYPE
+    {
+        HEALTH,
+        MAGIC,
+        ABILITY_TIMER
+    }
+
+    public enum AFFINITY_TYPE
+    {
+        STANDARD,
+        FIRE,
+        ICE,
+        WIND
+    }
+
 }
 

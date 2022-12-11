@@ -288,7 +288,7 @@ MonoBehaviour:
   m_GlossaryButton: {fileID: 6128702794386649220}
   m_SettingsButton: {fileID: 2987118930078514541}
   m_SaveButton: {fileID: 5872538436559510583}
-  m_QuitToTitleButton: {fileID: 0}
+  m_QuitToTitleButton: {fileID: 4665630833722714337}
   m_QuitGameButton: {fileID: 3583155474711902308}
 --- !u!1 &226726720013490036
 GameObject:

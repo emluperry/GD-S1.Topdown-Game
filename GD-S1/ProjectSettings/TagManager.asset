@@ -14,9 +14,9 @@ TagManager:
   - Enemy
   - TilemapObjects
   - Tilemap
-  - 
-  - 
-  - 
+  - Weapon
+  - Pit
+  - Platform
   - 
   - 
   - 

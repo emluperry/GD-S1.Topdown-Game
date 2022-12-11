@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 2559795852010073687}
   - component: {fileID: 2559795852010073686}
   - component: {fileID: -6359554344723142957}
+  - component: {fileID: 4184181953719605052}
+  - component: {fileID: -6197322110669454062}
   m_Layer: 7
   m_Name: FrontfacingDoor
   m_TagString: Untagged
@@ -111,3 +113,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 1.7}
   m_EdgeRadius: 0
+--- !u!114 &4184181953719605052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2559795852010073689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d87f9ba0daeaa9c46bb8d8cfe3803a92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Triggers: []
+  m_Decoration: {fileID: 0}
+--- !u!208 &-6197322110669454062
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2559795852010073689}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1, y: 0.85, z: 0.1}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5

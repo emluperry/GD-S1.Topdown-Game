@@ -3,24 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Spawner : MonoBehaviour
+public class Enemy_Spawner : Trigger
 {
     [SerializeField] private GameObject m_EnemyPrefabType;
     [SerializeField] private int m_NumEnemies;
+    [SerializeField] private float m_SpawnRadius = 1f;
 
     private Enemy_Handler[] m_Enemies;
     private Player_Movement m_Player;
 
-    private bool m_SpawnerCleared = false;
-
     public Action OnAllEnemiesKilled;
 
-    void Start()
+    private void Start()
     {
         m_Enemies = new Enemy_Handler[m_NumEnemies];
         for(int i = 0; i < m_NumEnemies; i++)
         {
-            m_Enemies[i] = Instantiate(m_EnemyPrefabType, transform.position, Quaternion.identity, transform).GetComponent<Enemy_Handler>();
+            m_Enemies[i] = Instantiate(m_EnemyPrefabType, (Vector2)transform.position + (UnityEngine.Random.insideUnitCircle * m_SpawnRadius), Quaternion.identity, transform).GetComponent<Enemy_Handler>();
             m_Enemies[i].OnEnemyKilled += OnEnemyKilled;
             m_Enemies[i].Initialise(m_Player);
         }
@@ -51,10 +50,10 @@ public class Enemy_Spawner : MonoBehaviour
     {
         m_NumEnemies--;
 
-        if (m_NumEnemies <= 0 && !m_SpawnerCleared)
+        if (m_NumEnemies <= 0 && !m_CurrentState)
         {
             OnAllEnemiesKilled?.Invoke();
-            m_SpawnerCleared = true;
+            ChangeState(true);
         }
     }
 }
