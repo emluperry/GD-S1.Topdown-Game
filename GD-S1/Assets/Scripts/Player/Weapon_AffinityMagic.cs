@@ -116,6 +116,8 @@ public class Weapon_AffinityMagic : Attack_Damage
             if (m_MagicIsActive)
                 LoseMagic(m_MagicCost);
         }
+
+        OnHitObject?.Invoke();
     }
 
     private void FireProjectile(Vector2 direction)
