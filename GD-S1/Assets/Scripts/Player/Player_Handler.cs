@@ -3,69 +3,51 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Enums;
+
 public class Player_Handler : MonoBehaviour
 {
     [SerializeField] private Player_Movement m_Player;
     private Entity_Health m_Health;
     [SerializeField] private Weapon_Movement m_Weapon;
-<<<<<<< Updated upstream
-=======
     private Weapon_AffinityMagic m_WeaponAffinity;
-    private SFXHandler m_WeaponSFX;
 
     private Player_Animation m_PlayerAnim;
->>>>>>> Stashed changes
 
-    public Action<float> OnDamageTaken;
+    public Action<AFFINITY_TYPE> UpdateCurrentAffinity;
+    public Action<bool> SetCurrentAffinity;
+    public Action<SEGMENT_TYPE, float> OnStatValueChange;
     public Action OnKilled;
 
     private void Awake()
     {
         m_Health = m_Player.GetComponent<Entity_Health>();
 
-        m_Health.DamageTaken += TookDamage;
+        m_Health.DamageUpdated += HealthChanged;
         m_Health.Killed += PlayerKilled;
-<<<<<<< Updated upstream
-=======
 
         m_WeaponAffinity = m_Weapon.GetComponent<Weapon_AffinityMagic>();
 
-        m_WeaponAffinity.OnObjectHit += ObjectHit;
         m_WeaponAffinity.MagicUpdated += MagicChanged;
         m_WeaponAffinity.OnAffinitySwapped += SwapSavedAffinity;
         m_WeaponAffinity.OnAffinitySet += SetAffinity;
 
         m_PlayerAnim = GetComponent<Player_Animation>();
-
-        m_WeaponSFX = m_Weapon.GetComponent<SFXHandler>();
->>>>>>> Stashed changes
     }
 
     private void OnDestroy()
     {
-        m_Health.DamageTaken -= TookDamage;
+        m_Health.DamageUpdated -= HealthChanged;
         m_Health.Killed -= PlayerKilled;
-<<<<<<< Updated upstream
-=======
 
-        m_WeaponAffinity.OnObjectHit -= ObjectHit;
         m_WeaponAffinity.MagicUpdated -= MagicChanged;
         m_WeaponAffinity.OnAffinitySwapped -= SwapSavedAffinity;
         m_WeaponAffinity.OnAffinitySet -= SetAffinity;
->>>>>>> Stashed changes
     }
 
     private void PlayerKilled()
     {
         OnKilled?.Invoke();
-    }
-
-<<<<<<< Updated upstream
-    private void TookDamage(float dec)
-=======
-    private void ObjectHit()
-    {
-        m_WeaponSFX.PlaySound();
     }
 
     private void HealthChanged(float dec)
@@ -84,9 +66,9 @@ public class Player_Handler : MonoBehaviour
     }
 
     private void SetAffinity(AFFINITY_TYPE type, bool wasSet)
->>>>>>> Stashed changes
     {
-        OnDamageTaken?.Invoke(dec);
+        SetCurrentAffinity?.Invoke(wasSet);
+        m_PlayerAnim.UpdateAffinityColours(type);
     }
 
     public void SetPause(bool paused)
@@ -98,5 +80,24 @@ public class Player_Handler : MonoBehaviour
     public Player_Movement GetPlayerMovementComponent()
     {
         return m_Player;
+    }
+
+    public void RecoverStat(int amount, COLLECTABLE_TYPE type)
+    {
+        switch(type)
+        {
+            case COLLECTABLE_TYPE.HEALTH:
+                m_Health.HealHealth(amount);
+                break;
+
+            case COLLECTABLE_TYPE.MAGIC:
+                m_WeaponAffinity.GainMagic(amount);
+                break;
+        }
+    }
+
+    public void LoseMagic(int cost)
+    {
+        m_WeaponAffinity.LoseMagic(cost);
     }
 }

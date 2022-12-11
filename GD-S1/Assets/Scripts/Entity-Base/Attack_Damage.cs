@@ -1,21 +1,18 @@
+using Enums;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Attack_Damage : MonoBehaviour
 {
-    [SerializeField][Min(0f)] int m_BaseDamage = 1;
+    [SerializeField] private AFFINITY_TYPE m_DamageAffinityType = AFFINITY_TYPE.STANDARD;
 
-<<<<<<< Updated upstream
-    private void OnCollisionEnter2D(Collision2D collision)
-=======
-    public Action OnObjectHit;
+    [SerializeField][Min(0f)] int m_BaseDamage = 1;
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         DealDamage(collision);
-
-        OnObjectHit?.Invoke();
     }
 
     protected void DealDamage(Collision2D collision)
@@ -31,8 +28,7 @@ public class Attack_Damage : MonoBehaviour
     }
 
     public AFFINITY_TYPE GetAffinity()
->>>>>>> Stashed changes
     {
-        collision.gameObject.GetComponent<Entity_Health>()?.TakeDamage(m_BaseDamage, collision);
+        return m_DamageAffinityType;
     }
 }

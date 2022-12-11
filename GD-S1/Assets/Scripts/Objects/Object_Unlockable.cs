@@ -13,10 +13,8 @@ public class Object_Unlockable : Trigger
     [SerializeField] private COLLECTABLE_TYPE m_RequiredCollectable = COLLECTABLE_TYPE.KEY;
     public Action<int, COLLECTABLE_TYPE> OnUnlockAttempt;
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
-
         m_Renderer = GetComponent<SpriteRenderer>();
         m_Collider = GetComponent<Collider2D>();
     }
