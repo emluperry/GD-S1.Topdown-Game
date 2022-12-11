@@ -11,6 +11,7 @@ public class Player_Handler : MonoBehaviour
     private Entity_Health m_Health;
     [SerializeField] private Weapon_Movement m_Weapon;
     private Weapon_AffinityMagic m_WeaponAffinity;
+    private SFXHandler m_SFXHandler;
 
     private Player_Animation m_PlayerAnim;
 
@@ -27,7 +28,9 @@ public class Player_Handler : MonoBehaviour
         m_Health.Killed += PlayerKilled;
 
         m_WeaponAffinity = m_Weapon.GetComponent<Weapon_AffinityMagic>();
+        m_SFXHandler = m_Weapon.GetComponent<SFXHandler>();
 
+        m_WeaponAffinity.OnHitObject += m_SFXHandler.PlaySound;
         m_WeaponAffinity.MagicUpdated += MagicChanged;
         m_WeaponAffinity.OnAffinitySwapped += SwapSavedAffinity;
         m_WeaponAffinity.OnAffinitySet += SetAffinity;

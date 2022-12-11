@@ -10,6 +10,7 @@ namespace Enums
         LEVEL_SELECT,
         HOWTOPLAY,
         GLOSSARY,
+        GLOSSARY_TUTORIAL,
         SETTINGS,
         PAUSED,
         WIN,

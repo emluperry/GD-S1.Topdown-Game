@@ -5,6 +5,7 @@ using UnityEngine;
 public class UI_LevelSelect : UI_SimpleScreen
 {
     [SerializeField] private Button_UIOnClickLevel[] m_LevelButtons;
+    [SerializeField] private Button_UIOnClickUI m_ControlsButton;
 
     protected override void Awake()
     {
@@ -15,6 +16,8 @@ public class UI_LevelSelect : UI_SimpleScreen
         {
             button.OnClicked += LoadLevel;
         }
+
+        m_ControlsButton.OnClicked += LoadUI;
     }
 
     protected override void OnDestroy()
@@ -23,6 +26,8 @@ public class UI_LevelSelect : UI_SimpleScreen
         {
             button.OnClicked -= LoadLevel;
         }
+
+        m_ControlsButton.OnClicked -= LoadUI;
 
         base.OnDestroy();
     }

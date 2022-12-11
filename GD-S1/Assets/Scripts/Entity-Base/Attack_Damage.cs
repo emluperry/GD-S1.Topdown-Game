@@ -10,9 +10,13 @@ public class Attack_Damage : MonoBehaviour
 
     [SerializeField][Min(0f)] int m_BaseDamage = 1;
 
+    public Action OnHitObject;
+
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
         DealDamage(collision);
+
+        OnHitObject?.Invoke();
     }
 
     protected void DealDamage(Collision2D collision)

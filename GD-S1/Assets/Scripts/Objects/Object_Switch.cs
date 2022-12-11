@@ -14,8 +14,10 @@ public class Object_Switch : Trigger
     [SerializeField][Min(0f)] private float m_ActivationDuration = 1;
     private Coroutine m_DurationCoroutine;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         m_Renderer = GetComponent<SpriteRenderer>();
     }
 

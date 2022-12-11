@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject m_LevelSelectPrefab;
     [SerializeField] private GameObject m_SettingsPrefab;
     [SerializeField] private GameObject m_GlossaryPrefab;
+    [SerializeField] private GameObject m_TutorialPrefab;
     [SerializeField] private GameObject m_PausePrefab;
     [SerializeField] private GameObject m_WinPrefab;
     [SerializeField] private GameObject m_LosePrefab;
@@ -19,6 +20,7 @@ public class UIManager : MonoBehaviour
     private UI_Abstract m_LevelSelect;
     private UI_Abstract m_Settings;
     private UI_Abstract m_Glossary;
+    private UI_Abstract m_Tutorial;
     private UI_Abstract m_Pause;
     private UI_Abstract m_Win;
     private UI_Abstract m_Lose;
@@ -168,6 +170,10 @@ public class UIManager : MonoBehaviour
 
             case UI_STATE.GLOSSARY:
                 LoadUI(ref m_GlossaryPrefab, ref m_Glossary);
+                break;
+
+            case UI_STATE.GLOSSARY_TUTORIAL:
+                LoadUI(ref m_TutorialPrefab, ref m_Tutorial);
                 break;
 
             case UI_STATE.WIN:
