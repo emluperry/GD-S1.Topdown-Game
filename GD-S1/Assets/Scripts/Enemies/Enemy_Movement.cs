@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -120,7 +121,10 @@ public class Enemy_Movement : Entity_Movement
 
     private Vector2 NewWanderPoint()
     {
-        return (Vector2)transform.position + (UnityEngine.Random.insideUnitCircle * m_WanderingRadius);
+        Vector3 randomPosition = (Vector2)transform.position + (UnityEngine.Random.insideUnitCircle * m_WanderingRadius);
+        NavMesh.SamplePosition(randomPosition, out NavMeshHit hit, 1, NavMesh.AllAreas);
+
+        return hit.position;
     }
 
     private bool IsInRange(float radius)
