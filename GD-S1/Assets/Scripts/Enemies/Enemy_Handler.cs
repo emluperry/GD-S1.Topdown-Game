@@ -8,7 +8,8 @@ public class Enemy_Handler : MonoBehaviour
     private Enemy_Movement m_Movement;
     private Enemy_Animation m_Animation;
     private Entity_Health m_Health;
-    private UI_Healthbar m_UIHealthbar;
+    private UI_SegmentBar m_UIHealthbar;
+    private Collider2D m_Collider;
 
     private bool m_IsAlive = true;
 
@@ -19,14 +20,15 @@ public class Enemy_Handler : MonoBehaviour
         m_Movement = GetComponent<Enemy_Movement>();
         m_Animation = GetComponent<Enemy_Animation>();
         m_Health = GetComponent<Entity_Health>();
-        m_UIHealthbar = GetComponentInChildren<UI_Healthbar>();
+        m_UIHealthbar = GetComponentInChildren<UI_SegmentBar>();
+        m_Collider = GetComponent<Collider2D>();
 
         m_Movement.UpdateInput += m_Animation.SetInputDirection;
         m_Movement.ChargingAttack += m_Animation.SetChargingBool;
         m_Movement.Attack += m_Animation.SetAttackTrigger;
 
         m_Health.Killed += SlimeKilled;
-        m_Health.DamageTaken += m_UIHealthbar.UpdateHealth;
+        m_Health.DamageUpdated += m_UIHealthbar.UpdateValue;
 
         m_Health.Destroyable += SetInactive;
     }
@@ -37,7 +39,7 @@ public class Enemy_Handler : MonoBehaviour
         m_Movement.ChargingAttack -= m_Animation.SetChargingBool;
         m_Movement.Attack -= m_Animation.SetAttackTrigger;
 
-        m_Health.DamageTaken -= m_UIHealthbar.UpdateHealth;
+        m_Health.DamageUpdated -= m_UIHealthbar.UpdateValue;
 
         m_Health.Destroyable -= SetInactive;
 
@@ -50,6 +52,7 @@ public class Enemy_Handler : MonoBehaviour
         {
             m_Animation.SetDeadTrigger();
             m_Movement.SetKilled();
+            m_Collider.enabled = false;
 
             OnEnemyKilled?.Invoke();
             m_IsAlive = false;
