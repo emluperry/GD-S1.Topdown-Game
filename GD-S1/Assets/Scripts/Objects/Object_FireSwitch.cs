@@ -14,12 +14,12 @@ public class Object_FireSwitch : Object_Switch
         if (collision.gameObject.layer == 9) //player weapon layer
         {
             AFFINITY_TYPE magicType = collision.gameObject.GetComponent<Weapon_AffinityMagic>().GetAffinity();
-            if (magicType == AFFINITY_TYPE.FIRE)
+            if (!m_CurrentState && magicType == AFFINITY_TYPE.FIRE)
             {
                 OnMagicHit?.Invoke(m_MagicCost);
                 ChangeState(true);
             }
-            else if(magicType == AFFINITY_TYPE.WIND)
+            else if(m_CurrentState && magicType == AFFINITY_TYPE.WIND)
             {
                 OnMagicHit?.Invoke(m_MagicCost);
                 ChangeState(false);

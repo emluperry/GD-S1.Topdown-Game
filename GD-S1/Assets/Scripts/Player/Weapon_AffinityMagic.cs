@@ -120,7 +120,7 @@ public class Weapon_AffinityMagic : Attack_Damage
 
     private void FireProjectile(Vector2 direction)
     {
-        if(m_CurrentAffinity == AFFINITY_TYPE.WIND && !m_ProjectileInstance.m_IsActive)
+        if(m_MagicIsActive && m_CurrentAffinity == AFFINITY_TYPE.WIND && !m_ProjectileInstance.m_IsActive)
         {
             LoseMagic(m_MagicCost);
             m_ProjectileInstance.gameObject.SetActive(true);

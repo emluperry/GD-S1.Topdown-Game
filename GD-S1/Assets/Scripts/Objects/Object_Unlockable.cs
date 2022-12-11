@@ -1,3 +1,4 @@
+using Enums;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +10,8 @@ public class Object_Unlockable : Trigger
     private Collider2D m_Collider;
 
     public int m_UnlockableID = -1;
-    public Action<int> OnUnlockAttempt;
+    [SerializeField] private COLLECTABLE_TYPE m_RequiredCollectable = COLLECTABLE_TYPE.KEY;
+    public Action<int, COLLECTABLE_TYPE> OnUnlockAttempt;
 
     private void Awake()
     {
@@ -21,7 +23,7 @@ public class Object_Unlockable : Trigger
     {
         if (collision.gameObject.layer == 3) //player layer
         {
-            OnUnlockAttempt?.Invoke(m_UnlockableID);
+            OnUnlockAttempt?.Invoke(m_UnlockableID, m_RequiredCollectable);
         }
     }
 

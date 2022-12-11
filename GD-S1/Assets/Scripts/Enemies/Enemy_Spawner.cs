@@ -7,6 +7,7 @@ public class Enemy_Spawner : Trigger
 {
     [SerializeField] private GameObject m_EnemyPrefabType;
     [SerializeField] private int m_NumEnemies;
+    [SerializeField] private float m_SpawnRadius = 1f;
 
     private Enemy_Handler[] m_Enemies;
     private Player_Movement m_Player;
@@ -18,7 +19,7 @@ public class Enemy_Spawner : Trigger
         m_Enemies = new Enemy_Handler[m_NumEnemies];
         for(int i = 0; i < m_NumEnemies; i++)
         {
-            m_Enemies[i] = Instantiate(m_EnemyPrefabType, transform.position, Quaternion.identity, transform).GetComponent<Enemy_Handler>();
+            m_Enemies[i] = Instantiate(m_EnemyPrefabType, (Vector2)transform.position + (UnityEngine.Random.insideUnitCircle * m_SpawnRadius), Quaternion.identity, transform).GetComponent<Enemy_Handler>();
             m_Enemies[i].OnEnemyKilled += OnEnemyKilled;
             m_Enemies[i].Initialise(m_Player);
         }

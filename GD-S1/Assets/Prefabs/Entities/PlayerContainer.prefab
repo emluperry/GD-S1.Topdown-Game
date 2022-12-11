@@ -841,7 +841,7 @@ Transform:
   - {fileID: 7002259321510264105}
   - {fileID: 7002259321569067271}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7002259321251887096
 MonoBehaviour:
@@ -1257,7 +1257,9 @@ MonoBehaviour:
   m_HealthAffinityType: 0
   m_MaximumHealth: 10
   m_KillDelay: 1
+  m_InvincibilityDelay: 1
   m_FallDamage: 2
+  m_SolidGroundCheckDelay: 0.05
 --- !u!1 &7002259321521617923
 GameObject:
   m_ObjectHideFlags: 0
@@ -1478,8 +1480,9 @@ MonoBehaviour:
   m_BaseDamage: 3
   m_SwapInputDelay: 0.1
   m_ApplyInputDelay: 0.5
-  m_MaximumMagic: 5
+  m_MaximumMagic: 10
   m_MagicCost: 1
+  m_WindProjectile: {fileID: 3922438949536400607, guid: 4f2a1669e68a5dc4bb96a7531d3387f1, type: 3}
 --- !u!1 &7002259321856428992
 GameObject:
   m_ObjectHideFlags: 0

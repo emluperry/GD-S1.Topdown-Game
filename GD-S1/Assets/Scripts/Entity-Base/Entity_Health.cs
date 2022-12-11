@@ -20,6 +20,9 @@ public class Entity_Health : MonoBehaviour
     private int m_CurrentHealth;
     [SerializeField][Min(0f)] private float m_KillDelay = 1f;
 
+    [SerializeField][Min(0f)] private float m_InvincibilityDelay = 0;
+    private bool m_Invincible = false;
+
     private bool m_IsGrounded = false;
     [SerializeField] private int m_FallDamage = 2;
     [SerializeField] private float m_SolidGroundCheckDelay = 0.05f;
@@ -32,6 +35,9 @@ public class Entity_Health : MonoBehaviour
 
     public void TakeDamage(int dmg, AFFINITY_TYPE type, Collision2D collision)
     {
+        if (m_Invincible)
+            return;
+
         UpdateHealth(-CalculateDamage(dmg, type));
 
         if(collision != null)
@@ -54,6 +60,8 @@ public class Entity_Health : MonoBehaviour
 
         float dec = m_CurrentHealth / (float)m_MaximumHealth;
         DamageUpdated?.Invoke(dec);
+
+        StartCoroutine(InvincibilityTimer());
 
         if (m_CurrentHealth <= 0)
         {
@@ -82,6 +90,15 @@ public class Entity_Health : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(m_KillDelay);
         Destroyable?.Invoke();
+    }
+
+    public IEnumerator InvincibilityTimer()
+    {
+        m_Invincible = true;
+
+        yield return new WaitForSecondsRealtime(m_InvincibilityDelay);
+
+        m_Invincible = false;
     }
 
     public void TouchingPit(bool isTouchingPit)

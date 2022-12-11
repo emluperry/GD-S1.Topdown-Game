@@ -501,6 +501,7 @@ MonoBehaviour:
   m_MaximumHealth: 5
   m_KillDelay: 1
   m_FallDamage: 2
+  m_SolidGroundCheckDelay: 0.1
 --- !u!114 &6336778941508639156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -514,7 +515,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_DamageAffinityType: 3
-  m_BaseDamage: 1
+  m_BaseDamage: 2
 --- !u!1 &6336778941933673183
 GameObject:
   m_ObjectHideFlags: 0

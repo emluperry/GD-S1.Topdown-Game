@@ -16,6 +16,14 @@ public class TriggerableObject : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        foreach(Trigger trigger in m_Triggers)
+        {
+            trigger.OnStateChange -= UpdateState;
+        }
+    }
+
     protected virtual void UpdateState(bool state)
     {
         if (state)

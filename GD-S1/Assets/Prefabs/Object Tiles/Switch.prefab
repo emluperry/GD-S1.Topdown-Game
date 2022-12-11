@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6632681066478980694}
   - component: {fileID: 6952579626727152874}
   - component: {fileID: 1338731759878354469}
+  - component: {fileID: 3810220330556896995}
   m_Layer: 7
   m_Name: Switch
   m_TagString: Untagged
@@ -118,3 +119,19 @@ MonoBehaviour:
   m_ActivatedSprite: {fileID: -638608740, guid: f24ccb3f1c11d93458923358661035d7, type: 3}
   m_CanDeactivate: 0
   m_ActivationDuration: 0
+--- !u!208 &3810220330556896995
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6456507358665189649}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.79, y: 0.98, z: 0.1}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5

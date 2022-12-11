@@ -188,14 +188,29 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void UnlockAttempt(int UnlockableID)
+    private void UnlockAttempt(int UnlockableID, COLLECTABLE_TYPE type)
     {
         bool CanUnlock = false;
-        if(m_NumKeys >= 1)
+
+        switch(type)
         {
-            m_NumKeys--;
-            CanUnlock = true;
-            UpdateHUDValue(COLLECTABLE_TYPE.KEY, -1);
+            case COLLECTABLE_TYPE.KEY:
+                if (m_NumKeys >= 1)
+                {
+                    m_NumKeys--;
+                    CanUnlock = true;
+                    UpdateHUDValue(COLLECTABLE_TYPE.KEY, -1);
+                }
+                break;
+
+            case COLLECTABLE_TYPE.BOSS_KEY:
+                if(m_HasBossKey)
+                {
+                    m_HasBossKey = false;
+                    CanUnlock = true;
+                    UpdateHUDValue(COLLECTABLE_TYPE.BOSS_KEY, -1);
+                }
+                break;
         }
 
         m_UnlockableObjects[UnlockableID].ShouldUnlock(CanUnlock);

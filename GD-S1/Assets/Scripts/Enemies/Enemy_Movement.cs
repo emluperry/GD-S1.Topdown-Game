@@ -121,13 +121,8 @@ public class Enemy_Movement : Entity_Movement
 
     private Vector2 NewWanderPoint()
     {
-        Vector3 randomPosition;
-        NavMeshHit hit;
-        do
-        {
-            randomPosition = (Vector2)transform.position + (UnityEngine.Random.insideUnitCircle * m_WanderingRadius);
-        }
-        while (!NavMesh.SamplePosition(randomPosition, out hit, 1, NavMesh.AllAreas));
+        Vector3 randomPosition = (Vector2)transform.position + (UnityEngine.Random.insideUnitCircle * m_WanderingRadius);
+        NavMesh.SamplePosition(randomPosition, out NavMeshHit hit, 1, NavMesh.AllAreas);
 
         return hit.position;
     }
