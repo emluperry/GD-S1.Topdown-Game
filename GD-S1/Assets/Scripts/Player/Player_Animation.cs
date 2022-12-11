@@ -1,33 +1,29 @@
-using Enums;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Player_Animation : MonoBehaviour
 {
-    [Header("Player Animation")]
-    [SerializeField] private Animator m_PlayerAnimator;
-
     private Vector2 m_InputDirection;
-
-    [Header("Weapon Animation")]
-    [SerializeField] private Color[] m_AffinityColours;
-    [SerializeField] private Transform m_AttackArmJoint;
-    [SerializeField] private Transform m_WeaponHead;
-    [SerializeField] private Transform m_WeaponChain;
 
     private Vector2 m_WeaponInputDirection;
     private Quaternion m_AttackArmIdleRotation;
 
-    private SpriteRenderer m_WeaponHeadSpriteRenderer;
     private SpriteRenderer m_ChainSpriteRenderer;
     private BoxCollider2D m_ChainCollider;
+
+    [Header("Player Animation")]
+    [SerializeField] private Animator m_PlayerAnimator;
+
+    [Header("Weapon Animation")]
+    [SerializeField] private Transform m_AttackArmJoint;
+    [SerializeField] private Transform m_WeaponHead;
+    [SerializeField] private Transform m_WeaponChain;
 
     private void Start()
     {
         m_AttackArmIdleRotation = m_AttackArmJoint.rotation;
 
-        m_WeaponHeadSpriteRenderer = m_WeaponHead.GetComponentInChildren<SpriteRenderer>();
         m_ChainSpriteRenderer = m_WeaponChain.GetComponent<SpriteRenderer>();
         m_ChainCollider = m_WeaponChain.GetComponent<BoxCollider2D>();
     }
@@ -103,12 +99,6 @@ public class Player_Animation : MonoBehaviour
     private void KillPlayer()
     {
         //m_PlayerAnimator.SetTrigger("Die");
-    }
-
-    public void UpdateAffinityColours(AFFINITY_TYPE type)
-    {
-        m_WeaponHeadSpriteRenderer.color = m_AffinityColours[(int)type];
-        m_ChainSpriteRenderer.color = m_AffinityColours[(int)type];
     }
 
 }

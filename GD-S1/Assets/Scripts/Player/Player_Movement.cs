@@ -8,10 +8,8 @@ public class Player_Movement : Entity_Movement
     [Header("Player Variables")]
     private Camera m_Camera;
 
-    protected override void Start()
+    private void Start()
     {
-        base.Start();
-
         m_Camera = Camera.main;
     }
 

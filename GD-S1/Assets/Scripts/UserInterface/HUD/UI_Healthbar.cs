@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_SegmentBar : MonoBehaviour
+public class UI_Healthbar : MonoBehaviour
 {
     private Image m_barSegment;
 
@@ -12,7 +12,7 @@ public class UI_SegmentBar : MonoBehaviour
         m_barSegment = GetComponent<Image>();
     }
 
-    public void UpdateValue(float dec)
+    public void UpdateHealth(float dec)
     {
         m_barSegment.fillAmount = dec;
     }

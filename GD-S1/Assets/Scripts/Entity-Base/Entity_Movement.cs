@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -21,43 +22,29 @@ public abstract class Entity_Movement : MonoBehaviour
     [SerializeField][Min(0f)] private AnimationCurve m_MaxAccelerationCurve;
     [SerializeField][Min(0f)] private float m_MinKnockbackForce = 20;
 
-    [Header("Falling Variables")]
-    private Vector2 m_LastSafePosition = Vector2.zero;
-    [SerializeField] private float m_SafePosOffsetDistance = 3f;
-    [SerializeField] private float m_InputDelay = 1f;
-    private bool m_PauseInput = false;
-
-    protected virtual void Awake()
+    private void Awake()
     {
         m_RB = GetComponent<Rigidbody2D>();
         m_Health = GetComponent<Entity_Health>();
     }
 
-    protected virtual void Start()
+    private void Start()
     {
-        if(m_Health)
-        {
-            m_Health.KnockbackEvent += ApplyKnockback;
-            m_Health.onLeftSolidGround += SaveLastSafePosition;
-            m_Health.onPitfall += ReturnToSolidGround;
-        }
+        if(!m_RB)
+            m_RB = GetComponent<Rigidbody2D>();
+        if (!m_Health)
+            m_Health = GetComponent<Entity_Health>();
+
+        m_Health.KnockbackEvent += ApplyKnockback;
     }
 
-    protected virtual void OnDestroy()
+    private void OnDestroy()
     {
-        if (m_Health)
-        {
-            m_Health.KnockbackEvent -= ApplyKnockback;
-            m_Health.onLeftSolidGround -= SaveLastSafePosition;
-            m_Health.onPitfall -= ReturnToSolidGround;
-        }
+        m_Health.KnockbackEvent -= ApplyKnockback;
     }
 
     protected void ApplyMovement()
     {
-        if (m_PauseInput)
-            return;
-
         float velDot = Vector2.Dot(m_InputDirection, m_GoalVelocity.normalized);
         float acceleration = m_Acceleration * m_AccelerationCurve.Evaluate(velDot);
 
@@ -75,26 +62,5 @@ public abstract class Entity_Movement : MonoBehaviour
     protected void ApplyKnockback(int dmg, Vector2 ForcePos, Vector2 ForceNormal)
     {
         m_RB.AddForceAtPosition(dmg * m_MinKnockbackForce * -ForceNormal, ForcePos);
-    }
-
-    private void SaveLastSafePosition()
-    {
-        m_LastSafePosition = (Vector2)transform.position + (m_SafePosOffsetDistance * -m_InputDirection.normalized);
-    }
-
-    private void ReturnToSolidGround()
-    {
-        m_RB.velocity = Vector2.zero;
-        m_PauseInput = true;
-        m_RB.MovePosition(m_LastSafePosition);
-
-        StartCoroutine(DelayTimer());
-    }
-
-    private IEnumerator DelayTimer()
-    {
-        yield return new WaitForSecondsRealtime(m_InputDelay);
-
-        m_PauseInput = false;
     }
 }

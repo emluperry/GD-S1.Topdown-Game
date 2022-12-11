@@ -14,14 +14,12 @@ public class Weapon_Movement : Entity_Movement
     private bool m_Returning;
     private bool m_IsActive;
 
-    public Action<Vector2> OnWeaponFired;
-
     [SerializeField][Min(0f)] private float m_MaxDistance = 4f;
     [SerializeField][Min(0f)] private float m_MaxReturnDistance = 0.1f;
     [SerializeField][Min(0f)] private float m_MaxReturnDistanceOffset = 0.1f;
     [SerializeField][Min(0f)] private float m_ReturnSpeed = 20f;
 
-    protected override void Start()
+    private void Start()
     {
         ToggleVisibility(false);
         m_PrevLocation = transform.position;
@@ -51,11 +49,6 @@ public class Weapon_Movement : Entity_Movement
         {
             m_RB.MovePosition(m_Player.position);
             ToggleVisibility(true);
-            OnWeaponFired?.Invoke(m_InputDirection);
-        }
-        else if (!m_IsActive)
-        {
-            m_RB.MovePosition(m_Player.position);
         }
 
         ApplyWeaponMovement();

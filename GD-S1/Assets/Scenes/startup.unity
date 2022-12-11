@@ -135,10 +135,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
-    - target: {fileID: 7115195148704001561, guid: b84cd1cfa28ae394fbe189060eb1ad78, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7115195148704001562, guid: b84cd1cfa28ae394fbe189060eb1ad78, type: 3}
       propertyPath: orthographic size
       value: 5.19
@@ -344,10 +340,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIManager
       objectReference: {fileID: 0}
-    - target: {fileID: 7871468428552418087, guid: c890198b74c220645a785c5987982255, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: c890198b74c220645a785c5987982255, type: 3}
@@ -362,10 +354,6 @@ PrefabInstance:
     - target: {fileID: 6043275912844165896, guid: 1ad8728130c2afb429b4c0e49c2a77eb, type: 3}
       propertyPath: m_Name
       value: SceneManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 6043275912844165896, guid: 1ad8728130c2afb429b4c0e49c2a77eb, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6043275912844165897, guid: 1ad8728130c2afb429b4c0e49c2a77eb, type: 3}
       propertyPath: m_Camera
@@ -481,10 +469,6 @@ PrefabInstance:
     - target: {fileID: 6273998092910780502, guid: de2a716ab7c136843a47e86ec80e5365, type: 3}
       propertyPath: m_Name
       value: SettingsManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 6273998092910780502, guid: de2a716ab7c136843a47e86ec80e5365, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
